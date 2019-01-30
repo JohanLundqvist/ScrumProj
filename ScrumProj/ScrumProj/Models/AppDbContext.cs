@@ -8,7 +8,7 @@ namespace ScrumProj.Models
 {
     public class AppDbContext : DbContext
     {
-        //dbsets
+        DbSet<Entry> Entries { get; set; }
         //dbsets
         //dbsets
         public DbSet<ProfileModel> Profiles { get; set; }
