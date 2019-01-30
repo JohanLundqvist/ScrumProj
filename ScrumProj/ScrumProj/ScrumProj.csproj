@@ -176,6 +176,7 @@
     <Compile Include="App_Start\RouteConfig2.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EntryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
@@ -411,6 +412,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
+    <Folder Include="Views\Entry\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
