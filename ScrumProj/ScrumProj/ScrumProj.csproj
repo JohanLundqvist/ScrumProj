@@ -187,6 +187,10 @@
     <Compile Include="Migrations\201901301344286_Etry.Designer.cs">
       <DependentUpon>201901301344286_Etry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901311154375_CreateAProfile.cs" />
+    <Compile Include="Migrations\201901311154375_CreateAProfile.Designer.cs">
+      <DependentUpon>201901311154375_CreateAProfile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -409,11 +413,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\ViewProfile.cshtml" />
+    <Content Include="Views\Profile\CreateProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
     <Folder Include="Views\Entry\" />
-    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -429,6 +435,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201901301344286_Etry.resx">
       <DependentUpon>201901301344286_Etry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901311154375_CreateAProfile.resx">
+      <DependentUpon>201901311154375_CreateAProfile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

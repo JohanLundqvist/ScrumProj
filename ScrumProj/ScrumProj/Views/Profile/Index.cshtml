@@ -1,0 +1,35 @@
+﻿
+@model ScrumProj.Models.ProfileViewModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    if (!Model.Exist)
+    {
+        <div>
+            <h2>Create your profile to get started!</h2>
+
+            <hr />
+
+            @Html.Partial("CreateProfile")
+        </div>
+    }
+
+    else
+    {
+        <h2>Your Profile!</h2>
+
+        <hr />
+
+        @Html.Partial("ViewProfile")
+    }
+}
+else
+{
+    <h2>Please sign in to see your profile!</h2>
+}

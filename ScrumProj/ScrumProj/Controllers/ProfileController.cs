@@ -26,9 +26,9 @@ namespace ScrumProj.Controllers
 
             var vm = new ProfileViewModel
             {
-                FirstName = userProfile.FirstName,
-                LastName = userProfile.LastName,
-                Position = userProfile.Position,
+                FirstName = userProfile?.FirstName,
+                LastName = userProfile?.LastName,
+                Position = userProfile?.Position,
                 Exist = exist
             };
 
@@ -38,6 +38,7 @@ namespace ScrumProj.Controllers
 
 
         // Method to create a profile
+        [HttpPost]
         public ActionResult CreateProfile(ProfileViewModel model)
         {
             var ctx = new AppDbContext();
@@ -54,6 +55,8 @@ namespace ScrumProj.Controllers
                     Position = model.Position
                 });
             }
+
+            ctx.SaveChanges();
 
             return RedirectToAction("Index");
         }
