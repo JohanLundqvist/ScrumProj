@@ -17,5 +17,18 @@ namespace ScrumProj.Controllers
             return View();
         }
 
+        public ActionResult Entry() {
+
+
+
+            return View("Blogginlägg");
+        }
+
+        public ActionResult PublishEntry() {
+
+
+
+            return View("Blogginlägg");
+        }
     }
 }

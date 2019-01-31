@@ -417,10 +417,9 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Entry\Blogginlägg.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\EntryAPI\" />
-    <Folder Include="Views\Entry\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
