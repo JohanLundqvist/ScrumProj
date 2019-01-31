@@ -9,14 +9,16 @@ namespace ScrumProj.Models
     public class AppDbContext : DbContext
     {
         DbSet<Entry> Entries { get; set; }
+        DbSet<File> Files { get; set; }
         //dbsets
-        //dbsets
+        public DbSet<ProfileModel> Profiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
           //  modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
+        //public System.Data.Entity.DbSet<ScrumProj.Models.File> Files { get; set; }
     }
 
 }

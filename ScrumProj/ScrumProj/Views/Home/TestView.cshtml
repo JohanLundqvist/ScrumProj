@@ -1,0 +1,13 @@
+﻿@model ScrumProj.Models.File
+
+@{
+    ViewBag.Title = "TestView";
+}
+
+<h2>TestView</h2>
+
+@using (Html.BeginForm("_FileInput", "Home", FormMethod.Post))
+{
+    <input type="file" />
+    <input type="submit" value="Submit" />
+}
