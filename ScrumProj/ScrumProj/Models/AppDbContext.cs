@@ -8,8 +8,8 @@ namespace ScrumProj.Models
 {
     public class AppDbContext : DbContext
     {
-        DbSet<Entry> Entries { get; set; }
-        DbSet<File> Files { get; set; }
+        public DbSet<Entry> Entries { get; set; }
+        public DbSet<File> Files { get; set; }
         //dbsets
         public DbSet<ProfileModel> Profiles { get; set; }
 
@@ -17,8 +17,6 @@ namespace ScrumProj.Models
         {
           //  modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-
-        //public System.Data.Entity.DbSet<ScrumProj.Models.File> Files { get; set; }
     }
 
 }

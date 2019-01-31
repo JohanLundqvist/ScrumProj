@@ -28,24 +28,5 @@ namespace ScrumProj.Controllers
 
             return View();
         }
-        public ActionResult TestView()
-        {
-            return View();
-        }
-
-        public ActionResult _FileInput(HttpPostedFileBase newFile)
-        {
-            AppDbContext db = new AppDbContext();
-            if (newFile != null)
-            {
-                byte[] file;
-
-                using (var br = new BinaryReader(newFile.InputStream))
-                {
-                    file = br.ReadBytes((int)newFile.ContentLength);
-                }
-            }
-            return View();
-        }
     }
 }
