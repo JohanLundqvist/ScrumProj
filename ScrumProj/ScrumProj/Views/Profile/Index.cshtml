@@ -22,14 +22,18 @@
 
     else
     {
-        <h2>Your Profile!</h2>
+        <div>
+            <h2>Your Profile!</h2>
 
-        <hr />
-
-        @Html.Partial("ViewProfile")
+            <hr />
+            
+            @Html.Partial("ViewProfile")
+        </div>
     }
 }
 else
 {
-    <h2>Please sign in to see your profile!</h2>
+    <hr />
+
+    <h3>You have to be signed in to view your profile</h3>
 }
