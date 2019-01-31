@@ -10,14 +10,13 @@ namespace ScrumProj.Controllers
 {
     public class ProfileController : Controller
     {
-        /*
         // GET: Profile
         public ActionResult Index()
         {
-            var ctx = new ApplicationDbContext();
+            var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var userProfile = ctx.Profiles.FirstOrDefault();
-
+            
             var exist = false;
 
             if (userProfile != null)
@@ -41,7 +40,7 @@ namespace ScrumProj.Controllers
         // Method to create a profile
         public ActionResult CreateProfile(ProfileViewModel model)
         {
-            var ctx = new ApplicationDbContext();
+            var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var userProfile = ctx.Profiles.FirstOrDefault();
 
@@ -49,12 +48,14 @@ namespace ScrumProj.Controllers
             {
                 ctx.Profiles.Add(new ProfileModel
                 {
-
+                    ID = currentUserId,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Position = model.Position
                 });
             }
 
             return RedirectToAction("Index");
         }
-        */
     }
 }

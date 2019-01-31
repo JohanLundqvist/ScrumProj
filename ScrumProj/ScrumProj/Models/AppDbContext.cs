@@ -11,6 +11,7 @@ namespace ScrumProj.Models
         DbSet<Entry> Entries { get; set; }
         DbSet<File> Files { get; set; }
         //dbsets
+        public DbSet<ProfileModel> Profiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
