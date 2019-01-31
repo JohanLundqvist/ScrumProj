@@ -15,7 +15,7 @@ namespace ScrumProj.Controllers
         {
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
-            var userProfile = ctx.Profiles.FirstOrDefault();
+            var userProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
             
             var exist = false;
 
@@ -26,9 +26,9 @@ namespace ScrumProj.Controllers
 
             var vm = new ProfileViewModel
             {
-                FirstName = userProfile.FirstName,
-                LastName = userProfile.LastName,
-                Position = userProfile.Position,
+                FirstName = userProfile?.FirstName,
+                LastName = userProfile?.LastName,
+                Position = userProfile?.Position,
                 Exist = exist
             };
 
@@ -41,11 +41,12 @@ namespace ScrumProj.Controllers
 
 
         // Method to create a profile
+        [HttpPost]
         public ActionResult CreateProfile(ProfileViewModel model)
         {
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
-            var userProfile = ctx.Profiles.FirstOrDefault();
+            var userProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
 
             if (userProfile == null)
             {
@@ -58,7 +59,18 @@ namespace ScrumProj.Controllers
                 });
             }
 
+            ctx.SaveChanges();
+
             return RedirectToAction("Index");
+        }
+        
+
+        public ProfileModel GetCurrentUser(string Id) {
+            var ctx = new AppDbContext();
+            var UserId = User.Identity.GetUserId();
+            var appUser = ctx.Profiles.SingleOrDefault(u => u.ID == Id);
+
+            return appUser;
         }
     }
 }

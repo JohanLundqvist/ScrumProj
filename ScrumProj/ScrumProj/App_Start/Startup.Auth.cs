@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
@@ -11,6 +12,34 @@ namespace ScrumProj
 {
     public partial class Startup
     {
+        protected void  InitRoles()
+        {
+            var context = new ApplicationDbContext();
+            // User-identity context
+            var userManager = new UserManager<ApplicationUser>(
+            new UserStore<ApplicationUser>(context));
+
+            var roleManager = new RoleManager<IdentityRole>(
+            new RoleStore<IdentityRole>(context));
+            
+            // Admin role:
+            var roleName = "Admins";
+            // Check to see if Role Exists, if not create it
+            if (!roleManager.RoleExists(roleName))
+            {
+                roleManager.Create(new IdentityRole(roleName));
+            }
+            
+            // Add user to role if not in role:
+            var adminUser = userManager.FindByEmail("jocke@hotmail.com");
+
+            if (!userManager.IsInRole(adminUser.Id, roleName))
+            {
+                userManager.AddToRole(adminUser.Id, roleName);
+            }
+            
+        }
+
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {

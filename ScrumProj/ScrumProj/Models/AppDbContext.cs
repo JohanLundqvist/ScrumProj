@@ -17,8 +17,6 @@ namespace ScrumProj.Models
         {
           //  modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
-
-        //public System.Data.Entity.DbSet<ScrumProj.Models.File> Files { get; set; }
     }
 
 }
