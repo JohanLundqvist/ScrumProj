@@ -57,11 +57,14 @@ namespace ScrumProj.Controllers
 
             return RedirectToAction("Index");
         }
-        */
+        
 
-        //public ApplicationUser GetCurrentUser() {
+        public ProfileModel GetCurrentUser(string Id) {
+            var ctx = new AppDbContext();
+            var UserId = User.Identity.GetUserId();
+            var appUser = ctx.Profiles.SingleOrDefault(u => u.ID == Id);
 
-           // return ApplicationUser;
-        //}
+            return appUser;
+        }
     }
 }

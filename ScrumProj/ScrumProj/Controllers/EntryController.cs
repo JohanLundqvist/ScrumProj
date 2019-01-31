@@ -1,4 +1,5 @@
-﻿using ScrumProj.Models;
+﻿using Microsoft.AspNet.Identity;
+using ScrumProj.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,18 +18,34 @@ namespace ScrumProj.Controllers
             return View();
         }
 
-        public ActionResult Entry() {
+        public ActionResult EntryView(EntryViewModel model) {
 
+            
+
+            return View(model);
+        }
+
+        public ActionResult PublishEntry(EntryViewModel model) {
+
+            var ctx = new AppDbContext();
+            model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
+            var UserId = model.loggedInUser.ID;
+            ctx.Entries.Add(new Entry {
+                AuthorId = UserId,
+                Content = model.content.Content
+            });
 
 
             return View("Blogginlägg");
         }
 
-        public ActionResult PublishEntry() {
+        public ProfileModel GetCurrentUser(string Id)
+        {
+            var ctx = new AppDbContext();
+            var UserId = User.Identity.GetUserId();
+            var appUser = ctx.Profiles.SingleOrDefault(u => u.ID == Id);
 
-
-
-            return View("Blogginlägg");
+            return appUser;
         }
     }
 }
