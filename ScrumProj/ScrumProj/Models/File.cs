@@ -8,7 +8,7 @@ namespace ScrumProj.Models
     public class File
     {
         public int FileId { get; set; }
-        public int Name { get; set; }
+        public string FileName { get; set; }
         public byte[] FileBytes { get; set; }
     }
 }

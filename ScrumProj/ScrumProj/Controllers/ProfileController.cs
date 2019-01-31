@@ -60,5 +60,11 @@ namespace ScrumProj.Controllers
 
             return RedirectToAction("Index");
         }
+        
+
+        //public ApplicationUser GetCurrentUser() {
+
+           // return ApplicationUser;
+        //}
     }
 }

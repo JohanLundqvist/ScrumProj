@@ -187,9 +187,13 @@
     <Compile Include="Migrations\201901301344286_Etry.Designer.cs">
       <DependentUpon>201901301344286_Etry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901311154375_CreateAProfile.cs" />
-    <Compile Include="Migrations\201901311154375_CreateAProfile.Designer.cs">
-      <DependentUpon>201901311154375_CreateAProfile.cs</DependentUpon>
+    <Compile Include="Migrations\201901311144326_Filmodelanddbset.cs" />
+    <Compile Include="Migrations\201901311144326_Filmodelanddbset.Designer.cs">
+      <DependentUpon>201901311144326_Filmodelanddbset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901311243105_FileName.cs" />
+    <Compile Include="Migrations\201901311243105_FileName.Designer.cs">
+      <DependentUpon>201901311243105_FileName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -436,8 +440,11 @@
     <EmbeddedResource Include="Migrations\201901301344286_Etry.resx">
       <DependentUpon>201901301344286_Etry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901311154375_CreateAProfile.resx">
-      <DependentUpon>201901311154375_CreateAProfile.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901311144326_Filmodelanddbset.resx">
+      <DependentUpon>201901311144326_Filmodelanddbset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901311243105_FileName.resx">
+      <DependentUpon>201901311243105_FileName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
