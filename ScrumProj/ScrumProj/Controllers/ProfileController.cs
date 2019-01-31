@@ -15,7 +15,7 @@ namespace ScrumProj.Controllers
         {
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
-            var userProfile = ctx.Profiles.FirstOrDefault();
+            var userProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
             
             var exist = false;
 
@@ -43,7 +43,7 @@ namespace ScrumProj.Controllers
         {
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
-            var userProfile = ctx.Profiles.FirstOrDefault();
+            var userProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
 
             if (userProfile == null)
             {
