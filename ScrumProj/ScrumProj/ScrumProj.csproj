@@ -413,13 +413,11 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Profile\Index.cshtml" />
-    <Content Include="Views\Profile\ViewProfile.cshtml" />
-    <Content Include="Views\Profile\CreateProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
     <Folder Include="Views\Entry\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
