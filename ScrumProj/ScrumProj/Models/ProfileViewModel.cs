@@ -19,7 +19,7 @@ namespace ScrumProj.Models
         [StringLength(60, MinimumLength = 1)]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Please enter your Last Name")]
+        [Required(ErrorMessage = "Please enter your Position")]
         [StringLength(60, MinimumLength = 1)]
         public string Position { get; set; }
 
