@@ -34,7 +34,10 @@ namespace ScrumProj.Controllers
 
             return View(vm);
         }
-
+        public ActionResult BlogPage()
+        {
+            return View();
+        }
 
 
         // Method to create a profile
