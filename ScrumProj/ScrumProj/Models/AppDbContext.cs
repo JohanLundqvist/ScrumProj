@@ -11,7 +11,10 @@ namespace ScrumProj.Models
         //dbsets
         //dbsets
         //dbsets
+        public AppDbContext() : base("DefaultConnection")
+        {
 
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
           //  modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
