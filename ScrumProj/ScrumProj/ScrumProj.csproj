@@ -187,9 +187,13 @@
     <Compile Include="Migrations\201901301344286_Etry.Designer.cs">
       <DependentUpon>201901301344286_Etry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201901311215519_test.cs" />
-    <Compile Include="Migrations\201901311215519_test.Designer.cs">
-      <DependentUpon>201901311215519_test.cs</DependentUpon>
+    <Compile Include="Migrations\201901311144326_Filmodelanddbset.cs" />
+    <Compile Include="Migrations\201901311144326_Filmodelanddbset.Designer.cs">
+      <DependentUpon>201901311144326_Filmodelanddbset.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901311243105_FileName.cs" />
+    <Compile Include="Migrations\201901311243105_FileName.Designer.cs">
+      <DependentUpon>201901311243105_FileName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -414,10 +418,13 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Entry\EntryView.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\Profile\ViewProfile.cshtml" />
+    <Content Include="Views\Profile\CreateProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Profile\" />
+    <Folder Include="Views\EntryAPI\" />
+    <Folder Include="Views\Entry\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -434,8 +441,11 @@
     <EmbeddedResource Include="Migrations\201901301344286_Etry.resx">
       <DependentUpon>201901301344286_Etry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201901311215519_test.resx">
-      <DependentUpon>201901311215519_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901311144326_Filmodelanddbset.resx">
+      <DependentUpon>201901311144326_Filmodelanddbset.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901311243105_FileName.resx">
+      <DependentUpon>201901311243105_FileName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
