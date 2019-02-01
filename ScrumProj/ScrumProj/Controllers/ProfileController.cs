@@ -35,12 +35,6 @@ namespace ScrumProj.Controllers
 
             return View(vm);
         }
-        public ActionResult BlogPage()
-        {
-            return View();
-        }
-
-
         // Method to create a profile
         [HttpPost]
         public ActionResult CreateProfile(ProfileViewModel model)
@@ -72,29 +66,6 @@ namespace ScrumProj.Controllers
             var appUser = ctx.Profiles.SingleOrDefault(u => u.ID == Id);
 
             return appUser;
-        }
-
-        public ActionResult PostFormalEntry(HttpPostedFileBase newFile)
-        {
-            AppDbContext db = new AppDbContext();
-            if (newFile != null)
-            {
-                byte[] file;
-                string fileName;
-                using (var br = new BinaryReader(newFile.InputStream))
-                {
-                    file = br.ReadBytes((int)newFile.ContentLength);
-                    fileName = Path.GetFileName(newFile.FileName);
-                }
-                db.Files.Add(new Models.File
-                {
-                    FileBytes = file,
-                    FileName = fileName
-                });
-                db.SaveChanges();
-                return RedirectToAction("BlogPage");
-            }
-            return RedirectToAction("BlogPage");
         }
     }
 }
