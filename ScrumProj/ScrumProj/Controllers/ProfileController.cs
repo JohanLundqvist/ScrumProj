@@ -96,5 +96,10 @@ namespace ScrumProj.Controllers
             }
             return RedirectToAction("BlogPage");
         }
+
+        public ActionResult Booking()
+        {
+            return View();
+        }
     }
 }
