@@ -6,6 +6,8 @@
     <title>@ViewBag.Title - ORU informatik</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/CustomStylesheet.css" type="text/css" />
+
 
 </head>
 <body style="padding-top:unset; padding-bottom:unset">
@@ -29,11 +31,18 @@
             </ul>
         </div>
     </nav>
+    <div class="jumbotron big-banner">
+        <h1 class="float-md-right">Örebro universitet</h1>
+        <hr class="my-4">
+        <hr />
+        <p class="float-md-right">Informatik</p>
+        <hr />
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - ORU</p>
+            <p style="text-align:center;">&copy; @DateTime.Now.Year - ORU</p>
         </footer>
     </div>
     @Scripts.Render("~/bundles/jquery")
