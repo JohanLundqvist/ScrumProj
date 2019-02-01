@@ -39,7 +39,6 @@ namespace ScrumProj
             {
                 userManager.AddToRole(adminUser.Id, roleName);
             }
-
         }
     }
 }

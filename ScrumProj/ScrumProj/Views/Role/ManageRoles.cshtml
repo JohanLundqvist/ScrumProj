@@ -8,7 +8,7 @@
 
 <h2>Role Add to User</h2>
 
-@using (Html.BeginForm("RoleAddToUser", "Roles"))
+@using (Html.BeginForm("RoleAddToUser", "Role"))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -23,7 +23,7 @@
 }
 <hr />
 <h3>Get Roles for a User</h3>
-@using (Html.BeginForm("GetRoles", "Roles"))
+@using (Html.BeginForm("GetRoles", "Role"))
 {
     @Html.AntiForgeryToken()
     <p>
@@ -48,7 +48,7 @@
 <hr />
 <h3>Delete A User from a Role</h3>
 
-@using (Html.BeginForm("DeleteRoleForUser", "Roles"))
+@using (Html.BeginForm("DeleteRoleForUser", "Role"))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
