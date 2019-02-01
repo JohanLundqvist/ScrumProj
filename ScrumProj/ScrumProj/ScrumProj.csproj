@@ -414,10 +414,10 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\ViewProfile.cshtml" />
     <Content Include="Views\Profile\CreateProfile.cshtml" />
+    <Content Include="Views\Entry\EntryView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
-    <Folder Include="Views\Entry\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
