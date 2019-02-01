@@ -74,6 +74,7 @@ namespace ScrumProj.Controllers
 
         public ActionResult BlogPage(EntryViewModel model)
         {
+            model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
             model.ListOfEntriesToLoopInBlogView = new List<EntryViewModel>();
             AppDbContext db = new AppDbContext();
             var ListofEntries = db.Entries.ToList();
@@ -118,6 +119,19 @@ namespace ScrumProj.Controllers
             string fileName = FileById.FileName;
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
 
+        }
+        public ActionResult DeleteEntry(int postId) {
+            var ctx = new AppDbContext();
+            var entry = ctx.Entries.Find(postId);
+            var fileID = entry.fileId;
+            var file = ctx.Files.Find(fileID);
+            if (file != null)
+            {
+                ctx.Files.Remove(file);
+            }
+            ctx.Entries.Remove(entry);
+            ctx.SaveChanges();
+            return RedirectToAction("BlogPage");
         }
 
     }
