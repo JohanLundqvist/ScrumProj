@@ -1,4 +1,5 @@
 ﻿using ScrumProj.Models;
+using ScrumProj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +28,13 @@ namespace ScrumProj.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult FirstPage(FirstPageViewModel model)
+        {
+
+
+            return View(model);
         }
     }
 }

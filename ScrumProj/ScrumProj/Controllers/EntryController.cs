@@ -34,9 +34,10 @@ namespace ScrumProj.Controllers
                 AuthorId = UserId,
                 Content = model.content.Content
             });
+            ctx.SaveChanges();
 
 
-            return View("Blogginlägg");
+            return View("EntryView");
         }
 
         public ProfileModel GetCurrentUser(string Id)

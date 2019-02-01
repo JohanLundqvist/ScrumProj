@@ -2,6 +2,7 @@
 using ScrumProj.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -71,6 +72,34 @@ namespace ScrumProj.Controllers
             var appUser = ctx.Profiles.SingleOrDefault(u => u.ID == Id);
 
             return appUser;
+        }
+
+        public ActionResult PostFormalEntry(HttpPostedFileBase newFile)
+        {
+            AppDbContext db = new AppDbContext();
+            if (newFile != null)
+            {
+                byte[] file;
+                string fileName;
+                using (var br = new BinaryReader(newFile.InputStream))
+                {
+                    file = br.ReadBytes((int)newFile.ContentLength);
+                    fileName = Path.GetFileName(newFile.FileName);
+                }
+                db.Files.Add(new Models.File
+                {
+                    FileBytes = file,
+                    FileName = fileName
+                });
+                db.SaveChanges();
+                return RedirectToAction("BlogPage");
+            }
+            return RedirectToAction("BlogPage");
+        }
+
+        public ActionResult Booking()
+        {
+            return View();
         }
     }
 }
