@@ -314,9 +314,11 @@
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\slate.css" />
+    <Content Include="Content\styles-booking.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\bg-svartvit.jpg" />
     <Content Include="Images\noti-gr.png" />
     <Content Include="Images\noti-wh-dot.png" />
     <Content Include="Images\tidigmorgon_i_september_entrehuset_och_kraka_dsc_0131.jpg" />
