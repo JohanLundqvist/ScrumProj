@@ -177,6 +177,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -415,6 +416,10 @@
     <Content Include="Views\Profile\ViewProfile.cshtml" />
     <Content Include="Views\Profile\CreateProfile.cshtml" />
     <Content Include="Views\Entry\EntryView.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\CreateRole.cshtml" />
+    <Content Include="Views\Role\EditRole.cshtml" />
+    <Content Include="Views\Role\ManageRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
