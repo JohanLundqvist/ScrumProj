@@ -311,6 +311,7 @@
     <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\CustomStylesheet.css" />
     <Content Include="Content\slate.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
