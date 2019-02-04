@@ -5,11 +5,11 @@ using System.Web;
 
 namespace ScrumProj.Models
 {
-	public class EntryViewModel
-	{
-		public ProfileModel loggedInUser;
-		public byte[] filebytes { get; set; }
-		public string fileName { get; set; }
-		public Entry content { get; set; }
-	}
+    public class EntryViewModel
+    {
+        public ProfileModel loggedInUser;
+        public Entry entry { get; set; }
+        public List<EntryViewModel> ListOfEntriesToLoopInBlogView { get; set; }
+        public File File { get ; set; }
+    }
 }

@@ -177,6 +177,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -192,10 +193,17 @@
     <Compile Include="Migrations\201901311243105_FileName.Designer.cs">
       <DependentUpon>201901311243105_FileName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902011041117_enyfileeeh.cs" />
+    <Compile Include="Migrations\201902011041117_enyfileeeh.Designer.cs">
+      <DependentUpon>201902011041117_enyfileeeh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902011239190_fulkod.cs" />
+    <Compile Include="Migrations\201902011239190_fulkod.Designer.cs">
+      <DependentUpon>201902011239190_fulkod.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
-    <Compile Include="Models\BlogpageViewModel.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\EntryViewModel.cs" />
     <Compile Include="Models\File.cs" />
@@ -313,6 +321,7 @@
     <Content Include="bin\System.Web.WebPages.xml" />
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\CustomStylesheet.css" />
     <Content Include="Content\slate.css" />
     <Content Include="Content\styles-booking.css" />
     <Content Include="favicon.ico" />
@@ -415,14 +424,17 @@
     <Content Include="Views\Home\TestView.cshtml" />
     <Content Include="Views\Shared\_navbar.cshtml" />
     <Content Include="Views\Shared\_navbarSignedIn.cshtml" />
-    <Content Include="Views\Profile\Blogpage.cshtml" />
+    <Content Include="Views\Entry\Blogpage.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\ViewProfile.cshtml" />
     <Content Include="Views\Profile\CreateProfile.cshtml" />
     <Content Include="Views\Entry\EntryView.cshtml" />
     <Content Include="Views\Home\FirstPage.cshtml" />
     <Content Include="Views\Profile\Booking.cshtml" />
-    <Content Include="Views\Profile\Projects.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\CreateRole.cshtml" />
+    <Content Include="Views\Role\EditRole.cshtml" />
+    <Content Include="Views\Role\ManageRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
@@ -447,6 +459,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901311243105_FileName.resx">
       <DependentUpon>201901311243105_FileName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902011041117_enyfileeeh.resx">
+      <DependentUpon>201902011041117_enyfileeeh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902011239190_fulkod.resx">
+      <DependentUpon>201902011239190_fulkod.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
