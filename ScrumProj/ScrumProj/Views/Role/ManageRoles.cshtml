@@ -64,10 +64,10 @@
         {
             <div style="background-color:#272b30;">
                 <dl class="dl-horizontal">
-                    @foreach (string s in ViewBag.RolesForThisUser)
+                    @foreach (string role in ViewBag.RolesForThisUser)
                     {
                         <dt>Roll:</dt>
-                        <dd>@s</dd>
+                        <dd>@role</dd>
                     }
                 </dl>
             </div>
