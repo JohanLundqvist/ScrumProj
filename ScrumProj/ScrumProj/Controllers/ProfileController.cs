@@ -40,6 +40,11 @@ namespace ScrumProj.Controllers
             return View();
         }
 
+        public ActionResult DevelopmentWork()
+        {
+            return View();
+        }
+
 
         // Method to create a profile
         [HttpPost]
