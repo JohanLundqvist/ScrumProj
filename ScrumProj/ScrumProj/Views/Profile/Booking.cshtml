@@ -1,5 +1,5 @@
 ﻿
-@{
+@if(User.Identity.IsAuthenticated){
     ViewBag.Title = "Booking";
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 }
