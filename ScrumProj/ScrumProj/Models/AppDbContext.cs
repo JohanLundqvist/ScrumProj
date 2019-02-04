@@ -10,7 +10,7 @@ namespace ScrumProj.Models
     {
         public DbSet<Entry> Entries { get; set; }
         public DbSet<File> Files { get; set; }
-        //dbsets
+        public DbSet<Comment> Comments { get; set; }
         public DbSet<ProfileModel> Profiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
