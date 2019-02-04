@@ -3,14 +3,14 @@
     ViewBag.Title = "Index";
 }
 <h2>Roles Listing </h2>
-@Html.ActionLink("Create New Role", "CreateRole") | @Html.ActionLink("Manage User Role", "ManageRoles")
+@Html.ActionLink("Lägg till en roll", "CreateRole") | @Html.ActionLink("Hantera roller", "ManageRoles")
 <hr />
 <div>
     @foreach (var role in Model)
     {
         <p>
             <strong>@role.Name | </strong>
-            <span onclick="return confirm('Are you sure to delete?')"><a href="/Role/DeleteRole?RoleName=@role.Name" class="delLink" style="color:red;">Delete</a></span> |
+            <span onclick="return confirm('Är du säker att du vill ta bort rollen?')"><a href="/Role/DeleteRole?RoleName=@role.Name" class="delLink" style="color:red;">Delete</a></span> |
             @Html.ActionLink("Edit", "EditRole", new { roleName = @role.Name })
         </p>
     }

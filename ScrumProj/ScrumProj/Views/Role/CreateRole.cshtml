@@ -2,19 +2,31 @@
     ViewBag.Title = "CreateRole";
 }
 
-<h2>Create Role</h2>
-@Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageRoles")
+
+
+<h2>Lägg till en roll</h2>
+
+@Html.ActionLink("Lista roller", "Index") | @Html.ActionLink("Hantera roller", "ManageRoles")
 <hr />
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <div>
-        Role name
+
+<div class="form-group">
+    @Html.Label("Roll:", htmlAttributes: new { @class = "control-label col-md-4" })
+    <div class="col-md-10">
+        @Html.TextBox("RoleName", null, new { @class = "form-control", style = "height: 35px" })
     </div>
-    <p>
-        @Html.TextBox("RoleName")
-    </p>
-    <input type="submit" value="Save" />
+</div>
+
+<div class="col-md-10">
+    <input type="submit" value="Save" class="btn btn-outline-warning" />
+</div>
+
+
+    
 }
+
+

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using ScrumProj.Models;
 using System;
 using System.Collections.Generic;
@@ -8,9 +9,14 @@ using System.Web.Mvc;
 
 namespace ScrumProj.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RoleController : Controller
     {
         ApplicationDbContext ctx = new ApplicationDbContext();
+
+        UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(
+            new UserStore<ApplicationUser>(
+                new ApplicationDbContext()));
 
         // GET: Role
         public ActionResult Index()
@@ -108,16 +114,15 @@ namespace ScrumProj.Controllers
             if (!string.IsNullOrWhiteSpace(UserName))
             {
                 ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-                var account = new AccountController();
 
-                ViewBag.RolesForThisUser = account.UserManager.GetRoles(user.Id);
+                ViewBag.RolesForThisUser = userManager.GetRoles(user.Id);
 
                 // prepopulat roles for the view dropdown
                 var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
                 ViewBag.Roles = list;
             }
 
-            return View("ManageUserRoles");
+            return View("ManageRoles");
         }
 
 
@@ -126,12 +131,12 @@ namespace ScrumProj.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteRoleForUser(string UserName, string RoleName)
         {
-            var account = new AccountController();
+            //var account = new AccountController();
             ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
-            if (account.UserManager.IsInRole(user.Id, RoleName))
+            if (userManager.IsInRole(user.Id, RoleName))
             {
-                account.UserManager.RemoveFromRole(user.Id, RoleName);
+                userManager.RemoveFromRole(user.Id, RoleName);
                 ViewBag.ResultMessage = "Role removed from this user successfully !";
             }
             else
@@ -142,18 +147,21 @@ namespace ScrumProj.Controllers
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
 
-            return View("ManageUserRoles");
+            return View("ManageRoles");
         }
 
-
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult RoleAddToUser(string UserName, string RoleName)
         {
             ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            var account = new AccountController();
-            account.UserManager.AddToRole(user.Id, RoleName);
+
+            var idResult = userManager.AddToRole(user.Id, RoleName);
+
+            //var account = new AccountController();
+            //account.UserManager.AddToRole(user.Id, RoleName);
 
             ViewBag.ResultMessage = "Role created successfully !";
 
@@ -161,7 +169,7 @@ namespace ScrumProj.Controllers
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
 
-            return View("ManageUserRoles");
+            return View("ManageRoles");
         }
     }
 }
