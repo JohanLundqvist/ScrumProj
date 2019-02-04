@@ -37,6 +37,7 @@ namespace ScrumProj.Controllers
                 ctx.Files.Add(ThisFile);
                 ctx.SaveChanges();
                 int FileIdToUse = 1000000;
+                //Loop to get the latest id from the file table.
                 foreach (var f in ctx.Files)
                 {
                     FileIdToUse = f.FileId;
@@ -46,7 +47,8 @@ namespace ScrumProj.Controllers
                     AuthorId = UserId,
                     Content = model.entry.Content,
                     Title = model.entry.Title,
-                    fileId = FileIdToUse
+                    fileId = FileIdToUse,
+                    Author = GetNameOfLoggedInUser()
                 });
                 
             }
@@ -56,7 +58,8 @@ namespace ScrumProj.Controllers
                 {
                     AuthorId = UserId,
                     Content = model.entry.Content,
-                    Title = model.entry.Title
+                    Title = model.entry.Title,
+                    Author = GetNameOfLoggedInUser()
                 });
             }       
             ctx.SaveChanges();
@@ -88,7 +91,11 @@ namespace ScrumProj.Controllers
                     File = FileToFetch
                 });
             }
-
+            model.ListOfComments = new List<Comment>();
+            foreach (var c in db.Comments)
+            {
+                model.ListOfComments.Add(c);
+            }
             return View(model);
         }
 
@@ -132,6 +139,33 @@ namespace ScrumProj.Controllers
             ctx.Entries.Remove(entry);
             ctx.SaveChanges();
             return RedirectToAction("BlogPage");
+        }
+        public ActionResult PostComment(EntryViewModel model, int postId)
+        {
+            var ctx = new AppDbContext();
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = GetCurrentUser(currentUserId);
+            var comment = model.comment;
+            ctx.Comments.Add(new Comment
+            {
+                comment = comment,
+                EntryId = postId,
+                Author = GetNameOfLoggedInUser()
+            });
+            ctx.SaveChanges();
+            return RedirectToAction("BlogPage");
+        }
+
+        public string GetNameOfLoggedInUser()
+        {
+            var ctx = new AppDbContext();
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = GetCurrentUser(currentUserId);
+            var Profile = ctx.Profiles.Find(currentUserId);
+            var FirstName = Profile.FirstName;
+            var LastName = Profile.LastName;
+
+            return FirstName + " " + LastName; 
         }
 
     }

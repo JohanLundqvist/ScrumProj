@@ -32,8 +32,6 @@ namespace ScrumProj.Controllers
 
         public ActionResult FirstPage(FirstPageViewModel model)
         {
-
-
             return View(model);
         }
     }

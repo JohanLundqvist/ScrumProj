@@ -201,9 +201,26 @@
     <Compile Include="Migrations\201902011239190_fulkod.Designer.cs">
       <DependentUpon>201902011239190_fulkod.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902041008245_Comments.cs" />
+    <Compile Include="Migrations\201902041008245_Comments.Designer.cs">
+      <DependentUpon>201902041008245_Comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902041058013_CommentChange.cs" />
+    <Compile Include="Migrations\201902041058013_CommentChange.Designer.cs">
+      <DependentUpon>201902041058013_CommentChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902041149200_NameInComment.cs" />
+    <Compile Include="Migrations\201902041149200_NameInComment.Designer.cs">
+      <DependentUpon>201902041149200_NameInComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902041202395_AuthorOnEntry.cs" />
+    <Compile Include="Migrations\201902041202395_AuthorOnEntry.Designer.cs">
+      <DependentUpon>201902041202395_AuthorOnEntry.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\EntryViewModel.cs" />
     <Compile Include="Models\File.cs" />
@@ -465,6 +482,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902011239190_fulkod.resx">
       <DependentUpon>201902011239190_fulkod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041008245_Comments.resx">
+      <DependentUpon>201902041008245_Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041058013_CommentChange.resx">
+      <DependentUpon>201902041058013_CommentChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041149200_NameInComment.resx">
+      <DependentUpon>201902041149200_NameInComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041202395_AuthorOnEntry.resx">
+      <DependentUpon>201902041202395_AuthorOnEntry.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
