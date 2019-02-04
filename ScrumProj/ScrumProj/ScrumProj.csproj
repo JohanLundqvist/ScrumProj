@@ -344,6 +344,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\art-art-materials-background-1191710.jpg" />
     <Content Include="Images\bg-svartvit.jpg" />
     <Content Include="Images\noti-gr.png" />
     <Content Include="Images\noti-wh-dot.png" />
@@ -452,6 +453,7 @@
     <Content Include="Views\Role\CreateRole.cshtml" />
     <Content Include="Views\Role\EditRole.cshtml" />
     <Content Include="Views\Role\ManageRoles.cshtml" />
+    <Content Include="Views\Profile\DevelopmentWork.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
