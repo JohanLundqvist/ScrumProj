@@ -3,7 +3,7 @@
     ViewBag.Title = "Booking";
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 }
-<link rel="stylesheet" type="text/css" href="~/Content/styles-booking.css" />
+<link rel="stylesheet" type="text/css" href="~/Content/styles-booking.css">
 <div class="col-8">
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -28,6 +28,15 @@
     </ul>
     <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade" id="home">
+            <div class="monthCont">
+                <ul>
+                    
+                    <li>Februari</li>
+                    
+                </ul>
+            </div>
+            
+            <div class="daysCont">
             <ul class="weekdays">
                 <li>Mo</li>
                 <li>Tu</li>
@@ -37,6 +46,34 @@
                 <li>Sa</li>
                 <li>Su</li>
             </ul>
+            </div>
+            <div class="dates">
+                <ul class="pagination">
+                    
+                    <li class="page-item">
+                        <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">4</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">5</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">6</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">7</a>
+                    </li>
+                </ul>
+            </div>
+
         </div>
         <div class="tab-pane fade active show" id="profile">
             <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
