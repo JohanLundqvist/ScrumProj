@@ -1,3 +1,42 @@
-﻿.weekdays li {
+﻿
+
+
+
+.weekdays{
+    
+}
+
+.daysCont {
+    background-color:dimgray;
+
+
+}
+.monthCont {
+    height: 50px;
+    background-color: lightslategray;
+    text-align: center;
+
+
+}
+
+    .monthCont ul li {
+        color: white;
+        font-size: 20px;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+        display: inline-block;
+        padding-top: 10px;
+    }
+.weekdays li {
     display: inline-block;
+    text-align: center;
+    width: 13.6%;
+    padding: 10px;
+    background-color: dimgray;
+}
+.dates li {
+    width: 13.6%;
+    text-align: center;
+    display: inline-block;
+    padding: 10px;
 }

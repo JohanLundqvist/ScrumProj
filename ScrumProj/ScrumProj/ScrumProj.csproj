@@ -422,6 +422,7 @@
     <Content Include="Views\Entry\EntryView.cshtml" />
     <Content Include="Views\Home\FirstPage.cshtml" />
     <Content Include="Views\Profile\Booking.cshtml" />
+    <Content Include="Views\Profile\Projects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
