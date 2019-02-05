@@ -1,6 +1,8 @@
 ﻿@model ScrumProj.Models.EntryViewModel
-@{
+@if(User.Identity.IsAuthenticated){
     ViewBag.Title = "Blogpage";
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+
 }
 
 <div class="row">

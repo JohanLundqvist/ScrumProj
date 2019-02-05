@@ -1,22 +1,39 @@
-﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+﻿
+@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+
 @{
     ViewBag.Title = "EditRole";
 }
 
-<h2>Edit Role</h2>
 
-@Html.ActionLink("List Roles", "Index") | @Html.ActionLink("Manage User Role", "ManageRoles")
-<hr />
+
+<h2>Redigera en roll</h2>
+
+@Html.ActionLink("Lista roller", "Index") | @Html.ActionLink("Hantera roller", "ManageRoles")
+
+<hr style="border-color: #777;" />
+<br />
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
     @Html.HiddenFor(model => model.Id)
+
     <div>
-        Role name
+        Roll
     </div>
-    <p>
-        @Html.TextBoxFor(model => model.Name)
-    </p>
-    <input type="submit" value="Save" />
+
+    <div class="form-group">
+        @Html.Label("Roll:", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.Name, null, new { @class = "form-control", style = "height: 35px" })
+        </div>
+    </div>
+    
+    <div class="col-md-10">
+        <input type="submit" value="Spara" class="btn btn-outline-warning" />
+    </div>
 }
+
+<br />

@@ -19,14 +19,14 @@
 
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Hem <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" @Html.ActionLink("Hem","Index","Home")</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Registrera</a>
+                    <a class="nav-link" @Html.ActionLink("Registrera","Register","Account")</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logga in</a>
+                    <a class="nav-link" @Html.ActionLink("Logga in","Login","Account")</a>
                 </li>
             </ul>
         </div>

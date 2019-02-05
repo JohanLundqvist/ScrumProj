@@ -11,20 +11,6 @@ namespace ScrumProj.Controllers
 {
     public class EntryController : Controller
     {
-        
-        // GET: Entry
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        public ActionResult EntryView(EntryViewModel model) {
-
-            
-
-            return View(model);
-        }
-
         public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model) {
 
             var ctx = new AppDbContext();
@@ -75,6 +61,7 @@ namespace ScrumProj.Controllers
             return appUser;
         }
 
+        [Authorize]
         public ActionResult BlogPage(EntryViewModel model)
         {
             model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());

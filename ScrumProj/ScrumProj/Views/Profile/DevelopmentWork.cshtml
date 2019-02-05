@@ -1,6 +1,10 @@
 ﻿
-@{
+
+@if (User.Identity.IsAuthenticated)
+{
     ViewBag.Title = "DevelopmentWork";
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+
 }
 
 <h2>Skapa nytt projekt</h2>
@@ -41,22 +45,25 @@
                     <div>
                         <input type="submit" value="Skapa projekt" class="btn btn-info" />
                     </div>
-                </div>
-            </div>
-        }
-            <div class="col-sm-8">
-                <div class="text-white bg-secondary mb-3" style="max-width: 40rem; border: 1px solid white;">
-                    <div class="card-body">
-                        @*@foreach (projekt in projektgrajjor)
-                            {*@
-                        <h2 class="card-title">Projekt titel</h2>
 
-                        <h4 class="card-title">Forskning/Utbildning</h4>
-                        <p class="card-text">I det här projekt finner vi information om bla bla bla bla utforska bla bla bla bla, empiriska studien bla bla bla.</p>
-                        <a href="#" class="card-link">Visa projekt</a>
-                        @*}*@
-                    </div>
                 </div>
-            </div>
-
+            }
         </div>
+
+    </div>
+
+    <div class="col-sm-8">
+        <div class="text-white bg-secondary mb-3" style="max-width: 40rem; border: 1px solid white;">
+            <div class="card-body">
+                @*@foreach (projekt in projektgrajjor)
+                    {*@
+                <h2 class="card-title">Projekt titel</h2>
+
+                <h4 class="card-title">Forskning/Utbildning</h4>
+                <p class="card-text">I det här projekt finner vi information om bla bla bla bla utforska bla bla bla bla, empiriska studien bla bla bla.</p>
+                <a href="#" class="card-link">Visa projekt</a>
+                @*}*@
+            </div>
+        </div>
+    </div>
+</div>

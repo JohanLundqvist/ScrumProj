@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using ScrumProj.Models;
+using ScrumProj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,11 +36,12 @@ namespace ScrumProj.Controllers
 
             return View(vm);
         }
+        [Authorize]
         public ActionResult BlogPage()
         {
             return View();
         }
-
+        [Authorize]
         public ActionResult DevelopmentWork()
         {
             return View();
@@ -67,7 +69,7 @@ namespace ScrumProj.Controllers
 
             ctx.SaveChanges();
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
         
 
@@ -101,15 +103,17 @@ namespace ScrumProj.Controllers
             }
             return RedirectToAction("BlogPage");
         }
+        [Authorize]
 
         public ActionResult Booking()
         {
             return View();
         }
 
-        public ActionResult Projects()
+        [Authorize]
+        public ActionResult FirstPage(FirstPageViewModel model)
         {
-            return View();
+            return View(model);
         }
     }
 }

@@ -444,10 +444,8 @@
     <Content Include="Views\Shared\_navbarSignedIn.cshtml" />
     <Content Include="Views\Entry\Blogpage.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
-    <Content Include="Views\Profile\ViewProfile.cshtml" />
     <Content Include="Views\Profile\CreateProfile.cshtml" />
-    <Content Include="Views\Entry\EntryView.cshtml" />
-    <Content Include="Views\Home\FirstPage.cshtml" />
+    <Content Include="Views\Profile\FirstPage.cshtml" />
     <Content Include="Views\Profile\Booking.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\CreateRole.cshtml" />
@@ -455,6 +453,7 @@
     <Content Include="Views\Role\ManageRoles.cshtml" />
     <Content Include="Views\Profile\DevelopmentWork.cshtml" />
     <Content Include="Views\Entry\EditEntryView.cshtml" />
+    <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
