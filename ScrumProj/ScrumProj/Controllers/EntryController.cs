@@ -11,45 +11,53 @@ namespace ScrumProj.Controllers
 {
     public class EntryController : Controller
     {
+        [Authorize]
         public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model) {
 
-            var ctx = new AppDbContext();
-            model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
-            var UserId = model.loggedInUser.ID;
-            Models.File ThisFile = new Models.File();
-            if (newFile != null)
-            {
-                ThisFile = SaveFileToDatabase(newFile);
-                ctx.Files.Add(ThisFile);
-                ctx.SaveChanges();
-                int FileIdToUse = 1000000;
-                //Loop to get the latest id from the file table.
-                foreach (var f in ctx.Files)
+   
+                var ctx = new AppDbContext();
+                model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
+                var UserId = model.loggedInUser.ID;
+                Models.File ThisFile = new Models.File();
+                if (newFile != null)
                 {
-                    FileIdToUse = f.FileId;
+                    ThisFile = SaveFileToDatabase(newFile);
+                    ctx.Files.Add(ThisFile);
+                    ctx.SaveChanges();
+                    int FileIdToUse = 1000000;
+                    //Loop to get the latest id from the file table.
+                    foreach (var f in ctx.Files)
+                    {
+                        FileIdToUse = f.FileId;
+                    }
+                    if(model.entry.Content.Length <= 1000)
+                {
+                    model.entry.Content = model.entry.Content.Substring(0, 999);
                 }
-                ctx.Entries.Add(new Entry
+                    ctx.Entries.Add(new Entry
+                    {
+                        AuthorId = UserId,
+                        Content = model.entry.Content,
+                        Title = model.entry.Title,
+                        fileId = FileIdToUse,
+                        Author = GetNameOfLoggedInUser()
+                    });
+
+                }
+                else
                 {
-                    AuthorId = UserId,
-                    Content = model.entry.Content,
-                    Title = model.entry.Title,
-                    fileId = FileIdToUse,
-                    Author = GetNameOfLoggedInUser()
-                });
-                
-            }
-            else
-            {
-                ctx.Entries.Add(new Entry
-                {
-                    AuthorId = UserId,
-                    Content = model.entry.Content,
-                    Title = model.entry.Title,
-                    Author = GetNameOfLoggedInUser()
-                });
-            }       
-            ctx.SaveChanges();
-            return RedirectToAction("BlogPage");
+                    ctx.Entries.Add(new Entry
+                    {
+                        AuthorId = UserId,
+                        Content = model.entry.Content,
+                        Title = model.entry.Title,
+                        Author = GetNameOfLoggedInUser()
+                    });
+                }
+                ctx.SaveChanges();
+
+                return RedirectToAction("BlogPage");
+  
         }
 
         public ProfileModel GetCurrentUser(string Id)
@@ -57,7 +65,6 @@ namespace ScrumProj.Controllers
             var ctx = new AppDbContext();
             var UserId = User.Identity.GetUserId();
             var appUser = ctx.Profiles.SingleOrDefault(u => u.ID == Id);
-
             return appUser;
         }
 
@@ -88,20 +95,21 @@ namespace ScrumProj.Controllers
 
         public Models.File SaveFileToDatabase(HttpPostedFileBase newFile)
         {
-            AppDbContext db = new AppDbContext();
+                AppDbContext db = new AppDbContext();
+                byte[] file;
+                string fileName;
+                using (var br = new BinaryReader(newFile.InputStream))
+                {
+                    file = br.ReadBytes((int)newFile.ContentLength);
+                    fileName = Path.GetFileName(newFile.FileName);
+                }
+                
+                return (new Models.File
+                {
+                    FileBytes = file,
+                    FileName = fileName
+                });
             
-            byte[] file;
-            string fileName;
-            using (var br = new BinaryReader(newFile.InputStream))
-            {
-                file = br.ReadBytes((int)newFile.ContentLength);
-                fileName = Path.GetFileName(newFile.FileName);
-            }
-            return (new Models.File
-            {
-                FileBytes = file,
-                FileName = fileName
-            });      
         }
         public FileResult DownLoadFile(int id)
         {
