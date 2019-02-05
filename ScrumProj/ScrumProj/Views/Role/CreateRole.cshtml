@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "CreateRole";
+}
+
+
+
+<h2>Lägg till en roll</h2>
+
+@Html.ActionLink("Lista roller", "Index") | @Html.ActionLink("Hantera roller", "ManageRoles")
+
+<hr style="border-color: #777;" />
+<br />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    
+    
+    <div class="form-group">
+        @Html.Label("Roll:", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.TextBox("RoleName", null, new { @class = "form-control", style = "height: 35px" })
+        </div>
+    </div>
+    
+    <div class="col-md-10">
+        <input type="submit" value="Lägg till" class="btn btn-outline-warning" />
+    </div>
+}

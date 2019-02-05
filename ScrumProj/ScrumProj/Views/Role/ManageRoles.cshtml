@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewBag.Title = "ManageRoles";
+}
+
+
+
+<h2>Hantera roller</h2>
+@Html.ActionLink("Lista roller", "Index") | @Html.ActionLink("Lägg till en roll", "CreateRole")
+
+
+<hr style="border-color: #777;" />
+<br />
+
+
+<h3>Lägg till roll för användare</h3>
+
+@using (Html.BeginForm("AddRoleToUser", "Role"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.Label("Roll:", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, new { @class = "form-control", style = "height: 35px; padding: 0px;" })
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.Label("E-mail adress:", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.TextBox("UserName", null, new { @class = "form-control", style = "height: 35px" })
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <input type="submit" value="Spara" class=" btn btn-outline-warning" />
+        </div>
+    </div>
+}
+
+
+<br />
+<hr style="border-color: #777;" />
+<br />
+
+
+<h3>Hämta roller för en användare</h3>
+@using (Html.BeginForm("GetRoles", "Role"))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.Label("E-mail adress:", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.TextBox("UserName", null, new { @class = "form-control", style = "height: 35px" })
+        </div>
+    </div>
+
+    <div class="col-md-10">
+        @if (ViewBag.RolesForThisUser != null)
+        {
+            <div style="background-color:#272b30;">
+                <dl class="dl-horizontal">
+                    @foreach (string role in ViewBag.RolesForThisUser)
+                    {
+                        <dt>Roll:</dt>
+                        <dd>@role</dd>
+                    }
+                </dl>
+            </div>
+        }
+    </div>
+
+    <div class="col-md-10">
+        <input type="submit" value="Hämta roller" class="btn btn-outline-warning" />
+    </div>
+}
+
+
+<br />
+<hr style="border-color: #777;" />
+<br />
+
+
+<h3>Ta bort roll från en användare</h3>
+
+@using (Html.BeginForm("DeleteRoleForUser", "Role"))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+
+
+    <div class="form-group">
+        @Html.Label("Roll:", htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="col-md-10">
+            @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, new { @class = "form-control", style = "height: 35px; padding: 0px;" })
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            @Html.Label("E-mail adress:", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-10">
+                @Html.TextBox("UserName", null, new { @class = "form-control", style = "height: 35px" })
+            </div>
+        </div>
+
+        <div class="col-md-10">
+            <input type="submit" value="Ta bort roll" class="btn btn-outline-warning" />
+        </div>
+    </div>
+}
+
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        }
+    </script>
+}
+
+<br />

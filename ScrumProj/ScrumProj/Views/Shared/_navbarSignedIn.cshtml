@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - ORU informatik</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/CustomStylesheet.css" type="text/css" />
+
+</head>
+<body style="padding-top:unset; padding-bottom:unset">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarColor02">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" @Html.ActionLink("Hem","Firstpage","Profile")  <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" @Html.ActionLink("Bloggar","blogpage","Entry") </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" @Html.ActionLink("Möten","Booking", "Profile")</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete","DevelopmentWork","Profile") </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="@Url.Action("LogOff", "Account")">Logga ut </a>
+                </li>
+
+            </ul>
+            <div id="no-notis">
+                <a href="@Url.Action()"><img src="~/Images/noti-gr.png" style="width:38px; height:35px; display:block" /></a>
+            </div>
+            <div id="notis">
+                <a href="@Url.Action()"><img src="~/Images/noti-wh-dot.png" style="width:38px; height:35px; display:block" /></a>
+            </div>
+        </div>
+    </nav>
+    <div class="jumbotron big-banner">
+
+        <h1 class="" style="color:white;">Örebro universitet</h1>
+        @*<hr style="height:3px;color:white;background-color:white;" />*@
+        <h2 class="" style="color:white">Informatik</h2>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer style="text-align:center;">
+            <p>&copy; @DateTime.Now.Year - LTP ORU</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
