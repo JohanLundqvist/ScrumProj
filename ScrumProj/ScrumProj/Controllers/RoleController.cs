@@ -9,7 +9,6 @@ using System.Web.Mvc;
 
 namespace ScrumProj.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
     public class RoleController : Controller
     {
         // Database connection
@@ -62,8 +61,10 @@ namespace ScrumProj.Controllers
         public ActionResult DeleteRole(string RoleName)
         {
             var thisRole = ctx.Roles.Where(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
             ctx.Roles.Remove(thisRole);
             ctx.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -99,11 +100,11 @@ namespace ScrumProj.Controllers
         // Method to prepopulate fields (ManageRoles first page)
         public ActionResult ManageRoles()
         {
-            // Prepopulate roles for the view dropdown
+            // Prepopulate the dropdown with roles
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
-            
             new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
+
             return View();
         }
 
@@ -120,8 +121,9 @@ namespace ScrumProj.Controllers
 
                 ViewBag.RolesForThisUser = userManager.GetRoles(user.Id);
 
-                // Prepopulate roles for the view dropdown
-                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                // Prepopulate the dropdown with roles
+                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
                 ViewBag.Roles = list;
             }
 
@@ -133,23 +135,37 @@ namespace ScrumProj.Controllers
         // Method to delete a Role for a User
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteRoleForUser(string UserName, string RoleName)
+        public ActionResult DeleteRoleForUser(string UserName, string RoleName, string name)
         {
             ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
-            if (userManager.IsInRole(user.Id, RoleName))
+            try
             {
-                userManager.RemoveFromRole(user.Id, RoleName);
-                ViewBag.ResultMessage = "Role removed from this user successfully !";
-            }
-            else
-            {
-                ViewBag.ResultMessage = "This user doesn't belong to selected role.";
-            }
+                if (userManager.IsInRole(user.Id, RoleName))
+                {
+                    userManager.RemoveFromRole(user.Id, RoleName);
 
-            // Prepopulate roles for the view dropdown
-            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-            ViewBag.Roles = list;
+                    ViewBag.Message = "Role removed from this user successfully!";
+                }
+                else
+                {
+                    ViewBag.Message = "This user does not belong to selected role!";
+                }
+
+                // Prepopulate the dropdown with roles
+                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                ViewBag.Roles = list;
+            }
+            catch
+            {
+                ViewBag.Message = "Please fill in all the fields!";
+
+                // Prepopulate the dropdown with roles
+                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                ViewBag.Roles = list;
+            }
 
             return View("ManageRoles");
         }
@@ -167,8 +183,9 @@ namespace ScrumProj.Controllers
 
             ViewBag.ResultMessage = "Role created successfully !";
 
-            // Prepopulate roles for the view dropdown
-            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            // Prepopulate the dropdown with roles
+            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+            new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
 
             return View("ManageRoles");
