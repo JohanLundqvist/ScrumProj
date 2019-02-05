@@ -82,7 +82,7 @@ namespace ScrumProj.Controllers
                 model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
                 {
                     entry = entry,
-                    File = FileToFetch
+                    File = FileToFetch                   
                 });
             }
             model.ListOfComments = new List<Comment>();
@@ -90,6 +90,7 @@ namespace ScrumProj.Controllers
             {
                 model.ListOfComments.Add(c);
             }
+            model.ListOfEntriesToLoopInBlogView.OrderByDescending(e => e.ListOfEntriesToLoopInBlogView);
             return View(model);
         }
 
@@ -135,6 +136,74 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
             return RedirectToAction("BlogPage");
         }
+        public ActionResult EditEntryView(EntryViewModel model, int postId, string Title, string Content, int? fileId)
+        {
+            var ctx = new AppDbContext();
+            var ThisFile = new Models.File();           
+            if (fileId != null)
+            {
+                var OldFile = ctx.Files.Find(fileId);
+                var CurrentEntry = ctx.Entries.Find(postId);
+                model.entry = new Entry();
+                model.entry.Title = Title;
+                model.entry.Content = Content;
+                model.entry.Id = postId;
+                model.entry.fileId = OldFile.FileId;                
+            }
+            else
+            {
+                var CurrentEntry = ctx.Entries.Find(postId);
+                model.entry = new Entry();
+                model.entry.Title = Title;
+                model.entry.Content = Content;
+                model.entry.Id = postId;
+            }
+            
+            return View(model);
+        }
+
+        public ActionResult EditEntry(HttpPostedFileBase newFile, EntryViewModel model)
+        {
+            var ctx = new AppDbContext();
+            if (newFile != null)
+            {
+                var ThisFile = new Models.File();
+                ThisFile = SaveFileToDatabase(newFile);
+                ctx.Files.Add(ThisFile);
+                int FileIdToUse = 1000000;
+                ctx.SaveChanges();
+                foreach (var f in ctx.Files)
+                {
+                    FileIdToUse = f.FileId;
+                }
+                var post = ctx.Entries.Find(model.entry.Id);
+                post.AuthorId = User.Identity.GetUserId();
+                post.Content = model.entry.Content;
+                post.Title = model.entry.Title;
+                post.fileId = FileIdToUse;
+                post.Author = GetNameOfLoggedInUser();
+            }
+            else if (model.entry.fileId != 0)
+            {
+                var post = ctx.Entries.Find(model.entry.Id);
+                post.AuthorId = User.Identity.GetUserId();
+                post.Content = model.entry.Content;
+                post.Title = model.entry.Title;
+                post.fileId = model.entry.fileId;
+                post.Author = GetNameOfLoggedInUser();
+            }
+            else
+            {
+                var post = ctx.Entries.Find(model.entry.Id);
+                post.AuthorId = User.Identity.GetUserId();
+                post.Content = model.entry.Content;
+                post.Title = model.entry.Title;
+                post.Author = GetNameOfLoggedInUser();
+            }
+            ctx.SaveChanges();
+
+            return RedirectToAction("BlogPage");
+        }
         public ActionResult PostComment(EntryViewModel model, int postId)
         {
             var ctx = new AppDbContext();
@@ -161,6 +230,17 @@ namespace ScrumProj.Controllers
             var LastName = Profile.LastName;
 
             return FirstName + " " + LastName; 
+        }
+        public ActionResult RemoveFile(int postId)
+        {
+            var ctx = new AppDbContext();
+            var post = ctx.Entries.Find(postId);
+            var i = post.fileId;
+            var file = ctx.Files.Find(post.fileId);
+            ctx.Files.Remove(file);
+            post.fileId = 0;
+            ctx.SaveChanges();
+            return RedirectToAction("BlogPage");
         }
 
     }

@@ -452,6 +452,7 @@
     <Content Include="Views\Role\EditRole.cshtml" />
     <Content Include="Views\Role\ManageRoles.cshtml" />
     <Content Include="Views\Profile\DevelopmentWork.cshtml" />
+    <Content Include="Views\Entry\EditEntryView.cshtml" />
     <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
