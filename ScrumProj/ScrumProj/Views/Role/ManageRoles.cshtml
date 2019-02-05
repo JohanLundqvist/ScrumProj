@@ -23,7 +23,7 @@
     <div class="form-group">
         @Html.Label("Roll:", htmlAttributes: new { @class = "control-label col-md-4" })
         <div class="col-md-10">
-            @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "", new { @class = "form-control", style = "height: 35px; padding: 0px;" })
+            @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, new { @class = "form-control", style = "height: 35px; padding: 0px;" })
         </div>
 
         <br />
@@ -97,7 +97,7 @@
     <div class="form-group">
         @Html.Label("Roll:", htmlAttributes: new { @class = "control-label col-md-4" })
         <div class="col-md-10">
-            @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "", new { @class = "form-control", style = "height: 35px; padding: 0px;" })
+            @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, new { @class = "form-control", style = "height: 35px; padding: 0px;" })
         </div>
 
         <br />
@@ -114,4 +114,16 @@
         </div>
     </div>
 }
- <br />
+
+
+
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        }
+    </script>
+}
+
+<br />
