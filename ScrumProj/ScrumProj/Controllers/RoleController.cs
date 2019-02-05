@@ -23,7 +23,6 @@ namespace ScrumProj.Controllers
         {
             var roles = ctx.Roles.ToList();
             return View(roles);
-
         }
 
 
