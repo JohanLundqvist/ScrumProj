@@ -77,12 +77,14 @@
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(u => u.entry.Title)
-                @Html.TextBoxFor(u => u.entry.Title, new { @class = "form-control", id = "inputDefault" })
+                @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "30", @class = "form-control", id = "inputDefault" })
+                <p>Max 30 tecken.</p>
             </div>
             <div class="form-control-static panel-primary">
                 <div class="form-group">
                     <div>
-                        @Html.TextAreaFor(u => u.entry.Content, new { @class = "form-control", @rows = "3", @style = "width" })
+                        @Html.TextAreaFor(u => u.entry.Content, new { maxLength="1000", @class = "form-control", @rows = "3", @style = "width" })
+                        <p>Max 1000 tecken.</p>
                     </div>
                 </div>
                 @Html.LabelFor(u => u.File.FileName)
@@ -107,5 +109,9 @@
         </div>
 
     </div>
+
+<script>
+
+</script>
 
 
