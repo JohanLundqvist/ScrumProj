@@ -217,6 +217,18 @@
     <Compile Include="Migrations\201902041202395_AuthorOnEntry.Designer.cs">
       <DependentUpon>201902041202395_AuthorOnEntry.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902061224366_fix.cs" />
+    <Compile Include="Migrations\201902061224366_fix.Designer.cs">
+      <DependentUpon>201902061224366_fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061255157_rstr.cs" />
+    <Compile Include="Migrations\201902061255157_rstr.Designer.cs">
+      <DependentUpon>201902061255157_rstr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061229485_123.cs" />
+    <Compile Include="Migrations\201902061229485_123.Designer.cs">
+      <DependentUpon>201902061229485_123.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -228,6 +240,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
+    <Compile Include="Models\ValidateFileSizeAttribute.cs" />
     <Compile Include="Models\ViewModels\FirstPageViewModel.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -406,7 +419,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -495,6 +507,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902041202395_AuthorOnEntry.resx">
       <DependentUpon>201902041202395_AuthorOnEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061224366_fix.resx">
+      <DependentUpon>201902061224366_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061255157_rstr.resx">
+      <DependentUpon>201902061255157_rstr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061229485_123.resx">
+      <DependentUpon>201902061229485_123.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
