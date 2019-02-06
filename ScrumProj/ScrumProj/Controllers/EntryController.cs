@@ -30,10 +30,6 @@ namespace ScrumProj.Controllers
                     {
                         FileIdToUse = f.FileId;
                     }
-                    if(model.entry.Content.Length <= 1000)
-                {
-                    model.entry.Content = model.entry.Content.Substring(0, 999);
-                }
                     ctx.Entries.Add(new Entry
                     {
                         AuthorId = UserId,

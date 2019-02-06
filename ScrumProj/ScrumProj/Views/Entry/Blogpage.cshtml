@@ -10,16 +10,42 @@
         <h2>Formella blogg</h2>
         @if (Model.ListOfEntriesToLoopInBlogView != null || Model.ListOfEntriesToLoopInBlogView.Count > 0)
         {
-            foreach (var FormalEntry in Model.ListOfEntriesToLoopInBlogView)
+            for (int i = Model.ListOfEntriesToLoopInBlogView.Count() - 1; i >= 0; i--)
             {
+                var FormalEntry = Model.ListOfEntriesToLoopInBlogView[i];
                 <div class="card mb-1">
                     <h3 class="card-header">@FormalEntry.entry.Title</h3>
                     <h5 class="card-header">
                         @FormalEntry.entry.Author
                         @if (FormalEntry.entry.AuthorId == Model.loggedInUser.ID)
                         {
-                            <a href="#" class="card-link"><small style="float:right">Redigera inlägg</small></a> <br />
-                            <small style="float:right">@Html.ActionLink("Ta bort inlägg", "DeleteEntry")</small>
+                            if (FormalEntry.File != null)
+                            {
+                                <small style="float:right; font-size: x-small">
+                                    @Html.ActionLink("Redigera inlägg", "EditEntryView",
+                                    new
+                                    {
+                                    postId = FormalEntry.entry.Id,
+                                    Title = FormalEntry.entry.Title,
+                                    Content = FormalEntry.entry.Content,
+                                    fileId = FormalEntry.File.FileId
+                                    })
+                                </small>
+                            }
+                            else
+                            {
+                                <small style="float:right; font-size: x-small">
+                                    @Html.ActionLink("Redigera inlägg", "EditEntryView",
+                                    new
+                                    {
+                                    postId = FormalEntry.entry.Id,
+                                    Title = FormalEntry.entry.Title,
+                                    Content = FormalEntry.entry.Content
+                                    })
+                                </small>
+                            }
+                            <br />
+                            <small style="float:right; font-size: x-small">@Html.ActionLink("Ta bort inlägg", "DeleteEntry", new { postId = FormalEntry.entry.Id })</small>
                         }
                     </h5>
                     @if (FormalEntry.entry.image != null)
@@ -27,15 +53,16 @@
                         <img style="height: 200px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image">
                     }
 
-                    <div class="card-body">
-                        <p class="card-text">@FormalEntry.entry.Content</p>
-                        @if (FormalEntry.File != null)
-                        {
-                            @Html.ActionLink(FormalEntry.File.FileName, "DownLoadFile", new { id = FormalEntry.File.FileId })
-                        }
+                        <div class="card-body">
+                            <p class="card-text">@FormalEntry.entry.Content</p>
+                            @if (FormalEntry.File != null)
+                            {
+                                @Html.ActionLink(FormalEntry.File.FileName, "DownLoadFile", new { id = FormalEntry.File.FileId })
+                                <br />
+                                <small style="font-size: x-small">@Html.ActionLink("Ta bort fil", "RemoveFile", new { postId = FormalEntry.entry.Id })</small>
+                            }
 
-                    </div>
-
+                        </div>
 
                     @if (Model.ListOfComments != null)
                     {
@@ -70,8 +97,7 @@
         </div>
 
     <div class="col-md-4">
-        <h2>Skriv inlägg</h2>
-        @using (Html.BeginForm("PublishEntry", "Entry", FormMethod.Post, new {role ="form", enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("PublishEntry", "Entry", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary("", new { @class = "text-danger" })
@@ -99,7 +125,7 @@
                 </div>
             </div>
         }
-            </div>
+    </div>
     
 
         <div class="col-md-4">
