@@ -217,13 +217,17 @@
     <Compile Include="Migrations\201902041202395_AuthorOnEntry.Designer.cs">
       <DependentUpon>201902041202395_AuthorOnEntry.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902051247052_hejhej.cs" />
-    <Compile Include="Migrations\201902051247052_hejhej.Designer.cs">
-      <DependentUpon>201902051247052_hejhej.cs</DependentUpon>
+    <Compile Include="Migrations\201902061224366_fix.cs" />
+    <Compile Include="Migrations\201902061224366_fix.Designer.cs">
+      <DependentUpon>201902061224366_fix.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902061258524_modelchanges.cs" />
-    <Compile Include="Migrations\201902061258524_modelchanges.Designer.cs">
-      <DependentUpon>201902061258524_modelchanges.cs</DependentUpon>
+    <Compile Include="Migrations\201902061255157_rstr.cs" />
+    <Compile Include="Migrations\201902061255157_rstr.Designer.cs">
+      <DependentUpon>201902061255157_rstr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061229485_123.cs" />
+    <Compile Include="Migrations\201902061229485_123.Designer.cs">
+      <DependentUpon>201902061229485_123.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -412,9 +416,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
@@ -459,7 +461,6 @@
     <Content Include="Views\Profile\Booking.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\CreateRole.cshtml" />
-    <Content Include="Views\Role\EditRole.cshtml" />
     <Content Include="Views\Role\ManageRoles.cshtml" />
     <Content Include="Views\Profile\DevelopmentWork.cshtml" />
     <Content Include="Views\Entry\EditEntryView.cshtml" />
@@ -507,11 +508,14 @@
     <EmbeddedResource Include="Migrations\201902041202395_AuthorOnEntry.resx">
       <DependentUpon>201902041202395_AuthorOnEntry.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902051247052_hejhej.resx">
-      <DependentUpon>201902051247052_hejhej.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902061224366_fix.resx">
+      <DependentUpon>201902061224366_fix.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902061258524_modelchanges.resx">
-      <DependentUpon>201902061258524_modelchanges.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902061255157_rstr.resx">
+      <DependentUpon>201902061255157_rstr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061229485_123.resx">
+      <DependentUpon>201902061229485_123.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -46,46 +46,8 @@ namespace ScrumProj.Controllers
                     Name = collection["RoleName"]
                 });
                 ctx.SaveChanges();
-                ViewBag.ResultMessage = "Role created successfully !";
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-
-
-        // Method to delete a Role
-        public ActionResult DeleteRole(string RoleName)
-        {
-            var thisRole = ctx.Roles.Where(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-
-            ctx.Roles.Remove(thisRole);
-            ctx.SaveChanges();
-
-            return RedirectToAction("Index");
-        }
-
-
-
-        // Method to edit a Role name
-        public ActionResult EditRole(string roleName)
-        {
-            var thisRole = ctx.Roles.Where(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-
-            return View(thisRole);
-        }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditRole(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
-        {
-            try
-            {
-                ctx.Entry(role).State = System.Data.Entity.EntityState.Modified;
-                ctx.SaveChanges();
+                ViewBag.Message = "Role created successfully!";
 
                 return RedirectToAction("Index");
             }
@@ -120,12 +82,16 @@ namespace ScrumProj.Controllers
                 ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
                 ViewBag.RolesForThisUser = userManager.GetRoles(user.Id);
-
-                // Prepopulate the dropdown with roles
-                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
-                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-                ViewBag.Roles = list;
             }
+            else
+            {
+                ViewBag.Message = "Var vänlig fyll i fältet!";
+            }
+
+            // Prepopulate the dropdown with roles
+            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+            new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+            ViewBag.Roles = list;
 
             return View("ManageRoles");
         }
@@ -145,11 +111,11 @@ namespace ScrumProj.Controllers
                 {
                     userManager.RemoveFromRole(user.Id, RoleName);
 
-                    ViewBag.Message = "Role removed from this user successfully!";
+                    ViewBag.Message = "Rollen för den här användaren togs bort!";
                 }
                 else
                 {
-                    ViewBag.Message = "This user does not belong to selected role!";
+                    ViewBag.Message = "Den här användaren tillhör ingen roll!";
                 }
 
                 // Prepopulate the dropdown with roles
@@ -159,7 +125,7 @@ namespace ScrumProj.Controllers
             }
             catch
             {
-                ViewBag.Message = "Please fill in all the fields!";
+                ViewBag.Message = "Var vänlig fyll i alla fält och ange en korrekt E-mail!";
 
                 // Prepopulate the dropdown with roles
                 var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
@@ -181,7 +147,7 @@ namespace ScrumProj.Controllers
 
             var idResult = userManager.AddToRole(user.Id, RoleName);
 
-            ViewBag.ResultMessage = "Role created successfully !";
+            ViewBag.Message = "Role created successfully!";
 
             // Prepopulate the dropdown with roles
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
