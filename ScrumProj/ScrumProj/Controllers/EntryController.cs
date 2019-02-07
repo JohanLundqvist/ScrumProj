@@ -14,10 +14,13 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model) {
 
-   
+                
                 var ctx = new AppDbContext();
                 model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
                 var UserId = model.loggedInUser.ID;
+
+            if (ModelState.IsValid)
+            {
                 Models.File ThisFile = new Models.File();
                 if (newFile != null)
                 {
@@ -30,15 +33,12 @@ namespace ScrumProj.Controllers
                     {
                         FileIdToUse = f.FileId;
                     }
-                    if(model.entry.Content.Length <= 1000)
-                {
-                    model.entry.Content = model.entry.Content.Substring(0, 999);
-                }
+
                     ctx.Entries.Add(new Entry
                     {
                         AuthorId = UserId,
                         Content = model.entry.Content,
-                        Title = model.entry.Title,
+                        Title = model.Title,
                         fileId = FileIdToUse,
                         Author = GetNameOfLoggedInUser()
                     });
@@ -50,12 +50,12 @@ namespace ScrumProj.Controllers
                     {
                         AuthorId = UserId,
                         Content = model.entry.Content,
-                        Title = model.entry.Title,
+                        Title = model.Title,
                         Author = GetNameOfLoggedInUser()
                     });
                 }
                 ctx.SaveChanges();
-
+            }
                 return RedirectToAction("BlogPage");
   
         }
@@ -71,26 +71,29 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult BlogPage(EntryViewModel model)
         {
-            model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
-            model.ListOfEntriesToLoopInBlogView = new List<EntryViewModel>();
-            AppDbContext db = new AppDbContext();
-            var ListofEntries = db.Entries.ToList();
-            foreach (var entry in ListofEntries)
+            if (ModelState.IsValid)
             {
-                var thisFileId = entry.fileId;
-                var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
-                model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
+                model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
+                model.ListOfEntriesToLoopInBlogView = new List<EntryViewModel>();
+                AppDbContext db = new AppDbContext();
+                var ListofEntries = db.Entries.ToList();
+                foreach (var entry in ListofEntries)
                 {
-                    entry = entry,
-                    File = FileToFetch                   
-                });
+                    var thisFileId = entry.fileId;
+                    var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
+                    model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
+                    {
+                        entry = entry,
+                        File = FileToFetch
+                    });
+                }
+                model.ListOfComments = new List<Comment>();
+                foreach (var c in db.Comments)
+                {
+                    model.ListOfComments.Add(c);
+                }
+                model.ListOfEntriesToLoopInBlogView.OrderByDescending(e => e.ListOfEntriesToLoopInBlogView);
             }
-            model.ListOfComments = new List<Comment>();
-            foreach (var c in db.Comments)
-            {
-                model.ListOfComments.Add(c);
-            }
-            model.ListOfEntriesToLoopInBlogView.OrderByDescending(e => e.ListOfEntriesToLoopInBlogView);
             return View(model);
         }
 

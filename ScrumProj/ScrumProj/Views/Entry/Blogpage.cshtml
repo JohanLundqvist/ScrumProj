@@ -1,4 +1,5 @@
 ﻿@model ScrumProj.Models.EntryViewModel
+
 @if(User.Identity.IsAuthenticated){
     ViewBag.Title = "Blogpage";
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
@@ -75,10 +76,12 @@
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(u => u.entry.Title)
-                @Html.TextBoxFor(u => u.entry.Title, new { @class = "form-control", id = "inputDefault" })
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(u => u.entry.Title)
+            @Html.TextBoxFor(u => u.Title, new { @class = "form-control", id = "inputDefault" })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+        </div>
             <div class="form-control-static panel-primary">
                 <div class="form-group">
                     <div>
