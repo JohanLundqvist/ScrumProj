@@ -85,7 +85,7 @@
                     @using (Html.BeginForm("PostComment", "Entry", new { postId = FormalEntry.entry.Id }, FormMethod.Post, null))
                     {
 
-                        @Html.TextBoxFor(c => c.comment, new { @class = "form-control", style = "min-width = 100%" })
+                        @Html.TextBoxFor(c => c.comment, new { maxLength = 140, @class = "form-control", style = "min-width = 100%" })
 
                         <input type="submit" class="btn btn-info" value="Kommentera" />
                     }
@@ -227,7 +227,17 @@
     </div>
 
 <script>
+    
+    var myFile = document.getElementById('newFile');
 
+    
+    myFile.addEventListener('change', function () {
+        if (this.files[0].size > 4000000) {
+            alert("Filen är för stor, gränsen är 4 mb");
+            myFile.value = "";
+        }
+
+    });
 </script>
 
 

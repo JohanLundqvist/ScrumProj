@@ -21,7 +21,8 @@ namespace ScrumProj.Models
         public List<Comment> ListOfComments { get; set; }
 
 
-        
+        [StringLength(maximumLength: 30, ErrorMessage = "Titeln får endast innehålla 30 tecken!")]
+        public string Title { get; set; }
     }
     
 
