@@ -229,6 +229,10 @@
     <Compile Include="Migrations\201902061229485_123.Designer.cs">
       <DependentUpon>201902061229485_123.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902071238436_choseBlogg.cs" />
+    <Compile Include="Migrations\201902071238436_choseBlogg.Designer.cs">
+      <DependentUpon>201902071238436_choseBlogg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -516,6 +520,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902061229485_123.resx">
       <DependentUpon>201902061229485_123.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071238436_choseBlogg.resx">
+      <DependentUpon>201902071238436_choseBlogg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

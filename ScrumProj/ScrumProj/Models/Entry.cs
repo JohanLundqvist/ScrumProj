@@ -21,6 +21,7 @@ namespace ScrumProj.Models
         public int fileId { get; set; }
         public byte[] image { get; set; }
         public string Author { get; set; }
+        public bool Formal { get; set; }
     }
-    
+
 }

@@ -12,12 +12,14 @@ namespace ScrumProj.Controllers
     public class EntryController : Controller
     {
         [Authorize]
-        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model) {
-
-   
+        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg)
+        {
                 var ctx = new AppDbContext();
                 model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
                 var UserId = model.loggedInUser.ID;
+                bool IsFormal = false;
+                if (SelectBlogg == "1")
+                IsFormal = true;
                 Models.File ThisFile = new Models.File();
                 if (newFile != null)
                 {
@@ -30,13 +32,15 @@ namespace ScrumProj.Controllers
                     {
                         FileIdToUse = f.FileId;
                     }
-                    ctx.Entries.Add(new Entry
-                    {
-                        AuthorId = UserId,
-                        Content = model.entry.Content,
-                        Title = model.entry.Title,
-                        fileId = FileIdToUse,
-                        Author = GetNameOfLoggedInUser()
+                ctx.Entries.Add(new Entry
+                {
+                    AuthorId = UserId,
+                    Content = model.entry.Content,
+                    Title = model.entry.Title,
+                    fileId = FileIdToUse,
+                    Author = GetNameOfLoggedInUser(),
+                    Formal = IsFormal
+                        
                     });
 
                 }
@@ -47,7 +51,8 @@ namespace ScrumProj.Controllers
                         AuthorId = UserId,
                         Content = model.entry.Content,
                         Title = model.entry.Title,
-                        Author = GetNameOfLoggedInUser()
+                        Author = GetNameOfLoggedInUser(),
+                        Formal = IsFormal
                     });
                 }
                 ctx.SaveChanges();
@@ -69,17 +74,32 @@ namespace ScrumProj.Controllers
         {
             model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
             model.ListOfEntriesToLoopInBlogView = new List<EntryViewModel>();
+            model.ListOfInformalEntriesToLoopInBlogView = new List<EntryViewModel>();
             AppDbContext db = new AppDbContext();
             var ListofEntries = db.Entries.ToList();
             foreach (var entry in ListofEntries)
             {
-                var thisFileId = entry.fileId;
-                var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
-                model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
+                if (entry.Formal == true)
                 {
-                    entry = entry,
-                    File = FileToFetch                   
-                });
+                    var thisFileId = entry.fileId;
+                    var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
+                    model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
+                    {
+                        entry = entry,
+                        File = FileToFetch
+                    });
+                }
+                else
+                {
+                    var thisFileId = entry.fileId;
+                    var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
+                    model.ListOfInformalEntriesToLoopInBlogView.Add(new EntryViewModel
+                    {
+                        entry = entry,
+                        File = FileToFetch
+                    });
+
+                }
             }
             model.ListOfComments = new List<Comment>();
             foreach (var c in db.Comments)
@@ -238,6 +258,9 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
             return RedirectToAction("BlogPage");
         }
-
+        public ActionResult CategoryChosen(int BloggType)
+        {
+            return RedirectToAction("BlogPage");
+        }
     }
 }
