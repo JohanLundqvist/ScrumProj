@@ -258,9 +258,5 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
             return RedirectToAction("BlogPage");
         }
-        public ActionResult CategoryChosen(int BloggType)
-        {
-            return RedirectToAction("BlogPage");
-        }
     }
 }

@@ -113,7 +113,53 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult FirstPage(FirstPageViewModel model)
         {
+            model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
+            model.ListOfEntriesToLoopInBlogView = new List<EntryViewModel>();
+            AppDbContext db = new AppDbContext();
+            var ListofEntries = db.Entries.ToList();
+            foreach (var entry in ListofEntries)
+            {
+                
+                    var thisFileId = entry.fileId;
+                    var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
+                    model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
+                    {
+                        entry = entry,
+                        File = FileToFetch
+                    });
+            }
+            model.ListOfComments = new List<Comment>();
+            foreach (var c in db.Comments)
+            {
+                model.ListOfComments.Add(c);
+            }
             return View(model);
+        }
+        public ActionResult PostComment(EntryViewModel model, int postId)
+        {
+            var ctx = new AppDbContext();
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = GetCurrentUser(currentUserId);
+            var comment = model.comment;
+            ctx.Comments.Add(new Comment
+            {
+                comment = comment,
+                EntryId = postId,
+                Author = GetNameOfLoggedInUser()
+            });
+            ctx.SaveChanges();
+            return RedirectToAction("FirstPage");
+        }
+        public string GetNameOfLoggedInUser()
+        {
+            var ctx = new AppDbContext();
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = GetCurrentUser(currentUserId);
+            var Profile = ctx.Profiles.Find(currentUserId);
+            var FirstName = Profile.FirstName;
+            var LastName = Profile.LastName;
+
+            return FirstName + " " + LastName;
         }
     }
 }

@@ -7,8 +7,14 @@ namespace ScrumProj.Models.ViewModels
 {
     public class FirstPageViewModel
     {
-        //Sammanlagd lista för både formella och informella inlägg.
+        public ProfileModel loggedInUser;
+        public Entry entry { get; set; }
+        public List<EntryViewModel> ListOfEntriesToLoopInBlogView { get; set; }
 
-        //public List<> AllEntrys {get;set;}
+        [ValidateFileSize(ErrorMessage = "Invalid File")]
+        public File File { get; set; }
+        public string comment { get; set; }
+        public int CommentId { get; set; }
+        public List<Comment> ListOfComments { get; set; }
     }
 }
