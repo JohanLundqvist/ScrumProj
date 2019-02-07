@@ -1,5 +1,5 @@
 ﻿
-@model IEnumerable<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@model IEnumerable<ScrumProj.Models.ProfileModel>
 
 @{
     ViewBag.Title = "Index";
@@ -15,13 +15,25 @@
 <br />
 
 
-<div>
-    @foreach (var role in Model)
+<div class="form-horizontal">
+    @foreach (var profile in Model)
     {
-        <p>
-            <strong>| @role.Name |</strong>
-        </p>
+        <div class="form-group">
+            <input type="button" class="btn btn-outline-warning" value="Acceptera användare" onclick="location.href='@Url.Action("AcceptUser", "role", new { id = profile.ID })'" />
+            <a class="btn btn-outline-warning" href="@Url.Action("RemoveUser", "role", new { id = profile.ID })" onclick="return confirm('Är du säker att du vill ta bort den här användaren?')">Ta bort användare</a>
+            <span style="font-size: 22px;">@Html.Label(profile.FirstName + " " + profile.LastName, new { @class = "col-md-4" })</span>
+        </div>
     }
 </div>
 
 <br />
+
+<script>
+    jQuery(document).ready(function () {
+        jQuery('[data-confirm]').click(function (e) {
+            if (!confirm(jQuery(this).attr("data-confirm"))) {
+                e.preventDefault();
+            }
+        });
+    });
+</script>

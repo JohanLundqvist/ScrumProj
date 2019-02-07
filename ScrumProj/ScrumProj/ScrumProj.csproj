@@ -237,6 +237,10 @@
     <Compile Include="Migrations\201902071143009_vad.Designer.cs">
       <DependentUpon>201902071143009_vad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902061434339_IsApproved.cs" />
+    <Compile Include="Migrations\201902061434339_IsApproved.Designer.cs">
+      <DependentUpon>201902061434339_IsApproved.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -530,6 +534,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902071238436_choseBlogg.resx">
       <DependentUpon>201902071238436_choseBlogg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061434339_IsApproved.resx">
+      <DependentUpon>201902061434339_IsApproved.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
