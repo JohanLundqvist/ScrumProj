@@ -1,4 +1,5 @@
-﻿using ScrumProj.Models;
+﻿using Microsoft.AspNet.Identity;
+using ScrumProj.Models;
 using ScrumProj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace ScrumProj.Controllers
 {
     public class HomeController : Controller
     {
+        
+
         public ActionResult Index()
         {
             return View();

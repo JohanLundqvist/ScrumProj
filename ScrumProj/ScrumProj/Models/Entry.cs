@@ -8,6 +8,7 @@ namespace ScrumProj.Models
 {
     public class Entry
     {
+
         public int Id { get; set; }
 
         [Display (Name = "Inlägg")]
