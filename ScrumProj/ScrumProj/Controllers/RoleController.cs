@@ -14,6 +14,9 @@ namespace ScrumProj.Controllers
         // Database connection
         ApplicationDbContext ctx = new ApplicationDbContext();
 
+        // Profile Database Context
+        AppDbContext profileCtx = new AppDbContext();
+
         // UserManager connection
         UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(
             new UserStore<ApplicationUser>(
@@ -24,8 +27,38 @@ namespace ScrumProj.Controllers
         // Method to view Profile requests or Roles
         public ActionResult Index()
         {
-            var roles = ctx.Roles.ToList();
-            return View(roles);
+            var profiles = profileCtx.Profiles.Where(p => p.IsApproved.Equals(false));
+
+            return View(profiles);
+        }
+
+
+
+        public ActionResult AcceptUser(string id)
+        {
+            var userProfile = profileCtx.Profiles.FirstOrDefault(p => p.ID == id);
+
+            userProfile.IsApproved = true;
+
+            profileCtx.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+
+
+        public ActionResult RemoveUser(string id)
+        {
+            var userProfile = profileCtx.Profiles.FirstOrDefault(p => p.ID == id);
+            var userIdentity = ctx.Users.FirstOrDefault(p => p.Id == id);
+
+            profileCtx.Profiles.Remove(userProfile);
+            ctx.Users.Remove(userIdentity);
+
+            profileCtx.SaveChanges();
+            ctx.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
 
