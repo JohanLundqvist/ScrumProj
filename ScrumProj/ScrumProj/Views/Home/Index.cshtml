@@ -2,16 +2,23 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
-
-<div class="card text-white bg-dark mb-3" style="max-width: 60rem;">
-    <div class="card-header"></div>
-    <div class="card-body">
-        <h4 class="card-title">Välkommen till Informatikavdelningens administrativa system på Örebro unversitet.</h4>
-        <p class="card-text">Här finner du utvecklingsarbeten, möten, din egen kalender, blogg relaterad till arbete samt om man vill, en blogg för fritid.</p>
-    </div>
+<div class="jumbotron"style="border: 1px solid white;">
+    <h1 class="display-3">Örebro Universitet</h1>
+    <p class="lead">Välkommen till Informatikavdelningens administrativa system.</p>
+    <hr class="my-4">
+    <p>Här finner du utvecklingsarbeten, möten, din egen kalender, blogg relaterad till arbete samt om man vill, en blogg för fritid. Klicka på "registrera" för att registrera ett nytt konto, och invänta en administratörs godkännande.</p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Register","Account")" role="button">Registrera</a>
+    </p>
 </div>
 
+    @*<div class="card text-white bg-info mb-3" style="max-width: 60rem">
+        <div class="card-body">
+            <h2 class="card-title">Välkommen till Informatikavdelningens administrativa system.</h2>
+            <h4 ="card-text">Här finner du utvecklingsarbeten, möten, din egen kalender, blogg relaterad till arbete samt om man vill, en blogg för fritid. Klicka på "registrera" för att registrera ett nytt konto, och invänta en administratörs godkännande.</h4>
+        </div>
+    </div>*@
+    
 
 
 

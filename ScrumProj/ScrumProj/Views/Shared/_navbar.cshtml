@@ -11,7 +11,7 @@
 
 </head>
 <body style="padding-top:unset; padding-bottom:unset">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color:black;">
         <a class="navbar-brand" href="#">Navbar</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -19,24 +19,23 @@
 
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Hem <span class="sr-only">(current)</span></a>
+                <li class="nav-item">
+                    <a class="nav-link" @Html.ActionLink("Hem", "Index", "Home")</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Registrera</a>
+                    <a class="nav-link" @Html.ActionLink("Registrera", "Register", "Account")</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logga in</a>
+                    <a class="nav-link" @Html.ActionLink("Logga in", "Login", "Account")</a>
                 </li>
             </ul>
         </div>
     </nav>
     <div class="jumbotron big-banner">
-        <h1 class="float-md-right">Örebro universitet</h1>
-        <hr class="my-4">
-        <hr />
-        <p class="float-md-right">Informatik</p>
-        <hr />
+
+        <h1 class="" style="color:white;">Örebro universitet</h1>
+        @*<hr style="height:3px;color:white;background-color:white;" />*@
+        <h2 class="" style="color:white">Informatik</h2>
     </div>
     <div class="container body-content">
         @RenderBody()

@@ -1,0 +1,69 @@
+﻿
+
+@if (User.Identity.IsAuthenticated)
+{
+    ViewBag.Title = "DevelopmentWork";
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+
+}
+
+<h2>Skapa nytt projekt</h2>
+
+
+<div class="row">
+
+    <div class="col-sm-4">
+        <div class=" col-8, text-white bg-secondary mb-3" style="max-width: 20rem;border: 1px solid white;">
+            @using (Html.BeginForm("blabla", "Profile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleTextarea">Titel</label>
+                        <textarea class="form-control" id="exampleTextarea" rows="1"></textarea>
+                        <div class="form-group">
+                            <label for="exampleSelect1">Kategori</label>
+                            <select class="form-control" id="exampleSelect1">
+                                <option>Forskning</option>
+                                <option>Utbildning</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleSelect2">Bjud in (markera flera)</label>
+                        <select multiple="" class="form-control" id="exampleSelect2">
+                            @*@foreach (anställd in anställda) {*@
+                            <option>en anställd</option>
+                            @*}*@
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleTextarea">Inledning</label>
+                        <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Skapa projekt" class="btn btn-info" />
+                    </div>
+
+                </div>
+            }
+        </div>
+
+    </div>
+
+    <div class="col-sm-8">
+        <div class="text-white bg-secondary mb-3" style="max-width: 40rem; border: 1px solid white;">
+            <div class="card-body">
+                @*@foreach (projekt in projektgrajjor)
+                    {*@
+                <h2 class="card-title">Projekt titel</h2>
+
+                <h4 class="card-title">Forskning/Utbildning</h4>
+                <p class="card-text">I det här projekt finner vi information om bla bla bla bla utforska bla bla bla bla, empiriska studien bla bla bla.</p>
+                <a href="#" class="card-link">Visa projekt</a>
+                @*}*@
+            </div>
+        </div>
+    </div>
+</div>

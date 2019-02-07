@@ -33,11 +33,5 @@ namespace ScrumProj.Controllers
             return View();
         }
 
-        public ActionResult FirstPage(FirstPageViewModel model)
-        {
-
-
-            return View(model);
-        }
     }
 }

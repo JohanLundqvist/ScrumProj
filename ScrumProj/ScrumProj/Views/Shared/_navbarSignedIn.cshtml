@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - ORU informatik</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link rel="stylesheet" href="~/Content/CustomStylesheet.css" type="text/css" />
 
 </head>
 <body style="padding-top:unset; padding-bottom:unset">
@@ -18,19 +19,19 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Hem <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" @Html.ActionLink("Hem","Firstpage","Profile")  <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Bloggar</a>
+                    <a class="nav-link" @Html.ActionLink("Bloggar","blogpage","Entry") </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Mötesbokning</a>
+                    <a class="nav-link" @Html.ActionLink("Möten","Booking", "Profile")</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Utvecklingsarbete</a>
+                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete","DevelopmentWork","Profile") </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Logga ut</a>
+                    <a class="nav-link" href="@Url.Action("LogOff", "Account")">Logga ut </a>
                 </li>
 
             </ul>
@@ -42,6 +43,12 @@
             </div>
         </div>
     </nav>
+    <div class="jumbotron big-banner">
+
+        <h1 class="" style="color:white;">Örebro universitet</h1>
+        @*<hr style="height:3px;color:white;background-color:white;" />*@
+        <h2 class="" style="color:white">Informatik</h2>
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />

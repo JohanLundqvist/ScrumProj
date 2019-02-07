@@ -201,9 +201,46 @@
     <Compile Include="Migrations\201902011239190_fulkod.Designer.cs">
       <DependentUpon>201902011239190_fulkod.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902041008245_Comments.cs" />
+    <Compile Include="Migrations\201902041008245_Comments.Designer.cs">
+      <DependentUpon>201902041008245_Comments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902041058013_CommentChange.cs" />
+    <Compile Include="Migrations\201902041058013_CommentChange.Designer.cs">
+      <DependentUpon>201902041058013_CommentChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902041149200_NameInComment.cs" />
+    <Compile Include="Migrations\201902041149200_NameInComment.Designer.cs">
+      <DependentUpon>201902041149200_NameInComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902041202395_AuthorOnEntry.cs" />
+    <Compile Include="Migrations\201902041202395_AuthorOnEntry.Designer.cs">
+      <DependentUpon>201902041202395_AuthorOnEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061224366_fix.cs" />
+    <Compile Include="Migrations\201902061224366_fix.Designer.cs">
+      <DependentUpon>201902061224366_fix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061255157_rstr.cs" />
+    <Compile Include="Migrations\201902061255157_rstr.Designer.cs">
+      <DependentUpon>201902061255157_rstr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902061229485_123.cs" />
+    <Compile Include="Migrations\201902061229485_123.Designer.cs">
+      <DependentUpon>201902061229485_123.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902071238436_choseBlogg.cs" />
+    <Compile Include="Migrations\201902071238436_choseBlogg.Designer.cs">
+      <DependentUpon>201902071238436_choseBlogg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902071143009_vad.cs" />
+    <Compile Include="Migrations\201902071143009_vad.Designer.cs">
+      <DependentUpon>201902071143009_vad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\EntryViewModel.cs" />
     <Compile Include="Models\File.cs" />
@@ -211,6 +248,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ProfileViewModel.cs" />
+    <Compile Include="Models\ValidateFileSizeAttribute.cs" />
     <Compile Include="Models\ViewModels\FirstPageViewModel.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
@@ -327,6 +365,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\art-art-materials-background-1191710.jpg" />
     <Content Include="Images\bg-svartvit.jpg" />
     <Content Include="Images\noti-gr.png" />
     <Content Include="Images\noti-wh-dot.png" />
@@ -388,7 +427,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -426,15 +464,15 @@
     <Content Include="Views\Shared\_navbarSignedIn.cshtml" />
     <Content Include="Views\Entry\Blogpage.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
-    <Content Include="Views\Profile\ViewProfile.cshtml" />
     <Content Include="Views\Profile\CreateProfile.cshtml" />
-    <Content Include="Views\Entry\EntryView.cshtml" />
-    <Content Include="Views\Home\FirstPage.cshtml" />
+    <Content Include="Views\Profile\FirstPage.cshtml" />
     <Content Include="Views\Profile\Booking.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\CreateRole.cshtml" />
-    <Content Include="Views\Role\EditRole.cshtml" />
     <Content Include="Views\Role\ManageRoles.cshtml" />
+    <Content Include="Views\Profile\DevelopmentWork.cshtml" />
+    <Content Include="Views\Entry\EditEntryView.cshtml" />
+    <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
     <Content Include="Views\EditEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -466,6 +504,33 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902011239190_fulkod.resx">
       <DependentUpon>201902011239190_fulkod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041008245_Comments.resx">
+      <DependentUpon>201902041008245_Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041058013_CommentChange.resx">
+      <DependentUpon>201902041058013_CommentChange.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041149200_NameInComment.resx">
+      <DependentUpon>201902041149200_NameInComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902041202395_AuthorOnEntry.resx">
+      <DependentUpon>201902041202395_AuthorOnEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061224366_fix.resx">
+      <DependentUpon>201902061224366_fix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061255157_rstr.resx">
+      <DependentUpon>201902061255157_rstr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902061229485_123.resx">
+      <DependentUpon>201902061229485_123.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071143009_vad.resx">
+      <DependentUpon>201902071143009_vad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071238436_choseBlogg.resx">
+      <DependentUpon>201902071238436_choseBlogg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

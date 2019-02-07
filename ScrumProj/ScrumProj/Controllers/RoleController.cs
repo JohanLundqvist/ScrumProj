@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using ScrumProj.Models;
 using System;
 using System.Collections.Generic;
@@ -10,24 +11,31 @@ namespace ScrumProj.Controllers
 {
     public class RoleController : Controller
     {
+        // Database connection
         ApplicationDbContext ctx = new ApplicationDbContext();
 
-        // GET: Role
+        // UserManager connection
+        UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(
+            new UserStore<ApplicationUser>(
+                new ApplicationDbContext()));
+
+
+
+        // Method to view Profile requests or Roles
         public ActionResult Index()
         {
             var roles = ctx.Roles.ToList();
             return View(roles);
-
         }
 
 
 
+        // Method to create a Role
         public ActionResult CreateRole()
         {
             return View();
         }
-
-        // POST: /Roles/Create
+        
         [HttpPost]
         public ActionResult CreateRole(FormCollection collection)
         {
@@ -38,46 +46,8 @@ namespace ScrumProj.Controllers
                     Name = collection["RoleName"]
                 });
                 ctx.SaveChanges();
-                ViewBag.ResultMessage = "Role created successfully !";
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-
-
-        public ActionResult DeleteRole(string RoleName)
-        {
-            var thisRole = ctx.Roles.Where(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            ctx.Roles.Remove(thisRole);
-            ctx.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-
-
-        //
-        // GET: /Roles/Edit/5
-        public ActionResult EditRole(string roleName)
-        {
-            var thisRole = ctx.Roles.Where(r => r.Name.Equals(roleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-
-            return View(thisRole);
-        }
-
-        //
-        // POST: /Roles/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditRole(Microsoft.AspNet.Identity.EntityFramework.IdentityRole role)
-        {
-            try
-            {
-                ctx.Entry(role).State = System.Data.Entity.EntityState.Modified;
-                ctx.SaveChanges();
+                ViewBag.Message = "Role created successfully!";
 
                 return RedirectToAction("Index");
             }
@@ -89,18 +59,20 @@ namespace ScrumProj.Controllers
 
 
 
+        // Method to prepopulate fields (ManageRoles first page)
         public ActionResult ManageRoles()
         {
-            // prepopulat roles for the view dropdown
+            // Prepopulate the dropdown with roles
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
-            
             new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
+
             return View();
         }
 
 
 
+        // Method to list Roles for a user
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GetRoles(string UserName)
@@ -108,60 +80,81 @@ namespace ScrumProj.Controllers
             if (!string.IsNullOrWhiteSpace(UserName))
             {
                 ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-                var account = new AccountController();
 
-                ViewBag.RolesForThisUser = account.UserManager.GetRoles(user.Id);
-
-                // prepopulat roles for the view dropdown
-                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-                ViewBag.Roles = list;
-            }
-
-            return View("ManageUserRoles");
-        }
-
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteRoleForUser(string UserName, string RoleName)
-        {
-            var account = new AccountController();
-            ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-
-            if (account.UserManager.IsInRole(user.Id, RoleName))
-            {
-                account.UserManager.RemoveFromRole(user.Id, RoleName);
-                ViewBag.ResultMessage = "Role removed from this user successfully !";
+                ViewBag.RolesForThisUser = userManager.GetRoles(user.Id);
             }
             else
             {
-                ViewBag.ResultMessage = "This user doesn't belong to selected role.";
+                ViewBag.Message = "Var vänlig fyll i fältet!";
             }
-            // prepopulat roles for the view dropdown
-            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+
+            // Prepopulate the dropdown with roles
+            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+            new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
 
-            return View("ManageUserRoles");
+            return View("ManageRoles");
         }
 
 
 
+        // Method to delete a Role for a User
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RoleAddToUser(string UserName, string RoleName)
+        public ActionResult DeleteRoleForUser(string UserName, string RoleName, string name)
         {
             ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
-            var account = new AccountController();
-            account.UserManager.AddToRole(user.Id, RoleName);
 
-            ViewBag.ResultMessage = "Role created successfully !";
+            try
+            {
+                if (userManager.IsInRole(user.Id, RoleName))
+                {
+                    userManager.RemoveFromRole(user.Id, RoleName);
 
-            // prepopulat roles for the view dropdown
-            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr => new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                    ViewBag.Message = "Rollen för den här användaren togs bort!";
+                }
+                else
+                {
+                    ViewBag.Message = "Den här användaren tillhör ingen roll!";
+                }
+
+                // Prepopulate the dropdown with roles
+                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                ViewBag.Roles = list;
+            }
+            catch
+            {
+                ViewBag.Message = "Var vänlig fyll i alla fält och ange en korrekt E-mail!";
+
+                // Prepopulate the dropdown with roles
+                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                ViewBag.Roles = list;
+            }
+
+            return View("ManageRoles");
+        }
+
+        
+
+        // Method to add a Role to a User
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddRoleToUser(string UserName, string RoleName)
+        {
+            ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+
+            var idResult = userManager.AddToRole(user.Id, RoleName);
+
+            ViewBag.Message = "Role created successfully!";
+
+            // Prepopulate the dropdown with roles
+            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+            new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
             ViewBag.Roles = list;
 
-            return View("ManageUserRoles");
+            return View("ManageRoles");
         }
     }
 }
