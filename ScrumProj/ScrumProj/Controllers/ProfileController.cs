@@ -36,17 +36,6 @@ namespace ScrumProj.Controllers
 
             return View(vm);
         }
-        [Authorize]
-        public ActionResult BlogPage()
-        {
-            return View();
-        }
-        [Authorize]
-        public ActionResult DevelopmentWork()
-        {
-            return View();
-        }
-
 
         // Method to create a profile
         [HttpPost]

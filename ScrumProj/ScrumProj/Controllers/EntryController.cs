@@ -258,5 +258,15 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
             return RedirectToAction("BlogPage");
         }
+        public JsonResult GetSearchValue(string search)
+        {
+            var ctx = new AppDbContext();
+            List<Catgories> allsearch = ctx.Catgories.Where(x => x.Name.Contains(search)).Select(x => new Catgories
+            {
+                Id = x.Id,
+                Name = x.Name
+            }).ToList();
+            return new JsonResult { Data = allsearch, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
 }
