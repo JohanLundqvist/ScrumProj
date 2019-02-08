@@ -31,6 +31,6 @@ namespace ScrumProj.Models
         [Display(Name = "Kategori")]
         public Category Cat { get; set; }
 
-
+        //ehh hampusbög
     }
 }
