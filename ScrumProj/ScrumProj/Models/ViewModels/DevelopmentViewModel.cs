@@ -10,6 +10,7 @@ namespace ScrumProj.Models.ViewModels
     {
         public DevelopmentProject project { get; set; }
         public List<DevelopmentProject> projects { get; set; }
+        public List<ProfileModel> Users { get; set; }
         public ProfileModel ActiveUser { get; set; }
 
         public enum Category

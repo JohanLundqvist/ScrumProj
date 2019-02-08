@@ -15,7 +15,7 @@
 
     <div class="col-sm-4">
         <div class=" col-8, text-white bg-secondary mb-3" style="max-width: 20rem;border: 1px solid white;">
-            @using (Html.BeginForm("Developmentwork", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("PublishDevProject", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
             {
                 @Html.AntiForgeryToken();
@@ -34,9 +34,9 @@
                     <div class="form-group">
                         <label for="exampleSelect2">Bjud in (markera flera)</label>
                         <select multiple="" class="form-control" id="exampleSelect2">
-                            @*@foreach () {*@
-                            <option>en anställd</option>
-                            @*}*@
+                            @foreach (var anställd in Model.Users) {
+                            <option>@anställd.FirstName</option>
+                            }
                         </select>
                     </div>
                     <div class="form-group">
