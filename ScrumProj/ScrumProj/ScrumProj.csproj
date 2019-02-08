@@ -173,6 +173,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DevelopmentController.cs" />
     <Compile Include="Controllers\EntryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -245,17 +246,41 @@
     <Compile Include="Migrations\201902071517593_migggg.Designer.cs">
       <DependentUpon>201902071517593_migggg.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902081038266_fix1.cs" />
+    <Compile Include="Migrations\201902081038266_fix1.Designer.cs">
+      <DependentUpon>201902081038266_fix1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902081041044_fixit.cs" />
+    <Compile Include="Migrations\201902081041044_fixit.Designer.cs">
+      <DependentUpon>201902081041044_fixit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902081056104_CategoryInEntry.cs" />
+    <Compile Include="Migrations\201902081056104_CategoryInEntry.Designer.cs">
+      <DependentUpon>201902081056104_CategoryInEntry.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902081002569_tjo.cs" />
+    <Compile Include="Migrations\201902081002569_tjo.Designer.cs">
+      <DependentUpon>201902081002569_tjo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902081052212_projekts.cs" />
+    <Compile Include="Migrations\201902081052212_projekts.Designer.cs">
+      <DependentUpon>201902081052212_projekts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
+    <Compile Include="Models\Categories.cs" />
+    <Compile Include="Models\CategoryInEntry.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\DevelopmentProject.cs" />
     <Compile Include="Models\Entry.cs" />
-    <Compile Include="Models\EntryViewModel.cs" />
+    <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
+    <Compile Include="Models\ViewModels\EntryViewModel.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileModel.cs" />
-    <Compile Include="Models\ProfileViewModel.cs" />
+    <Compile Include="Models\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Models\ValidateFileSizeAttribute.cs" />
     <Compile Include="Models\ViewModels\FirstPageViewModel.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -375,6 +400,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\art-art-materials-background-1191710.jpg" />
     <Content Include="Images\bg-svartvit.jpg" />
+    <Content Include="Images\Nelson_liten.png" />
+    <Content Include="Images\Nelson_logo.png" />
     <Content Include="Images\noti-gr.png" />
     <Content Include="Images\noti-wh-dot.png" />
     <Content Include="Images\tidigmorgon_i_september_entrehuset_och_kraka_dsc_0131.jpg" />
@@ -478,7 +505,7 @@
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\CreateRole.cshtml" />
     <Content Include="Views\Role\ManageRoles.cshtml" />
-    <Content Include="Views\Profile\DevelopmentWork.cshtml" />
+    <Content Include="Views\Development\DevelopmentWork.cshtml" />
     <Content Include="Views\Entry\EditEntryView.cshtml" />
     <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
     <Content Include="Views\Profile\ProfileCreated.cshtml" />
@@ -545,6 +572,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902071517593_migggg.resx">
       <DependentUpon>201902071517593_migggg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081038266_fix1.resx">
+      <DependentUpon>201902081038266_fix1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081041044_fixit.resx">
+      <DependentUpon>201902081041044_fixit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081056104_CategoryInEntry.resx">
+      <DependentUpon>201902081056104_CategoryInEntry.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081002569_tjo.resx">
+      <DependentUpon>201902081002569_tjo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081052212_projekts.resx">
+      <DependentUpon>201902081052212_projekts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

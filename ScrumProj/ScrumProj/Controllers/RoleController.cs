@@ -24,7 +24,7 @@ namespace ScrumProj.Controllers
 
 
 
-        // Method to view Profile requests or Roles
+        // Method to view Profile requests
         public ActionResult Index()
         {
             var profiles = profileCtx.Profiles.Where(p => p.IsApproved.Equals(false));
@@ -34,6 +34,7 @@ namespace ScrumProj.Controllers
 
 
 
+        // Method to accept a user
         public ActionResult AcceptUser(string id)
         {
             var userProfile = profileCtx.Profiles.FirstOrDefault(p => p.ID == id);
@@ -47,6 +48,7 @@ namespace ScrumProj.Controllers
 
 
 
+        // Method to completely remove a user
         public ActionResult RemoveUser(string id)
         {
             var userProfile = profileCtx.Profiles.FirstOrDefault(p => p.ID == id);
@@ -74,7 +76,7 @@ namespace ScrumProj.Controllers
         {
             try
             {
-                ctx.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole()
+                ctx.Roles.Add(new IdentityRole()
                 {
                     Name = collection["RoleName"]
                 });
