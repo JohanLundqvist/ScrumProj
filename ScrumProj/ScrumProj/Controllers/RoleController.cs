@@ -65,35 +65,6 @@ namespace ScrumProj.Controllers
 
 
 
-        // Method to create a Role
-        public ActionResult CreateRole()
-        {
-            return View();
-        }
-        
-        [HttpPost]
-        public ActionResult CreateRole(FormCollection collection)
-        {
-            try
-            {
-                ctx.Roles.Add(new IdentityRole()
-                {
-                    Name = collection["RoleName"]
-                });
-                ctx.SaveChanges();
-
-                ViewBag.Message = "Role created successfully!";
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-
-
         // Method to prepopulate fields (ManageRoles first page)
         public ActionResult ManageRoles()
         {
