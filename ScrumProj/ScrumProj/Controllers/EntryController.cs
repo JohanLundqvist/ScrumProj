@@ -55,23 +55,65 @@ namespace ScrumProj.Controllers
                 });
             }
             ctx.SaveChanges();
-            int postId = 100000000;
-            foreach (var f in ctx.Entries)
-            {
-                postId = f.Id;
-            }
-            var strArray = searchInput.Split(' ');
-            foreach (var str in strArray)
-            {
-                if (ctx.Categories.Any(x => x.Name == str))
+            
+                int postId = 100000000;
+                foreach (var f in ctx.Entries)
                 {
-                    ctx.CategoryInEntrys.Add(new CategoryInEntry
-                    {
-                        EntryId = postId,
-                        CategoryId = ctx.Categories.Where(s => s.Name == str).Select(i => i.Id).Single()
-                    });
+                    postId = f.Id;
                 }
-            }
+                var strArray = searchInput.Split(' ');
+                foreach (var str in strArray)
+                {
+                    if (str != "")
+                    {
+                    string strWithHash = "#" + str;
+                    if (ctx.Categories.Any(x => x.Name == str))
+                    {
+                        ctx.CategoryInEntrys.Add(new CategoryInEntry
+                        {
+                            EntryId = postId,
+                            CategoryId = ctx.Categories.Where(s => s.Name == str).Select(i => i.Id).Single()
+                        });
+                    }
+                    else if (ctx.Categories.Any(x => x.Name == strWithHash))
+                    {
+                        ctx.CategoryInEntrys.Add(new CategoryInEntry
+                        {
+                            EntryId = postId,
+                            CategoryId = ctx.Categories.Where(s => s.Name == strWithHash).Select(i => i.Id).Single()
+                        });
+                    }
+                    else if (!ctx.Categories.Any(x => x.Name == str))
+                        {                            
+                            if (str.StartsWith("#"))
+                            {
+                                ctx.Categories.Add(new Categories
+                                {
+                                    Name = str
+                                });
+                            }
+                            else
+                            {
+                                ctx.Categories.Add(new Categories
+                                {
+                                    Name = "#" + str
+                                });
+                            }
+                            ctx.SaveChanges();
+                            int CatId = 100000000;
+                            foreach (var f in ctx.Categories)
+                            {
+                                CatId = f.Id;
+                            }
+                            ctx.CategoryInEntrys.Add(new CategoryInEntry
+                            {
+                                EntryId = postId,
+                                CategoryId = CatId
+                            });
+                            ctx.SaveChanges();
+                        }
+                    }
+                }           
             ctx.SaveChanges();
 
             return RedirectToAction("BlogPage"); 
