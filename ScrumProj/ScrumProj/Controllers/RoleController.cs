@@ -9,7 +9,6 @@ using System.Web.Mvc;
 
 namespace ScrumProj.Controllers
 {
-    [Authorize(Roles = "SuperAdmin")]
     public class RoleController : Controller
     {
         // Database connection
