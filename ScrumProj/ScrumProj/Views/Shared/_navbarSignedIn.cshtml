@@ -11,7 +11,9 @@
 </head>
 <body style="padding-top:unset; padding-bottom:unset">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a href="@Url.Action("Index", "Home")" style="padding-right:10px">
+            <img src="~/Images/logotyp.png" title="Startsida" width="150" />
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -19,16 +21,16 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" @Html.ActionLink("Hem","Firstpage","Profile")  <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" @Html.ActionLink("Hem", "Firstpage", "Profile")  <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" @Html.ActionLink("Bloggar","blogpage","Entry") </a>
+                    <a class="nav-link" @Html.ActionLink("Bloggar", "blogpage", "Entry") </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" @Html.ActionLink("Möten","Booking", "Profile")</a>
+                    <a class="nav-link" @Html.ActionLink("Möten", "Booking", "Profile")</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete","DevelopmentWork","Profile") </a>
+                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete", "DevelopmentWork", "Profile") </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("LogOff", "Account")">Logga ut </a>

@@ -69,9 +69,13 @@ namespace ScrumProj.Controllers
 
             ctx.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return View("ProfileCreated");
         }
-        
+
+        public ActionResult ProfileCreated()
+        {
+            return View();
+        }
 
 
         public ProfileModel GetCurrentUser(string Id) {
