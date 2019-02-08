@@ -84,7 +84,9 @@ namespace ScrumProj.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult GetRoles(string UserName)
         {
-            if (!string.IsNullOrWhiteSpace(UserName))
+            var profile = ctx.Users.FirstOrDefault(p => p.UserName == UserName);
+
+            if (!string.IsNullOrWhiteSpace(UserName) && profile != null)
             {
                 ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
@@ -92,7 +94,7 @@ namespace ScrumProj.Controllers
             }
             else
             {
-                ViewBag.Message = "Var vänlig fyll i fältet!";
+                ViewBag.Message = "Var vänlig fyll i fältet och ange i en giltig E-post adress!";
             }
 
             // Prepopulate the dropdown with roles
@@ -122,7 +124,7 @@ namespace ScrumProj.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Den här användaren tillhör ingen roll!";
+                    ViewBag.Message = "Den här användaren tillhör inte den här rollen!";
                 }
 
                 // Prepopulate the dropdown with roles
