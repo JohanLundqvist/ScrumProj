@@ -11,6 +11,8 @@ namespace ScrumProj.Models
     {
         public ProfileModel loggedInUser;
         public Entry entry { get; set; }
+        public List<Categories> Categories { get; set; }
+        public List<CategoryInEntry> CategoryIds { get; set; }
         public List<EntryViewModel> ListOfEntriesToLoopInBlogView { get; set; }
         public List<EntryViewModel> ListOfInformalEntriesToLoopInBlogView { get; set; }
 

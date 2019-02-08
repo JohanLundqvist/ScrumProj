@@ -245,14 +245,23 @@
     <Compile Include="Migrations\201902071517593_migggg.Designer.cs">
       <DependentUpon>201902071517593_migggg.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902071522392_test.cs" />
-    <Compile Include="Migrations\201902071522392_test.Designer.cs">
-      <DependentUpon>201902071522392_test.cs</DependentUpon>
+    <Compile Include="Migrations\201902081038266_fix1.cs" />
+    <Compile Include="Migrations\201902081038266_fix1.Designer.cs">
+      <DependentUpon>201902081038266_fix1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902081041044_fixit.cs" />
+    <Compile Include="Migrations\201902081041044_fixit.Designer.cs">
+      <DependentUpon>201902081041044_fixit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902081056104_CategoryInEntry.cs" />
+    <Compile Include="Migrations\201902081056104_CategoryInEntry.Designer.cs">
+      <DependentUpon>201902081056104_CategoryInEntry.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
-    <Compile Include="Models\Catgories.cs" />
+    <Compile Include="Models\Categories.cs" />
+    <Compile Include="Models\CategoryInEntry.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\EntryViewModel.cs" />
@@ -488,6 +497,7 @@
     <Content Include="Views\Profile\DevelopmentWork.cshtml" />
     <Content Include="Views\Entry\EditEntryView.cshtml" />
     <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
+    <Content Include="Views\Entry\TestView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
@@ -552,8 +562,14 @@
     <EmbeddedResource Include="Migrations\201902071517593_migggg.resx">
       <DependentUpon>201902071517593_migggg.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902071522392_test.resx">
-      <DependentUpon>201902071522392_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902081038266_fix1.resx">
+      <DependentUpon>201902081038266_fix1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081041044_fixit.resx">
+      <DependentUpon>201902081041044_fixit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081056104_CategoryInEntry.resx">
+      <DependentUpon>201902081056104_CategoryInEntry.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

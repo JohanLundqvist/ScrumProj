@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ScrumProj.Models
 {
-    public class Catgories
+    public class Categories
     {
         public int Id { get; set; }
         public string Name { get; set; }
