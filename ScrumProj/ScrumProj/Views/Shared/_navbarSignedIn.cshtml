@@ -19,16 +19,20 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" @Html.ActionLink("Hem","Firstpage","Profile")  <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" @Html.ActionLink("Hem", "Firstpage", "Profile")  <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" @Html.ActionLink("Bloggar","blogpage","Entry") </a>
+                    <a class="nav-link" @Html.ActionLink("Bloggar", "blogpage", "Entry") </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" @Html.ActionLink("Möten","Booking", "Profile")</a>
+                    <a class="nav-link" @Html.ActionLink("Möten", "Booking", "Profile")</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete","DevelopmentWork","Profile") </a>
+                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete", "DevelopmentWork", "Profile") </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete","DevelopmentWork","Development") </a>
+                    <a class="nav-link" @Html.ActionLink("Admin", "Index", "Role") </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("LogOff", "Account")">Logga ut </a>
