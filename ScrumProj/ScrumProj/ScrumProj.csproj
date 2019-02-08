@@ -241,6 +241,10 @@
     <Compile Include="Migrations\201902061434339_IsApproved.Designer.cs">
       <DependentUpon>201902061434339_IsApproved.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902071517593_migggg.cs" />
+    <Compile Include="Migrations\201902071517593_migggg.Designer.cs">
+      <DependentUpon>201902071517593_migggg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902071522392_test.cs" />
     <Compile Include="Migrations\201902071522392_test.Designer.cs">
       <DependentUpon>201902071522392_test.cs</DependentUpon>
@@ -543,6 +547,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902061434339_IsApproved.resx">
       <DependentUpon>201902061434339_IsApproved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902071517593_migggg.resx">
+      <DependentUpon>201902071517593_migggg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902071522392_test.resx">
       <DependentUpon>201902071522392_test.cs</DependentUpon>
