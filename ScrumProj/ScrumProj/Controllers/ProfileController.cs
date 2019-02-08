@@ -73,6 +73,7 @@ namespace ScrumProj.Controllers
         }
         
 
+
         public ProfileModel GetCurrentUser(string Id) {
             var ctx = new AppDbContext();
             var UserId = User.Identity.GetUserId();
