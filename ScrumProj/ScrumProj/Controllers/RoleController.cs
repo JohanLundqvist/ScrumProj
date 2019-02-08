@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ScrumProj.Controllers
 {
+    [Authorize(Roles = "SuperAdmin")]
     public class RoleController : Controller
     {
         // Database connection
@@ -61,35 +62,6 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
 
             return RedirectToAction("Index");
-        }
-
-
-
-        // Method to create a Role
-        public ActionResult CreateRole()
-        {
-            return View();
-        }
-        
-        [HttpPost]
-        public ActionResult CreateRole(FormCollection collection)
-        {
-            try
-            {
-                ctx.Roles.Add(new IdentityRole()
-                {
-                    Name = collection["RoleName"]
-                });
-                ctx.SaveChanges();
-
-                ViewBag.Message = "Role created successfully!";
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
 
 

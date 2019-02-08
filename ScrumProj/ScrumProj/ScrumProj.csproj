@@ -266,6 +266,14 @@
     <Compile Include="Migrations\201902081052212_projekts.Designer.cs">
       <DependentUpon>201902081052212_projekts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902081331285_JakeMiggar.cs" />
+    <Compile Include="Migrations\201902081331285_JakeMiggar.Designer.cs">
+      <DependentUpon>201902081331285_JakeMiggar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902081329186_Miggen.cs" />
+    <Compile Include="Migrations\201902081329186_Miggen.Designer.cs">
+      <DependentUpon>201902081329186_Miggen.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902081248357_h.cs" />
     <Compile Include="Migrations\201902081248357_h.Designer.cs">
       <DependentUpon>201902081248357_h.cs</DependentUpon>
@@ -507,12 +515,11 @@
     <Content Include="Views\Profile\FirstPage.cshtml" />
     <Content Include="Views\Profile\Booking.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
-    <Content Include="Views\Role\CreateRole.cshtml" />
     <Content Include="Views\Role\ManageRoles.cshtml" />
     <Content Include="Views\Development\DevelopmentWork.cshtml" />
     <Content Include="Views\Entry\EditEntryView.cshtml" />
     <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
-    <Content Include="Views\Entry\TestView.cshtml" />
+    <Content Include="Views\Profile\ProfileCreated.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
@@ -591,6 +598,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081052212_projekts.resx">
       <DependentUpon>201902081052212_projekts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081331285_JakeMiggar.resx">
+      <DependentUpon>201902081331285_JakeMiggar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081329186_Miggen.resx">
+      <DependentUpon>201902081329186_Miggen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081248357_h.resx">
       <DependentUpon>201902081248357_h.cs</DependentUpon>

@@ -58,10 +58,8 @@ namespace ScrumProj.Controllers
 
             ctx.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return View("ProfileCreated");
         }
-        
-
 
         public ProfileModel GetCurrentUser(string Id) {
             var ctx = new AppDbContext();
