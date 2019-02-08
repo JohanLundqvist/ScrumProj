@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201902081052212_projekts.Designer.cs">
       <DependentUpon>201902081052212_projekts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902081331285_JakeMiggar.cs" />
+    <Compile Include="Migrations\201902081331285_JakeMiggar.Designer.cs">
+      <DependentUpon>201902081331285_JakeMiggar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -586,6 +590,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081052212_projekts.resx">
       <DependentUpon>201902081052212_projekts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081331285_JakeMiggar.resx">
+      <DependentUpon>201902081331285_JakeMiggar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
