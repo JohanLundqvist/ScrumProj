@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201902081052212_projekts.Designer.cs">
       <DependentUpon>201902081052212_projekts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902081331285_JakeMiggar.cs" />
+    <Compile Include="Migrations\201902081331285_JakeMiggar.Designer.cs">
+      <DependentUpon>201902081331285_JakeMiggar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902081329186_Miggen.cs" />
     <Compile Include="Migrations\201902081329186_Miggen.Designer.cs">
       <DependentUpon>201902081329186_Miggen.cs</DependentUpon>
@@ -590,6 +594,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081052212_projekts.resx">
       <DependentUpon>201902081052212_projekts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081331285_JakeMiggar.resx">
+      <DependentUpon>201902081331285_JakeMiggar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081329186_Miggen.resx">
       <DependentUpon>201902081329186_Miggen.cs</DependentUpon>
