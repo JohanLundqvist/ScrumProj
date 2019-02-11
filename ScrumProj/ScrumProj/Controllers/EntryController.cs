@@ -12,7 +12,7 @@ namespace ScrumProj.Controllers
     public class EntryController : Controller
     {
         [Authorize]
-        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string searchInput)
+        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string searchInput, HttpPostedFileBase img)
         {
             var ctx = new AppDbContext();            
             model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
@@ -27,31 +27,54 @@ namespace ScrumProj.Controllers
                 ctx.Files.Add(ThisFile);
                 ctx.SaveChanges();
                 int FileIdToUse = 1000000;
+                var imageUrl = "";
+
+                if (img != null && img.ContentLength > 0)
+                {
+                    string imgName = Path.GetFileName(img.FileName);
+                    string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
+                    img.SaveAs(url);
+                    imageUrl = "/Images/EntryImg" + imgName;
+                }
+
                 //Loop to get the latest id from the file table.
                 foreach (var f in ctx.Files)
                 {
                     FileIdToUse = f.FileId;
                 }
-            ctx.Entries.Add(new Entry
-            {
-                AuthorId = UserId,
-                Content = model.entry.Content,
-                Title = model.entry.Title,
-                fileId = FileIdToUse,
-                Author = GetNameOfLoggedInUser(),
-                Formal = IsFormal                       
-                });
+
+                ctx.Entries.Add(new Entry
+                {
+                    AuthorId = UserId,
+                    Content = model.entry.Content,
+                    Title = model.entry.Title,
+                    fileId = FileIdToUse,
+                    Author = GetNameOfLoggedInUser(),
+                    Formal = IsFormal,
+                    ImgUrl = imageUrl
+                    });
 
             }
             else
             {
+                var imageUrl = "";
+
+                if (img != null && img.ContentLength > 0)
+                {
+                    string imgName = Path.GetFileName(img.FileName);
+                    string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
+                    img.SaveAs(url);
+                    imageUrl = "/Images/EntryImg/" + imgName;
+                }
+
                 ctx.Entries.Add(new Entry
                 {
                     AuthorId = UserId,
                     Content = model.entry.Content,
                     Title = model.entry.Title,
                     Author = GetNameOfLoggedInUser(),
-                    Formal = IsFormal
+                    Formal = IsFormal,
+                    ImgUrl = imageUrl
                 });
             }
             ctx.SaveChanges();
@@ -62,11 +85,13 @@ namespace ScrumProj.Controllers
                     postId = f.Id;
                 }
                 var strArray = searchInput.Split(' ');
+
                 foreach (var str in strArray)
                 {
                     if (str != "")
                     {
                     string strWithHash = "#" + str;
+
                     if (ctx.Categories.Any(x => x.Name == str))
                     {
                         ctx.CategoryInEntrys.Add(new CategoryInEntry
@@ -100,11 +125,13 @@ namespace ScrumProj.Controllers
                                 });
                             }
                             ctx.SaveChanges();
+
                             int CatId = 100000000;
                             foreach (var f in ctx.Categories)
                             {
                                 CatId = f.Id;
                             }
+
                             ctx.CategoryInEntrys.Add(new CategoryInEntry
                             {
                                 EntryId = postId,
