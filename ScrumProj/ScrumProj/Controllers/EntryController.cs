@@ -13,7 +13,7 @@ namespace ScrumProj.Controllers
     public class EntryController : Controller
     {
         [Authorize]
-        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string searchInput)
+        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string searchInput, HttpPostedFileBase img)
         {
             var ctx = new AppDbContext();            
             model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
@@ -29,32 +29,55 @@ namespace ScrumProj.Controllers
                 ctx.Files.Add(ThisFile);
                 ctx.SaveChanges();
                 int FileIdToUse = 1000000;
+                var imageUrl = "";
+
+                if (img != null && img.ContentLength > 0)
+                {
+                    string imgName = Path.GetFileName(img.FileName);
+                    string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
+                    img.SaveAs(url);
+                    imageUrl = "/Images/EntryImg" + imgName;
+                }
+
                 //Loop to get the latest id from the file table.
                 foreach (var f in ctx.Files)
                 {
                     FileIdToUse = f.FileId;
                 }
-            ctx.Entries.Add(new Entry
-            {
-                AuthorId = UserId,
-                Content = model.entry.Content,
-                Title = model.entry.Title,
-                fileId = FileIdToUse,
-                Author = GetNameOfLoggedInUser(),
-                Formal = IsFormal                       
-                });
+
+                ctx.Entries.Add(new Entry
+                {
+                    AuthorId = UserId,
+                    Content = model.entry.Content,
+                    Title = model.entry.Title,
+                    fileId = FileIdToUse,
+                    Author = GetNameOfLoggedInUser(),
+                    Formal = IsFormal,
+                    ImageUrl = imageUrl
+                    });
 
             }
             //adds data to file without file
             else
             {
+                var imageUrl = "";
+
+                if (img != null && img.ContentLength > 0)
+                {
+                    string imgName = Path.GetFileName(img.FileName);
+                    string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
+                    img.SaveAs(url);
+                    imageUrl = "/Images/EntryImg/" + imgName;
+                }
+
                 ctx.Entries.Add(new Entry
                 {
                     AuthorId = UserId,
                     Content = model.entry.Content,
                     Title = model.entry.Title,
                     Author = GetNameOfLoggedInUser(),
-                    Formal = IsFormal
+                    Formal = IsFormal,
+                    ImageUrl = imageUrl
                 });
             }
             ctx.SaveChanges();

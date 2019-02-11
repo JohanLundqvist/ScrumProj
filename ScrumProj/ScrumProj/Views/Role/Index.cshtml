@@ -1,5 +1,10 @@
 ﻿@model ScrumProj.Models.ProfileViewModel
 
+@if (User.Identity.IsAuthenticated)
+{
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+}
+
 @{
     ViewBag.Title = "Index";
 }

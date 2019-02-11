@@ -282,6 +282,10 @@
     <Compile Include="Migrations\201902081248357_h.Designer.cs">
       <DependentUpon>201902081248357_h.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902111438471_IMAGE.cs" />
+    <Compile Include="Migrations\201902111438471_IMAGE.Designer.cs">
+      <DependentUpon>201902111438471_IMAGE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902111301162_mergemig.cs" />
     <Compile Include="Migrations\201902111301162_mergemig.Designer.cs">
       <DependentUpon>201902111301162_mergemig.cs</DependentUpon>
@@ -622,6 +626,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111301162_mergemig.resx">
       <DependentUpon>201902111301162_mergemig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111438471_IMAGE.resx">
+      <DependentUpon>201902111438471_IMAGE.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
