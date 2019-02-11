@@ -266,6 +266,10 @@
     <Compile Include="Migrations\201902081052212_projekts.Designer.cs">
       <DependentUpon>201902081052212_projekts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902081304544_tjo1.cs" />
+    <Compile Include="Migrations\201902081304544_tjo1.Designer.cs">
+      <DependentUpon>201902081304544_tjo1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902081331285_JakeMiggar.cs" />
     <Compile Include="Migrations\201902081331285_JakeMiggar.Designer.cs">
       <DependentUpon>201902081331285_JakeMiggar.cs</DependentUpon>
@@ -524,6 +528,7 @@
     <Content Include="Views\Entry\EditEntryView.cshtml" />
     <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
     <Content Include="Views\Profile\ProfileCreated.cshtml" />
+    <Content Include="Views\Entry\_DeleteCategoryPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
@@ -611,6 +616,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081248357_h.resx">
       <DependentUpon>201902081248357_h.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902081304544_tjo1.resx">
+      <DependentUpon>201902081304544_tjo1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111230068_Image.resx">
       <DependentUpon>201902111230068_Image.cs</DependentUpon>

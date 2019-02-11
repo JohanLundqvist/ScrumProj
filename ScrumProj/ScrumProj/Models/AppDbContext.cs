@@ -18,7 +18,11 @@ namespace ScrumProj.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-          //  modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.Entity<DevelopmentProject>()
+           .HasMany(c => c.Participants).WithMany(i => i.Projects)
+           .Map(t => t.MapLeftKey("ProjectId")
+                 .MapRightKey("UserID")
+                  .ToTable("ProjectParticipants"));
         }
     }
 

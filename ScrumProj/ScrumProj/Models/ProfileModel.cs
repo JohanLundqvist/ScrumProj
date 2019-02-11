@@ -14,5 +14,7 @@ namespace ScrumProj.Models
         public string LastName { get; set; }
         public string Position { get; set; }
         public bool IsApproved { get; set; }
+        public virtual ICollection<DevelopmentProject> Projects { get; set; }
+
     }
 }

@@ -20,7 +20,7 @@ namespace ScrumProj.Models
         public string Content { get; set; }
 
         [Required]
-        public ICollection<ProfileModel> Participants { get; set; }
+        public virtual ICollection<ProfileModel> Participants { get; set; }
 
         public enum Category
         {
@@ -31,6 +31,5 @@ namespace ScrumProj.Models
         [Display(Name = "Kategori")]
         public Category Cat { get; set; }
 
-        //ehh hampusbög
     }
 }

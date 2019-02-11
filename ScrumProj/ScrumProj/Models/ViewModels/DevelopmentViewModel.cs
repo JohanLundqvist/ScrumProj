@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using ScrumProj.Models;
 
 namespace ScrumProj.Models.ViewModels
@@ -24,5 +25,9 @@ namespace ScrumProj.Models.ViewModels
 
         public List<ProfileModel> Participants { get; set; }
 
+        public IEnumerable<SelectListItem> UsersToChoose { get; set; }
+
+        public IEnumerable<SelectListItem> selected = new List<SelectListItem>();
+        
     }
 }
