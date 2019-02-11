@@ -30,8 +30,6 @@
                 <label for="exampleInputFile">Bifoga</label>
                 <div class="form-group">
                     <div>
-                        @Html.TextBoxFor(model => model.entry.fileId, new { @class = "invisible" })
-                        @Html.TextBoxFor(model => model.entry.Id, new { @class = "invisible" })
                         <input type="file" id="newFile" name="newFile" />
                         <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
                     </div>
@@ -39,6 +37,8 @@
                 <div class="form-group">
                     <div>
                         <input type="submit" value="Submit" class="btn btn-info" style="float:right" />
+                        @Html.TextBoxFor(model => model.entry.fileId, new { @class = "invisible" })
+                        @Html.TextBoxFor(model => model.entry.Id, new { @class = "invisible" })
                     </div>
                 </div>
             </div>
