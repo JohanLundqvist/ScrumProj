@@ -13,7 +13,7 @@ namespace ScrumProj.Controllers
 {
     public class ProfileController : Controller
     {
-        // GET: Profile
+        // Index method to return a ProfileViewModel
         public ActionResult Index()
         {
             var ctx = new AppDbContext();
@@ -38,6 +38,8 @@ namespace ScrumProj.Controllers
             return View(vm);
         }
 
+
+
         // Method to create a profile
         [HttpPost]
         public ActionResult CreateProfile(ProfileViewModel model)
@@ -61,7 +63,7 @@ namespace ScrumProj.Controllers
 
             return View("ProfileCreated");
         }
-
+        
         public ProfileModel GetCurrentUser(string Id) {
             var ctx = new AppDbContext();
             var UserId = User.Identity.GetUserId();

@@ -21,18 +21,26 @@ namespace ScrumProj.Controllers
                 return View(model);
         }
 
-        [Authorize]
+        [Authorize][HttpPost]
+        
         public ActionResult PublishDevProject(DevelopmentViewModel model)
         {
+            _context = new AppDbContext();
+            var selectedUsers = new List<ProfileModel>();
+            selectedUsers = model.selected as List<ProfileModel>;
             if (ModelState.IsValid)
             {
+                var contributors = new List<ProfileModel>();
                 var proj = new DevelopmentProject
                 {
                     Title = model.project.Title,
                     Content = model.project.Content,
-                    Cat = model.project.Cat
-                    
+                    Cat = model.project.Cat,
+                    Participants = selectedUsers
+                   
                 };
+                _context.Projects.Add(proj);
+                _context.SaveChanges();
             }
             model = FillModel();
             return View("DevelopmentWork", model);
@@ -45,6 +53,7 @@ namespace ScrumProj.Controllers
             var listOfUsers = new List<ProfileModel>();
             var listOfProjects = new List<DevelopmentProject>();
             var activeUser = new ProfileModel();
+            var listboxList = new List<SelectListItem>();
 
             foreach(var proj in _context.Projects)
             {
@@ -58,7 +67,20 @@ namespace ScrumProj.Controllers
                 }
                 
             }
+            foreach(var user in listOfUsers)
+            {
+                var item = new SelectListItem
+                {
+                    
+                    Text = user.FirstName + " " + user.LastName,
+                    Value = user.ID,
+                    Selected = false
+                };
+                listboxList.Add(item);
+            }
+            
 
+            
             var idToCompare = User.Identity.GetUserId();
 
             activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
@@ -66,8 +88,11 @@ namespace ScrumProj.Controllers
             model.projects = listOfProjects;
             model.Users = listOfUsers;
             model.ActiveUser = activeUser;
+            model.UsersToChoose = listboxList;
 
             return model;
         }
+
+      
     }
 }

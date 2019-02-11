@@ -62,15 +62,22 @@
     <div class="col-md-10">
         @if (ViewBag.RolesForThisUser != null)
         {
-            <div style="background-color:#272b30;">
-                <dl class="dl-horizontal">
-                    @foreach (string role in ViewBag.RolesForThisUser)
-                    {
-                        <dt>Roll:</dt>
-                        <dd>@role</dd>
-                    }
-                </dl>
-            </div>
+            if (ViewBag.RolesForThisUser.Count > 0)
+            {
+                <div style="background-color:#272b30;">
+                    <dl class="dl-horizontal">
+                        @foreach (string role in ViewBag.RolesForThisUser)
+                        {
+                            <dt>Roll:</dt>
+                            <dd>@role</dd>
+                        }
+                    </dl>
+                </div>
+            }
+            else
+            {
+                <p>Den här användaren finns men har ingen högre roll.</p>
+            }
         }
     </div>
 
