@@ -36,7 +36,7 @@ namespace ScrumProj.Controllers
                     string imgName = Path.GetFileName(img.FileName);
                     string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
                     img.SaveAs(url);
-                    imageUrl = "/Images/EntryImg" + imgName;
+                    imageUrl = "/Images/EntryImg/" + imgName;
                 }
 
                 //Loop to get the latest id from the file table.
