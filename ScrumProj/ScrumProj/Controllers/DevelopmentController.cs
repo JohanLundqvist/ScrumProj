@@ -26,6 +26,8 @@ namespace ScrumProj.Controllers
         {
             if (ModelState.IsValid)
             {
+                var SelectedUsers = new List<ProfileModel>();
+               
                 var proj = new DevelopmentProject
                 {
                     Title = model.project.Title,
