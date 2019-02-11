@@ -520,6 +520,7 @@
     <Content Include="Views\Entry\EditEntryView.cshtml" />
     <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
     <Content Include="Views\Profile\ProfileCreated.cshtml" />
+    <Content Include="Views\Entry\_DeleteCategoryPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />

@@ -7,35 +7,80 @@
 @{
     ViewBag.Title = "Blogpage";
 }
+<div class="row">
+    @using (Html.BeginForm("EditEntry", "Entry", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
 
-@using (Html.BeginForm("EditEntry", "Entry", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="col-md-4">
-        <h2>Skriv inlägg</h2>
-        <div class="form-group">
-            <label class="col-form-label" for="inputDefault">Titel</label>
-            @Html.TextBoxFor(u => u.entry.Title, new { @class = "form-control", id = "inputDefault" })
+        <div class="col-md-4">
+            <h2>Skriv inlägg</h2>
+            <div class="form-group">
+                <label class="col-form-label" for="inputDefault">Titel</label>
+                @Html.TextBoxFor(u => u.entry.Title, new { @class = "form-control", id = "inputDefault" })
+            </div>
+            <div class="form-control-static panel-primary" style="width: 100%">
+                <div class="form-group" style="width:100%">
+                    <div>
+                        @Html.TextAreaFor(u => u.entry.Content, new { @class = "form-control", rows = "3", style = "min-width: 100%" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Lägg till kategori:</label>
+                    <input class="form-control" id="searchInput" name="searchInput" />
+                </div>
+                <label for="exampleInputFile">Bifoga</label>
+                <div class="form-group">
+                    <div>
+                        @Html.TextBoxFor(model => model.entry.fileId, new { @class = "invisible" })
+                        @Html.TextBoxFor(model => model.entry.Id, new { @class = "invisible" })
+                        <input type="file" id="newFile" name="newFile" />
+                        <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Submit" class="btn btn-info" style="float:right" />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-control-static panel-primary">
-            <div class="form-group">
-                <div>
-                    @Html.TextAreaFor(u => u.entry.Content, new { @class = "form-control", @rows = "3", @style = "width" })
-                </div>
-            </div>
-            <label for="exampleInputFile">Bifoga</label>
-            <div class="form-group">
-                <div>
-                    @Html.TextBoxFor(model => model.entry.fileId, new { @class = "invisible" })
-                    @Html.TextBoxFor(model => model.entry.Id, new { @class = "invisible" })                   
-                    <input type="file" id="newFile" name="newFile" />
-                    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
-                </div>
-            </div>
-            <div class="form-group">
-                <div>
-                    <input type="submit" value="Submit" class="btn btn-info" style="float:right" />
-                </div>
-            </div>
-        </div>
-    </div>
-}
+    }
+    @Html.Action("_DeleteCategoryPartial", new { model = Model})
+</div>
+
+        @section scripts {
+
+            <script src="~/Scripts/jquery-3.3.1.js"></script>
+            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+            <script>
+
+    var myFile = document.getElementById('newFile');
+
+
+    myFile.addEventListener('change', function () {
+        if (this.files[0].size > 4000000) {
+            alert("Filen är för stor, gränsen är 4 mb");
+            myFile.value = "";
+        }
+
+    });
+        $("#searchInput").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetSearchValue","Entry")',
+                dataType: "json",
+                data: { search: $("#searchInput").val() },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item, value: item };
+                    }));
+                },
+                error: function (xhr, status, error) {
+                    alert("Error");
+                }
+            });
+        }
+    });
+            </script>
+        }
