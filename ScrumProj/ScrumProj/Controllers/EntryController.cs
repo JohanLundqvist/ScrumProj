@@ -21,6 +21,7 @@ namespace ScrumProj.Controllers
             if (SelectBlogg == "1")
             IsFormal = true;
             Models.File ThisFile = new Models.File();
+            // adds data to entry with file
             if (newFile != null)
             {
                 ThisFile = SaveFileToDatabase(newFile);
@@ -43,6 +44,7 @@ namespace ScrumProj.Controllers
                 });
 
             }
+            //adds data to file without file
             else
             {
                 ctx.Entries.Add(new Entry
@@ -57,16 +59,19 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
             
                 int postId = 100000000;
+                // gets the entry just saved to database
                 foreach (var f in ctx.Entries)
                 {
                     postId = f.Id;
                 }
+                // splits categories from the input with space and puts them in array
                 var strArray = searchInput.Split(' ');
                 foreach (var str in strArray)
                 {
                     if (str != "")
                     {
                     string strWithHash = "#" + str;
+                    //Checks if ínputdata matches with categories in the database.
                     if (ctx.Categories.Any(x => x.Name == str))
                     {
                         ctx.CategoryInEntrys.Add(new CategoryInEntry
@@ -75,6 +80,7 @@ namespace ScrumProj.Controllers
                             CategoryId = ctx.Categories.Where(s => s.Name == str).Select(i => i.Id).Single()
                         });
                     }
+                    //Checks if ínputdata matches with categories in the database if we add the # in the input.
                     else if (ctx.Categories.Any(x => x.Name == strWithHash))
                     {
                         ctx.CategoryInEntrys.Add(new CategoryInEntry
@@ -83,6 +89,7 @@ namespace ScrumProj.Controllers
                             CategoryId = ctx.Categories.Where(s => s.Name == strWithHash).Select(i => i.Id).Single()
                         });
                     }
+                    //If the input doesn't exist in the database we add them.
                     else if (!ctx.Categories.Any(x => x.Name == str))
                         {                            
                             if (str.StartsWith("#"))
@@ -222,8 +229,12 @@ namespace ScrumProj.Controllers
         public ActionResult EditEntryView(EntryViewModel model, int postId, string Title, string Content, int? fileId)
         {
             var ctx = new AppDbContext();
-            var ThisFile = new Models.File();           
-            if (fileId != null)
+            var ThisFile = new Models.File();
+            if (model == null)
+            {
+                model = new EntryViewModel();
+            }
+            if (fileId != null && fileId != 0)
             {
                 var OldFile = ctx.Files.Find(fileId);
                 var CurrentEntry = ctx.Entries.Find(postId);
@@ -241,11 +252,22 @@ namespace ScrumProj.Controllers
                 model.entry.Content = Content;
                 model.entry.Id = postId;
             }
-            
+
+            model.Categories = new List<Categories>();
+            foreach (var c in ctx.Categories)
+            {
+                model.Categories.Add(c);
+            }
+            model.CategoryIds = new List<CategoryInEntry>();
+            foreach (var i in ctx.CategoryInEntrys)
+            {
+                model.CategoryIds.Add(i);
+            }
             return View(model);
+            
         }
 
-        public ActionResult EditEntry(HttpPostedFileBase newFile, EntryViewModel model)
+        public ActionResult EditEntry(HttpPostedFileBase newFile, EntryViewModel model, string searchInput)
         {
             var ctx = new AppDbContext();
             if (newFile != null)
@@ -283,6 +305,7 @@ namespace ScrumProj.Controllers
                 post.Title = model.entry.Title;
                 post.Author = GetNameOfLoggedInUser();
             }
+            AddCategoryToDatabase(searchInput, model.entry.Id);
             ctx.SaveChanges();
 
             return RedirectToAction("BlogPage");
@@ -338,5 +361,89 @@ namespace ScrumProj.Controllers
             return View(model);
         }
 
+        public void AddCategoryToDatabase(string searchInput, int latestPost)
+        {
+            var ctx = new AppDbContext();
+
+            // splits categories from the input with space and puts them in array
+            var strArray = searchInput.Split(' ');
+            foreach (var str in strArray)
+            {
+                if (str != "")
+                {
+                    string strWithHash = "#" + str;
+                    //Checks if ínputdata matches with categories in the database.
+                    if (ctx.Categories.Any(x => x.Name == str))
+                    {
+                        ctx.CategoryInEntrys.Add(new CategoryInEntry
+                        {
+                            EntryId = latestPost,
+                            CategoryId = ctx.Categories.Where(s => s.Name == str).Select(i => i.Id).Single()
+                        });
+                    }
+                    //Checks if ínputdata matches with categories in the database if we add the # in the input.
+                    else if (ctx.Categories.Any(x => x.Name == strWithHash))
+                    {
+                        ctx.CategoryInEntrys.Add(new CategoryInEntry
+                        {
+                            EntryId = latestPost,
+                            CategoryId = ctx.Categories.Where(s => s.Name == strWithHash).Select(i => i.Id).Single()
+                        });
+                    }
+                    //If the input doesn't exist in the database we add them.
+                    else if (!ctx.Categories.Any(x => x.Name == str))
+                    {
+                        if (str.StartsWith("#"))
+                        {
+                            ctx.Categories.Add(new Categories
+                            {
+                                Name = str
+                            });
+                        }
+                        else
+                        {
+                            ctx.Categories.Add(new Categories
+                            {
+                                Name = "#" + str
+                            });
+                        }
+                        ctx.SaveChanges();
+                        int CatId = 100000000;
+                        foreach (var f in ctx.Categories)
+                        {
+                            CatId = f.Id;
+                        }
+                        ctx.CategoryInEntrys.Add(new CategoryInEntry
+                        {
+                            EntryId = latestPost,
+                            CategoryId = CatId
+                        });
+                        ctx.SaveChanges();
+                    }
+                }
+                ctx.SaveChanges();
+            }
+        }
+        public ActionResult DeleteCategory(int catId, int postId)
+        {
+            var ctx = new AppDbContext();
+            var categoryToDelete = ctx.CategoryInEntrys.Find(catId);
+            ctx.CategoryInEntrys.Remove(categoryToDelete);
+            ctx.SaveChanges();
+            var entry = ctx.Entries.Find(postId);
+            var model = new EntryViewModel();
+            return RedirectToAction("EditEntryView", new
+            {
+                model,
+                postId,
+                entry.Title,
+                entry.Content,
+                entry.fileId
+            });
+        }
+        public ActionResult _DeleteCategoryPartial(EntryViewModel model)
+        {
+            return PartialView(model);
+        }
     }
 }
