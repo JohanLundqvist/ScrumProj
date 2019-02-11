@@ -1,5 +1,4 @@
-﻿
-@model IEnumerable<ScrumProj.Models.ProfileModel>
+﻿@model ScrumProj.Models.ProfileViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -23,7 +22,7 @@
 
 
 <div class="form-horizontal">
-    @foreach (var profile in Model)
+    @foreach (var profile in Model.Profiles)
     {
         <div class="form-group">
             <input type="button" class="btn btn-outline-warning" value="Acceptera användare" onclick="location.href='@Url.Action("AcceptUser", "role", new { id = profile.ID })'" />
@@ -31,6 +30,25 @@
             <span style="font-size: 22px;">@Html.Label(profile.FirstName + " " + profile.LastName, new { @class = "col-md-4" })</span>
         </div>
     }
+</div>
+<div class="form-horizontal">
+    <div class="col-md-4">
+
+        @if (Model.Categories != null)
+        {
+            foreach (var Category in Model.Categories)
+            {
+                <ul style="list-style-type: none;">
+                    <label>Ta bort kategori:</label>
+                    <li>
+                        <a href="@Url.Action("DeleteCategory", new {catId = Category.Id })" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                            <small class="mb-1">@Category.Name</small>
+                        </a>
+                    </li>
+                </ul>
+            }
+        }
+    </div>
 </div>
 
 <br />

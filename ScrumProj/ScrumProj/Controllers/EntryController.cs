@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -64,63 +65,7 @@ namespace ScrumProj.Controllers
                 {
                     postId = f.Id;
                 }
-                // splits categories from the input with space and puts them in array
-                var strArray = searchInput.Split(' ');
-                foreach (var str in strArray)
-                {
-                    if (str != "")
-                    {
-                    string strWithHash = "#" + str;
-                    //Checks if ínputdata matches with categories in the database.
-                    if (ctx.Categories.Any(x => x.Name == str))
-                    {
-                        ctx.CategoryInEntrys.Add(new CategoryInEntry
-                        {
-                            EntryId = postId,
-                            CategoryId = ctx.Categories.Where(s => s.Name == str).Select(i => i.Id).Single()
-                        });
-                    }
-                    //Checks if ínputdata matches with categories in the database if we add the # in the input.
-                    else if (ctx.Categories.Any(x => x.Name == strWithHash))
-                    {
-                        ctx.CategoryInEntrys.Add(new CategoryInEntry
-                        {
-                            EntryId = postId,
-                            CategoryId = ctx.Categories.Where(s => s.Name == strWithHash).Select(i => i.Id).Single()
-                        });
-                    }
-                    //If the input doesn't exist in the database we add them.
-                    else if (!ctx.Categories.Any(x => x.Name == str))
-                        {                            
-                            if (str.StartsWith("#"))
-                            {
-                                ctx.Categories.Add(new Categories
-                                {
-                                    Name = str
-                                });
-                            }
-                            else
-                            {
-                                ctx.Categories.Add(new Categories
-                                {
-                                    Name = "#" + str
-                                });
-                            }
-                            ctx.SaveChanges();
-                            int CatId = 100000000;
-                            foreach (var f in ctx.Categories)
-                            {
-                                CatId = f.Id;
-                            }
-                            ctx.CategoryInEntrys.Add(new CategoryInEntry
-                            {
-                                EntryId = postId,
-                                CategoryId = CatId
-                            });
-                            ctx.SaveChanges();
-                        }
-                    }
-                }           
+            AddCategoryToDatabase(searchInput, postId);
             ctx.SaveChanges();
 
             return RedirectToAction("BlogPage"); 
@@ -366,7 +311,9 @@ namespace ScrumProj.Controllers
             var ctx = new AppDbContext();
 
             // splits categories from the input with space and puts them in array
-            var strArray = searchInput.Split(' ');
+            Regex rgx = new Regex("[^a-zA-Z ]");
+            var fixedString = rgx.Replace(searchInput, "");
+            var strArray = fixedString.ToLower().Split(' ');
             foreach (var str in strArray)
             {
                 if (str != "")

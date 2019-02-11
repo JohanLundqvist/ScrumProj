@@ -29,9 +29,16 @@ namespace ScrumProj.Controllers
         [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult Index()
         {
-            var profiles = profileCtx.Profiles.Where(p => p.IsApproved.Equals(false));
+            var vm = new ProfileViewModel();
+            var profiles = profileCtx.Profiles.Where(p => p.IsApproved.Equals(false)).ToList();           
+            vm.Categories = new List<Categories>();
+            foreach (var c in profileCtx.Categories)
+            {
+                vm.Categories.Add(c);
+            }
+            vm.Profiles = profiles;
 
-            return View(profiles);
+            return View(vm);
         }
 
 
@@ -171,6 +178,15 @@ namespace ScrumProj.Controllers
             ViewBag.Roles = list;
 
             return View("ManageRoles");
+        }
+
+        public ActionResult DeleteCategory(int catId)
+        {
+            var ctx = new AppDbContext();
+            var Category = ctx.Categories.Find(catId);
+            ctx.Categories.Remove(Category);
+            ctx.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
