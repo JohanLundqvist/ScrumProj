@@ -1,4 +1,5 @@
 ﻿@using ScrumProj.Models.ViewModels
+@using ScrumProj.Models
 @model ScrumProj.Models.ViewModels.DevelopmentViewModel
 
 @if (User.Identity.IsAuthenticated)
@@ -33,12 +34,8 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleSelect2">Bjud in (markera flera)</label>
-                        <select multiple="" class="form-control" id="exampleSelect2">
-                            @foreach (var anställd in Model.Users)
-                            {
-                                <option>@anställd.FirstName</option>
-                            } 
-                        </select>
+                        @Html.ListBoxFor(m => m.project.Participants, Model.UsersToChoose)
+                       
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.project.Content, htmlAttributes: new { @class = "control-label col-md-4" })

@@ -12,53 +12,111 @@ namespace ScrumProj.Controllers
     public class EntryController : Controller
     {
         [Authorize]
-        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg)
+        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string searchInput)
         {
-                var ctx = new AppDbContext();
-                model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
-                var UserId = model.loggedInUser.ID;
-                bool IsFormal = false;
-                if (SelectBlogg == "1")
-                IsFormal = true;
-                Models.File ThisFile = new Models.File();
-                if (newFile != null)
+            var ctx = new AppDbContext();            
+            model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
+            var UserId = model.loggedInUser.ID;
+            bool IsFormal = false;
+            if (SelectBlogg == "1")
+            IsFormal = true;
+            Models.File ThisFile = new Models.File();
+            if (newFile != null)
+            {
+                ThisFile = SaveFileToDatabase(newFile);
+                ctx.Files.Add(ThisFile);
+                ctx.SaveChanges();
+                int FileIdToUse = 1000000;
+                //Loop to get the latest id from the file table.
+                foreach (var f in ctx.Files)
                 {
-                    ThisFile = SaveFileToDatabase(newFile);
-                    ctx.Files.Add(ThisFile);
-                    ctx.SaveChanges();
-                    int FileIdToUse = 1000000;
-                    //Loop to get the latest id from the file table.
-                    foreach (var f in ctx.Files)
-                    {
-                        FileIdToUse = f.FileId;
-                    }
+                    FileIdToUse = f.FileId;
+                }
+            ctx.Entries.Add(new Entry
+            {
+                AuthorId = UserId,
+                Content = model.entry.Content,
+                Title = model.entry.Title,
+                fileId = FileIdToUse,
+                Author = GetNameOfLoggedInUser(),
+                Formal = IsFormal                       
+                });
+
+            }
+            else
+            {
                 ctx.Entries.Add(new Entry
                 {
                     AuthorId = UserId,
                     Content = model.entry.Content,
                     Title = model.entry.Title,
-                    fileId = FileIdToUse,
                     Author = GetNameOfLoggedInUser(),
                     Formal = IsFormal
-                        
-                    });
-
-                }
-                else
+                });
+            }
+            ctx.SaveChanges();
+            
+                int postId = 100000000;
+                foreach (var f in ctx.Entries)
                 {
-                    ctx.Entries.Add(new Entry
-                    {
-                        AuthorId = UserId,
-                        Content = model.entry.Content,
-                        Title = model.entry.Title,
-                        Author = GetNameOfLoggedInUser(),
-                        Formal = IsFormal
-                    });
+                    postId = f.Id;
                 }
-                ctx.SaveChanges();
+                var strArray = searchInput.Split(' ');
+                foreach (var str in strArray)
+                {
+                    if (str != "")
+                    {
+                    string strWithHash = "#" + str;
+                    if (ctx.Categories.Any(x => x.Name == str))
+                    {
+                        ctx.CategoryInEntrys.Add(new CategoryInEntry
+                        {
+                            EntryId = postId,
+                            CategoryId = ctx.Categories.Where(s => s.Name == str).Select(i => i.Id).Single()
+                        });
+                    }
+                    else if (ctx.Categories.Any(x => x.Name == strWithHash))
+                    {
+                        ctx.CategoryInEntrys.Add(new CategoryInEntry
+                        {
+                            EntryId = postId,
+                            CategoryId = ctx.Categories.Where(s => s.Name == strWithHash).Select(i => i.Id).Single()
+                        });
+                    }
+                    else if (!ctx.Categories.Any(x => x.Name == str))
+                        {                            
+                            if (str.StartsWith("#"))
+                            {
+                                ctx.Categories.Add(new Categories
+                                {
+                                    Name = str
+                                });
+                            }
+                            else
+                            {
+                                ctx.Categories.Add(new Categories
+                                {
+                                    Name = "#" + str
+                                });
+                            }
+                            ctx.SaveChanges();
+                            int CatId = 100000000;
+                            foreach (var f in ctx.Categories)
+                            {
+                                CatId = f.Id;
+                            }
+                            ctx.CategoryInEntrys.Add(new CategoryInEntry
+                            {
+                                EntryId = postId,
+                                CategoryId = CatId
+                            });
+                            ctx.SaveChanges();
+                        }
+                    }
+                }           
+            ctx.SaveChanges();
 
-                return RedirectToAction("BlogPage");
-  
+            return RedirectToAction("BlogPage"); 
         }
 
         public ProfileModel GetCurrentUser(string Id)
@@ -106,7 +164,16 @@ namespace ScrumProj.Controllers
             {
                 model.ListOfComments.Add(c);
             }
-            model.ListOfEntriesToLoopInBlogView.OrderByDescending(e => e.ListOfEntriesToLoopInBlogView);
+            model.Categories = new List<Categories>();
+            foreach (var c in db.Categories)
+            {
+                model.Categories.Add(c);
+            }
+            model.CategoryIds = new List<CategoryInEntry>();
+            foreach (var i in db.CategoryInEntrys)
+            {
+                model.CategoryIds.Add(i);
+            }
             return View(model);
         }
 
@@ -261,12 +328,15 @@ namespace ScrumProj.Controllers
         public JsonResult GetSearchValue(string search)
         {
             var ctx = new AppDbContext();
-            List<Catgories> allsearch = ctx.Catgories.Where(x => x.Name.Contains(search)).Select(x => new Catgories
-            {
-                Id = x.Id,
-                Name = x.Name
-            }).ToList();
+            List<string> allsearch = ctx.Categories.Where(x => x.Name.Contains(search)).Select(x => x.Name).ToList();
             return new JsonResult { Data = allsearch, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
         }
+        public ActionResult TestView()
+        {
+            var ctx = new AppDbContext();
+            var model = ctx.Categories.ToList();
+            return View(model);
+        }
+
     }
 }

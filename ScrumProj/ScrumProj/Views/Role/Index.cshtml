@@ -7,9 +7,16 @@
 
 
 
-<h2>Lista Roller</h2>
+<h2>Lista Användare</h2>
 
-@Html.ActionLink("Lägg till en roll", "CreateRole") | @Html.ActionLink("Hantera roller", "ManageRoles")
+<hr style="border-color: #777;" />
+
+<h4>Här listas alla användare som väntar på att accepteras</h4>
+
+@if (User.IsInRole("SuperAdmin"))
+{
+    @Html.ActionLink("Hantera roller", "ManageRoles")
+}
 
 <hr style="border-color: #777;" />
 <br />
