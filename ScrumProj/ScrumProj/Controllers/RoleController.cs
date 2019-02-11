@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace ScrumProj.Controllers
 {
+    [Authorize(Roles = "Admin, SuperAdmin")]
     public class RoleController : Controller
     {
         // Database connection
@@ -25,6 +26,7 @@ namespace ScrumProj.Controllers
 
 
         // Method to view Profile requests
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult Index()
         {
             var profiles = profileCtx.Profiles.Where(p => p.IsApproved.Equals(false));
@@ -35,6 +37,7 @@ namespace ScrumProj.Controllers
 
 
         // Method to accept a user
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult AcceptUser(string id)
         {
             var userProfile = profileCtx.Profiles.FirstOrDefault(p => p.ID == id);
@@ -49,6 +52,7 @@ namespace ScrumProj.Controllers
 
 
         // Method to completely remove a user
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult RemoveUser(string id)
         {
             var userProfile = profileCtx.Profiles.FirstOrDefault(p => p.ID == id);
@@ -66,6 +70,7 @@ namespace ScrumProj.Controllers
 
 
         // Method to prepopulate fields (ManageRoles first page)
+        [Authorize(Roles = "SuperAdmin")]
         public ActionResult ManageRoles()
         {
             // Prepopulate the dropdown with roles
@@ -77,8 +82,9 @@ namespace ScrumProj.Controllers
         }
 
 
-
+        
         // Method to list Roles for a user
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult GetRoles(string UserName)
@@ -107,6 +113,7 @@ namespace ScrumProj.Controllers
 
 
         // Method to delete a Role for a User
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteRoleForUser(string UserName, string RoleName, string name)
@@ -144,9 +151,10 @@ namespace ScrumProj.Controllers
             return View("ManageRoles");
         }
 
-        
+
 
         // Method to add a Role to a User
+        [Authorize(Roles = "SuperAdmin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddRoleToUser(string UserName, string RoleName)

@@ -32,7 +32,7 @@
                 <li class="nav-item">
                     <a class="nav-link" @Html.ActionLink("Utvecklingsarbete", "DevelopmentWork", "Development") </a>
                 </li>
-                @if (User.IsInRole("SuperAdmin"))
+                @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
                 {
                     <li class="nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Role")">Admin</a>

@@ -13,7 +13,10 @@
 
 <h4>Här listas alla användare som väntar på att accepteras</h4>
 
-| @Html.ActionLink("Hantera roller", "ManageRoles") |
+@if (User.IsInRole("SuperAdmin"))
+{
+    @Html.ActionLink("Hantera roller", "ManageRoles")
+}
 
 <hr style="border-color: #777;" />
 <br />
