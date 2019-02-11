@@ -282,9 +282,9 @@
     <Compile Include="Migrations\201902081248357_h.Designer.cs">
       <DependentUpon>201902081248357_h.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902111230068_Image.cs" />
-    <Compile Include="Migrations\201902111230068_Image.Designer.cs">
-      <DependentUpon>201902111230068_Image.cs</DependentUpon>
+    <Compile Include="Migrations\201902111438471_IMAGE.cs" />
+    <Compile Include="Migrations\201902111438471_IMAGE.Designer.cs">
+      <DependentUpon>201902111438471_IMAGE.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -620,8 +620,8 @@
     <EmbeddedResource Include="Migrations\201902081304544_tjo1.resx">
       <DependentUpon>201902081304544_tjo1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902111230068_Image.resx">
-      <DependentUpon>201902111230068_Image.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902111438471_IMAGE.resx">
+      <DependentUpon>201902111438471_IMAGE.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

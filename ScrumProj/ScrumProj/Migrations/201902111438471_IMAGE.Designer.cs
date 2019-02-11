@@ -7,13 +7,13 @@ namespace ScrumProj.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Image : IMigrationMetadata
+    public sealed partial class IMAGE : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Image));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(IMAGE));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902111230068_Image"; }
+            get { return "201902111438471_IMAGE"; }
         }
         
         string IMigrationMetadata.Source

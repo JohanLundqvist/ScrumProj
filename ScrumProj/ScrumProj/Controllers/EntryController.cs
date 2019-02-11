@@ -52,7 +52,7 @@ namespace ScrumProj.Controllers
                     fileId = FileIdToUse,
                     Author = GetNameOfLoggedInUser(),
                     Formal = IsFormal,
-                    ImgUrl = imageUrl
+                    ImageUrl = imageUrl
                     });
 
             }
@@ -76,7 +76,7 @@ namespace ScrumProj.Controllers
                     Title = model.entry.Title,
                     Author = GetNameOfLoggedInUser(),
                     Formal = IsFormal,
-                    ImgUrl = imageUrl
+                    ImageUrl = imageUrl
                 });
             }
             ctx.SaveChanges();
