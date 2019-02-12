@@ -24,7 +24,7 @@ namespace ScrumProj.Controllers
             IsFormal = true;
             Models.File ThisFile = new Models.File();
 
-            // adds data to entry with file
+            // Adds data to entry with file
             if (newFile != null)
             {
                 ThisFile = SaveFileToDatabase(newFile);
@@ -36,9 +36,22 @@ namespace ScrumProj.Controllers
                 if (img != null && img.ContentLength > 0)
                 {
                     string imgName = Path.GetFileName(img.FileName);
-                    string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
-                    img.SaveAs(url);
-                    imageUrl = "/Images/EntryImg/" + imgName;
+                    string imgExtension = Path.GetExtension(imgName);
+
+                    // Checks if the image file is an actual image
+                    if (imgExtension == ".jpg" ||
+                        imgExtension == ".jpeg" ||
+                        imgExtension == ".png" ||
+                        imgExtension == ".gif")
+                    {
+                        string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
+                        img.SaveAs(url);
+                        imageUrl = "/Images/EntryImg/" + imgName;
+                    }
+                    else
+                    {
+
+                    }
                 }
 
                 //Loop to get the latest id from the file table.
@@ -67,9 +80,22 @@ namespace ScrumProj.Controllers
                 if (img != null && img.ContentLength > 0)
                 {
                     string imgName = Path.GetFileName(img.FileName);
-                    string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
-                    img.SaveAs(url);
-                    imageUrl = "/Images/EntryImg/" + imgName;
+                    string imgExtension = Path.GetExtension(imgName);
+
+                    // Checks if the image file is an actual image
+                    if (imgExtension == ".jpg" ||
+                        imgExtension == ".jpeg" ||
+                        imgExtension == ".png" ||
+                        imgExtension == ".gif")
+                    {
+                        string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
+                        img.SaveAs(url);
+                        imageUrl = "/Images/EntryImg/" + imgName;
+                    }
+                    else
+                    {
+
+                    }
                 }
 
                 ctx.Entries.Add(new Entry
