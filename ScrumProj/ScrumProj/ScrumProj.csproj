@@ -282,6 +282,10 @@
     <Compile Include="Migrations\201902081248357_h.Designer.cs">
       <DependentUpon>201902081248357_h.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902111301086_tjo2.cs" />
+    <Compile Include="Migrations\201902111301086_tjo2.Designer.cs">
+      <DependentUpon>201902111301086_tjo2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -291,6 +295,7 @@
     <Compile Include="Models\DevelopmentProject.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
+    <Compile Include="Models\ViewModels\EditDevelopmentProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\EntryViewModel.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -525,6 +530,7 @@
     <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
     <Content Include="Views\Profile\ProfileCreated.cshtml" />
     <Content Include="Views\Entry\_DeleteCategoryPartial.cshtml" />
+    <Content Include="Views\Development\EditDevelopmentPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
@@ -615,6 +621,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902081304544_tjo1.resx">
       <DependentUpon>201902081304544_tjo1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902111301086_tjo2.resx">
+      <DependentUpon>201902111301086_tjo2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
