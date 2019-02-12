@@ -12,14 +12,14 @@ namespace ScrumProj.Models
 
         [Required]
         [Display(Name = "Titel")]
-        [StringLength (30)]
+        [StringLength(30)]
         public string Title { get; set; }
 
         [StringLength(1000)]
-        [Display(Name = "Inledning" )]
+        [Display(Name = "Inledning")]
         public string Content { get; set; }
 
-        [Required]
+        [Display(Name = "Kollegor")]
         public virtual ICollection<ProfileModel> Participants { get; set; }
 
         public enum Category
@@ -30,6 +30,11 @@ namespace ScrumProj.Models
         public File UploadedFile { get; set; }
         [Display(Name = "Kategori")]
         public Category Cat { get; set; }
+
+        public DevelopmentProject(){
+            this.Participants = new HashSet<ProfileModel>();
+
+            }
 
     }
 }

@@ -21,13 +21,10 @@ namespace ScrumProj.Models.ViewModels
         }
         public string Content { get; set; }
 
-        public string Title { get; set; }
+        public string UserToAdd { get; set; }
 
         public List<ProfileModel> Participants { get; set; }
 
-        public IEnumerable<SelectListItem> UsersToChoose { get; set; }
-
-        public IEnumerable<SelectListItem> selected = new List<SelectListItem>();
-        
-    }
+        public List<SelectListItem> UsersFullName { get; set; }
+          }
 }

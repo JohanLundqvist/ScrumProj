@@ -11,8 +11,8 @@ namespace ScrumProj.Controllers
 {
     public class DevelopmentController : Controller
     {
-        private AppDbContext _context { get; set; } 
-        // GET: Development
+        private AppDbContext _context = new AppDbContext();
+
         [Authorize]
         public ActionResult DevelopmentWork(DevelopmentViewModel model)
         {
@@ -25,25 +25,24 @@ namespace ScrumProj.Controllers
         
         public ActionResult PublishDevProject(DevelopmentViewModel model)
         {
-            _context = new AppDbContext();
-            var selectedUsers = new List<ProfileModel>();
-            selectedUsers = model.selected as List<ProfileModel>;
+            var idToCompare = User.Identity.GetUserId();
+          var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
+            var partiList = new List<ProfileModel>();
+            partiList.Add(activeUser);
+
             if (ModelState.IsValid)
             {
-                var contributors = new List<ProfileModel>();
-                var proj = new DevelopmentProject
+                _context.Projects.Add(new DevelopmentProject
                 {
                     Title = model.project.Title,
                     Content = model.project.Content,
                     Cat = model.project.Cat,
-                    Participants = selectedUsers
-                   
-                };
-                _context.Projects.Add(proj);
+                    Participants = partiList
+                });
+              
                 _context.SaveChanges();
             }
-            model = FillModel();
-            return View("DevelopmentWork", model);
+           return RedirectToAction("DevelopmentWork");
         }
 
         protected DevelopmentViewModel FillModel()
@@ -51,13 +50,18 @@ namespace ScrumProj.Controllers
             DevelopmentViewModel model = new DevelopmentViewModel();
             _context = new AppDbContext();
             var listOfUsers = new List<ProfileModel>();
-            var listOfProjects = new List<DevelopmentProject>();
             var activeUser = new ProfileModel();
             var listboxList = new List<SelectListItem>();
-
+            var DoneProjects = new List<DevelopmentProject>();
             foreach(var proj in _context.Projects)
             {
-                listOfProjects.Add(proj);
+                DoneProjects.Add(proj);
+            }
+
+           
+            for(int i = DoneProjects.Count-1; i >= 0; i--)
+            {
+
             }
             foreach(var user in _context.Profiles)
             {
@@ -69,6 +73,7 @@ namespace ScrumProj.Controllers
             }
             foreach(var user in listOfUsers)
             {
+                
                 var item = new SelectListItem
                 {
                     
@@ -78,21 +83,90 @@ namespace ScrumProj.Controllers
                 };
                 listboxList.Add(item);
             }
-            
 
-            
+
             var idToCompare = User.Identity.GetUserId();
 
             activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
 
-            model.projects = listOfProjects;
             model.Users = listOfUsers;
             model.ActiveUser = activeUser;
-            model.UsersToChoose = listboxList;
-
+            model.UsersFullName = listboxList;
+            model.projects = DoneProjects;
             return model;
         }
 
+        public ActionResult AddParticipants(DevelopmentViewModel model)
+        { 
+            var listOfUsers = new List<ProfileModel>();
+            var listboxList = new List<SelectListItem>();
+            model.Users = listOfUsers;
+            model.UsersFullName = listboxList;
+
+            
+
+            foreach (var user in _context.Profiles)
+            {
+                if (!user.ID.Equals(User.Identity.GetUserId()))
+                {
+                    listOfUsers.Add(user);
+                }
+
+            }
+            foreach (var user in listOfUsers)
+            {
+                var item = new SelectListItem
+                {
+
+                    Text = user.FirstName + " " + user.LastName,
+                    Value = user.ID,
+                    Selected = false
+                };
+                listboxList.Add(item);
+            }
+            var projectToUpdate = _context.Projects.First(p => p.Id == model.project.Id);
+
+            //var LatestProject =_context.Projects.OrderByDescending(q => q.Id)
+            //.FirstOrDefault();
+
+            if (projectToUpdate != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
+                    projectToUpdate.Participants.Add(user);
+                    _context.SaveChanges();
+                }
+            }
+            return RedirectToAction("EditDevelopmentPage", new { projectId = model.project.Id });
+        }
+
+
+        public ActionResult EditDevelopmentPage(int projectId)
+        {
+            var project = _context.Projects.First(p => p.Id == projectId);
+            var model = new DevelopmentViewModel();
+            model = FillModel();
+
+            model.project = project;
+            return View(model);
+        }
+
+        public ActionResult Edit(DevelopmentViewModel model)
+        {
+            var projectToUpdate = _context.Projects.First(p => p.Id == model.project.Id);
+
+            if (ModelState.IsValid)
+            {
+                projectToUpdate.Title = model.project.Title;
+                projectToUpdate.Content = model.project.Content;
+                projectToUpdate.Cat = model.project.Cat;
+                _context.SaveChanges();
+            }
+
+
+            return RedirectToAction("DevelopmentWork");
+        }
       
     }
 }

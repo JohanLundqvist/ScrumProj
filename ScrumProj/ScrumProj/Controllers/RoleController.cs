@@ -170,7 +170,7 @@ namespace ScrumProj.Controllers
 
             var idResult = userManager.AddToRole(user.Id, RoleName);
 
-            ViewBag.Message = "Role created successfully!";
+            ViewBag.Message = "Det lyckades!";
 
             // Prepopulate the dropdown with roles
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
