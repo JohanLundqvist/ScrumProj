@@ -14,7 +14,7 @@ namespace ScrumProj.Controllers
     {
         // Method
         [Authorize]
-        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string searchInput, HttpPostedFileBase img)
+        public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string tags, HttpPostedFileBase img)
         {
             var ctx = new AppDbContext();            
             model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
@@ -23,8 +23,9 @@ namespace ScrumProj.Controllers
             if (SelectBlogg == "1")
             IsFormal = true;
             Models.File ThisFile = new Models.File();
-
-            // Adds data to entry with file
+            if(!ModelState.IsValid)
+                return RedirectToAction("BlogPage");
+            // adds data to entry with file
             if (newFile != null)
             {
                 ThisFile = SaveFileToDatabase(newFile);
@@ -117,7 +118,7 @@ namespace ScrumProj.Controllers
             {
                 postId = f.Id;
             }
-            AddCategoryToDatabase(searchInput, postId);
+            AddCategoryToDatabase(tags, postId);
             ctx.SaveChanges();
 
             return RedirectToAction("BlogPage"); 
@@ -303,7 +304,7 @@ namespace ScrumProj.Controllers
 
 
         // Method
-        public ActionResult EditEntry(HttpPostedFileBase newFile, EntryViewModel model, string searchInput)
+        public ActionResult EditEntry(HttpPostedFileBase newFile, EntryViewModel model, string tags)
         {
             var ctx = new AppDbContext();
 
@@ -345,7 +346,7 @@ namespace ScrumProj.Controllers
                 post.Title = model.entry.Title;
                 post.Author = GetNameOfLoggedInUser();
             }
-            AddCategoryToDatabase(searchInput, model.entry.Id);
+            AddCategoryToDatabase(tags, model.entry.Id);
             ctx.SaveChanges();
 
             return RedirectToAction("BlogPage");
