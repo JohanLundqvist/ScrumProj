@@ -1,5 +1,4 @@
 ﻿@using ScrumProj.Models.ViewModels
-@using ScrumProj.Models
 @model ScrumProj.Models.ViewModels.DevelopmentViewModel
 
 @if (User.Identity.IsAuthenticated)
@@ -15,7 +14,7 @@
 <div class="row">
 
     <div class="col-sm-4">
-        <div class=" col-8, text-white bg-secondary mb-3" style="max-width: 20rem;border: 1px solid white;">
+        <div class=" col-8, text-white bg-secondary mb-3" id="CreateProjectCard" style="max-width: 20rem;border: 1px solid white;">
             @using (Html.BeginForm("PublishDevProject", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
 
             {
@@ -32,40 +31,72 @@
                         @Html.LabelFor(m => m.project.Cat)
                         @Html.DropDownListFor(m => m.project.Cat, new SelectList(Enum.GetValues(typeof(DevelopmentViewModel.Category))), " ", new { @class = "form-control" })
                     </div>
-                    <div class="form-group">
-                        <label for="exampleSelect2">Bjud in (markera flera)</label>
-                        @Html.ListBoxFor(m => m.project.Participants, Model.UsersToChoose)
-                       
-                    </div>
+
+                    @Html.HiddenFor(m => m.project.Participants)
                     <div class="form-group">
                         @Html.LabelFor(model => model.project.Content, htmlAttributes: new { @class = "control-label col-md-4" })
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.project.Content, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.TextAreaFor(model => model.project.Content, new { htmlAttributes = new { @class = "form-control" } })
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <div>
-                        <input type="submit" value="Skapa projekt" class="btn btn-info" />
+                        <input type="submit" id="Create" value="Skapa projekt" class="btn btn-info" />
                     </div>
                 </div>
             }
         </div>
+        @*<div class=" col-8, text-white bg-secondary mb-3" id="AddParticipantsCard" style="max-width: 20rem;border: 1px solid white;">
+            @using (Html.BeginForm("AddParticipants", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken();
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.project.Participants)
+                    @Html.DropDownListFor(x => x.UserToAdd, new SelectList(Model.UsersFullName, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "DevelopmentViewModel" })
+                </div>
+                <div class="form-group">
+                    <div>
+                        <input type="submit" value="Bjud in" class="btn btn-info" />
+                    </div>
+                </div>
+            }
+            <div>
+                <button id="Done" class="btn btn-info"> Klar </button>
+            </div>
+        </div>*@
     </div>
 
     <div class="col-sm-8">
+        @for (int i = Model.projects.Count - 1; i >= 0; i--)
+        {
+            var project = Model.projects[i];
         <div class="text-white bg-secondary mb-3" style="max-width: 40rem; border: 1px solid white;">
-            <div class="card-body">
-                @*@foreach (projekt in projektgrajjor)
-                    {*@
-                <h2 class="card-title">Projekt titel</h2>
 
-                <h4 class="card-title">Forskning/Utbildning</h4>
-                <p class="card-text">I det här projekt finner vi information om bla bla bla bla utforska bla bla bla bla, empiriska studien bla bla bla.</p>
-                <a href="#" class="card-link">Visa projekt</a>
-                @*}*@
-            </div>
-        </div>
+            <div class="card-body">
+                @Html.HiddenFor(m => m.project.Id)
+                <h2 class="card-title">@project.Title</h2>
+                <h4 class="card-title">@project.Cat</h4>
+                <p class="card-text">@project.Content</p>
+                @*<a class="nav-link" </a>*@
+
+                <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link">Redigera</a>
+            </div>       
+        </div>   
+        }
     </div>
 </div>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+    $('#Create').on('click', function () {
+        $('#CreateProjectCard').hide();
+        $('#AddParticipantsCard').show();
+    }
+    );
+    $('#Done').on('click', function () {
+        $('#AddParticipantsCard').hide();
+        $('#CreateProjectCard').show();
+    }
+    );
+    </script>

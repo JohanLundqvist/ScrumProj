@@ -57,7 +57,7 @@
                         }
                     </h5>
 
-                    @if (FormalEntry.entry.ImageUrl != null || FormalEntry.entry.ImageUrl != "")
+                    @if (FormalEntry.entry.ImageUrl != "")
                     {
                         <div class="container">
                             <a href="@FormalEntry.entry.ImageUrl" target="_blank"><img src="@FormalEntry.entry.ImageUrl" alt="Avatar-Image" class="img-thumbnail" style="height:auto;width:100%;" /></a>
@@ -151,8 +151,9 @@
             <div class="form-control-static panel-primary">
                 <div class="form-group">
                     <div>
-                        @Html.TextAreaFor(u => u.entry.Content, new { maxLength = "1500", @class = "form-control", style = "min-width: 100%" })
-                        <p>Max 1500 tecken.</p>
+
+                        @Html.TextAreaFor(u => u.entry.Content, new { maxLength = "1500", @class = "form-control", style = "min-width: 100%", onkeyup = "textCounter(this,'counter',1500);", id = "message" })
+                        <input disabled maxlength="3" size="3" value="1500" id="counter" style="outline:none">
                     </div>
                 </div>
 
@@ -329,6 +330,16 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
+
+        function textCounter(field, field2, maxlimit) {
+            var countfield = document.getElementById(field2);
+            if (field.value.length > maxlimit) {
+                field.value = field.value.substring(0, maxlimit);
+                return false;
+            } else {
+                countfield.value = maxlimit - field.value.length;
+            }
+        }
 
     var myFile = document.getElementById('newFile');
     myFile.addEventListener('change', function () {
