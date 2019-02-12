@@ -48,29 +48,29 @@ namespace ScrumProj.Controllers
                         string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
                         img.SaveAs(url);
                         imageUrl = "/Images/EntryImg/" + imgName;
+
+                        //Loop to get the latest id from the file table.
+                        foreach (var f in ctx.Files)
+                        {
+                            FileIdToUse = f.FileId;
+                        }
+
+                        ctx.Entries.Add(new Entry
+                        {
+                            AuthorId = UserId,
+                            Content = model.entry.Content,
+                            Title = model.entry.Title,
+                            fileId = FileIdToUse,
+                            Author = GetNameOfLoggedInUser(),
+                            Formal = IsFormal,
+                            ImageUrl = imageUrl
+                        });
                     }
                     else
                     {
-
+                        ViewBag.Message = "Bilden får bara ha formeten: .jpg .jpeg .png eller .gif!";
                     }
                 }
-
-                //Loop to get the latest id from the file table.
-                foreach (var f in ctx.Files)
-                {
-                    FileIdToUse = f.FileId;
-                }
-
-                ctx.Entries.Add(new Entry
-                {
-                    AuthorId = UserId,
-                    Content = model.entry.Content,
-                    Title = model.entry.Title,
-                    fileId = FileIdToUse,
-                    Author = GetNameOfLoggedInUser(),
-                    Formal = IsFormal,
-                    ImageUrl = imageUrl
-                });
             }
             
             //adds data to file without file
@@ -92,22 +92,22 @@ namespace ScrumProj.Controllers
                         string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
                         img.SaveAs(url);
                         imageUrl = "/Images/EntryImg/" + imgName;
+
+                        ctx.Entries.Add(new Entry
+                        {
+                            AuthorId = UserId,
+                            Content = model.entry.Content,
+                            Title = model.entry.Title,
+                            Author = GetNameOfLoggedInUser(),
+                            Formal = IsFormal,
+                            ImageUrl = imageUrl
+                        });
                     }
                     else
                     {
-
+                        ViewBag.Message = "Bilden får bara ha formeten: .jpg .jpeg .png eller .gif!";
                     }
                 }
-
-                ctx.Entries.Add(new Entry
-                {
-                    AuthorId = UserId,
-                    Content = model.entry.Content,
-                    Title = model.entry.Title,
-                    Author = GetNameOfLoggedInUser(),
-                    Formal = IsFormal,
-                    ImageUrl = imageUrl
-                });
             }
             ctx.SaveChanges();
             

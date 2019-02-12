@@ -143,11 +143,11 @@
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(u => u.entry.Title)
-            @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "100", @class = "form-control", style = "min-width: 100%", id = "inputDefault" })
-            <p>Max 100 tecken.</p>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(u => u.entry.Title)
+                @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "100", @class = "form-control", style = "min-width: 100%", id = "inputDefault" })
+                <p>Max 100 tecken.</p>
+            </div>
             <div class="form-control-static panel-primary">
                 <div class="form-group">
                     <div>
@@ -159,7 +159,7 @@
                 <div class="form-group">
                     <div class="ui-widget">
                         <label for="tags">Lägg till kategori: </label>
-                        <input  class="form-control" id="tags" name="tags" style="min-width: 100%" />
+                        <input class="form-control" id="tags" name="tags" style="min-width: 100%" />
                     </div>
                     <span id="faux" style="display:none;"></span>
 
@@ -183,7 +183,7 @@
                             <option value="1">Formell</option>
                             <option value="2">Informell</option>
                         </select>
-                        <input type="submit" value="Posta inlägg" class="btn btn-info" style="float:right" id="SubmitButton"/>
+                        <input type="submit" value="Posta inlägg" class="btn btn-info" style="float:right" id="SubmitButton" />
                     </div>
                 </div>
             </div>
@@ -556,5 +556,21 @@
                     return false;
                 }
             });
+    </script>
+}
+
+
+
+<!--
+    -------------------------------------------------------------------------------------
+    JavaScript to show an Alert message
+    -------------------------------------------------------------------------------------
+-->
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="iso-8859-1" culture="sv-se">
+    window.onload = function () {
+        alert('@Html.Raw(ViewBag.Message)');
+    }
     </script>
 }
