@@ -24,5 +24,9 @@ namespace ScrumProj.Models
         public string Position { get; set; }
 
         public bool Exist { get; set; }
+
+        public List<Categories> Categories { get; set; }
+
+        public List<ProfileModel> Profiles { get; set; }
     }
 }

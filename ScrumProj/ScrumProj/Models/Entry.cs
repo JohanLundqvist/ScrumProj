@@ -16,12 +16,11 @@ namespace ScrumProj.Models
         public string Content { get; set; }
         public string AuthorId { get; set; }
         [Display(Name = "Titel")]
-        [Required]
+        [Required(ErrorMessage = "Vänlig fyll i titel")]
         public string Title { get; set; }
         public int fileId { get; set; }
-        public byte[] image { get; set; }
         public string Author { get; set; }
         public bool Formal { get; set; }
+        public string ImageUrl { get; set; }
     }
-
 }

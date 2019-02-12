@@ -6,6 +6,13 @@
 
 }
 
+
+
+<!--
+    -------------------------------------------------------------------------------------
+    Code to show the "Formella bloggen"
+    -------------------------------------------------------------------------------------
+-->
 <div class="row">
     <div class="col-md-4">
         <h2>Formella blogg</h2>
@@ -49,9 +56,12 @@
                             <small style="float:right; font-size: x-small">@Html.ActionLink("Ta bort inlägg", "DeleteEntry", new { postId = FormalEntry.entry.Id })</small>
                         }
                     </h5>
-                    @if (FormalEntry.entry.image != null)
+
+                    @if (FormalEntry.entry.ImageUrl != null || FormalEntry.entry.ImageUrl != "")
                     {
-                        <img style="height: 200px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image">
+                        <div class="container">
+                            <a href="@FormalEntry.entry.ImageUrl" target="_blank"><img src="@FormalEntry.entry.ImageUrl" alt="Avatar-Image" class="img-thumbnail" style="height:auto;width:100%;" /></a>
+                        </div>
                     }
 
                     <div class="card-body">
@@ -63,6 +73,7 @@
                             <small style="font-size: x-small">@Html.ActionLink("Ta bort fil", "RemoveFile", new { postId = FormalEntry.entry.Id })</small>
                         }
                     </div>
+
                     <div class="card-body" style="padding-bottom: 0px; padding-top: 0px;">
                         @if (Model.Categories != null)
                         {
@@ -87,6 +98,7 @@
                             }
                         }
                     </div>
+
                     <div class="card-body">
                         @if (Model.ListOfComments != null)
                         {
@@ -119,6 +131,13 @@
         }
     </div>
 
+
+
+    <!--
+        -------------------------------------------------------------------------------------
+        Code to publish an Entry
+        -------------------------------------------------------------------------------------
+    -->
     <div class="col-md-4">
         @using (Html.BeginForm("PublishEntry", "Entry", FormMethod.Post, new { role = "form", enctype = "multipart/form-data" }))
         {
@@ -126,34 +145,45 @@
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(u => u.entry.Title)
-                @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "30", @class = "form-control", style = "min-width: 100%", id = "inputDefault" })
-                <p>Max 30 tecken.</p>
+                @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "100", @class = "form-control", style = "min-width: 100%", id = "inputDefault" })
+                <p>Max 100 tecken.</p>
             </div>
             <div class="form-control-static panel-primary">
                 <div class="form-group">
                     <div>
-                        @Html.TextAreaFor(u => u.entry.Content, new { maxLength = "1000", @class = "form-control", style = "min-width: 100%" })                        
-                        <p>Max 1000 tecken.</p>
+                        @Html.TextAreaFor(u => u.entry.Content, new { maxLength = "1500", @class = "form-control", style = "min-width: 100%" })
+                        <p>Max 1500 tecken.</p>
                     </div>
                 </div>
+
                 <div class="form-group">
-                    <label>Lägg till kategori:</label>
-                    <input class="form-control" id="searchInput" name="searchInput" />
+                    <div class="ui-widget">
+                        <label for="tags">Lägg till kategori: </label>
+                        <input class="form-control" id="tags" name="tags" style="min-width: 100%" />
+                    </div>
+                    <span id="faux" style="display:none;"></span>
+
                 </div>
                 @Html.LabelFor(u => u.File.FileName)
                 <div class="form-group">
                     <div>
                         <input type="file" id="newFile" name="newFile" />
-                        <small id="fileHelp" class="form-text text-muted">högsta filstorlek tillåten är 25MB.</small>
+
+                    </div>
+                    <br />
+                    <label>Ladda upp bild:</label>
+                    <div>
+                        @Html.TextBox("img", "", new { type = "file", Id = "ImageFile", accept = ".jpg, .jpeg .png, .gif" })
                     </div>
                 </div>
+
                 <div class="form-group">
                     <div>
                         <select id="SelectBlogg" name="SelectBlogg" class="form-control" style="float:left; width:50%">
                             <option value="1">Formell</option>
                             <option value="2">Informell</option>
                         </select>
-                        <input type="submit" value="Posta inlägg" class="btn btn-info" style="float:right" />
+                        <input type="submit" value="Posta inlägg" class="btn btn-info" style="float:right" id="SubmitButton" />
                     </div>
                 </div>
             </div>
@@ -161,6 +191,12 @@
     </div>
 
 
+
+    <!--
+        -------------------------------------------------------------------------------------
+        Code to show the "Informella bloggen"
+        -------------------------------------------------------------------------------------
+    -->
     <div class="col-md-4">
         <h2>Informell blogg</h2>
         @if (Model.ListOfInformalEntriesToLoopInBlogView != null || Model.ListOfInformalEntriesToLoopInBlogView.Count > 0)
@@ -203,9 +239,12 @@
                             <small style="float:right; font-size: x-small">@Html.ActionLink("Ta bort inlägg", "DeleteEntry", new { postId = FormalEntry.entry.Id })</small>
                         }
                     </h5>
-                    @if (FormalEntry.entry.image != null)
+
+                    @if (FormalEntry.entry.ImageUrl != null || FormalEntry.entry.ImageUrl != "")
                     {
-                        <img style="height: 200px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22318%22%20height%3D%22180%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20318%20180%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_158bd1d28ef%20text%20%7B%20fill%3Argba(255%2C255%2C255%2C.75)%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A16pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_158bd1d28ef%22%3E%3Crect%20width%3D%22318%22%20height%3D%22180%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22129.359375%22%20y%3D%2297.35%22%3EImage%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" alt="Card image">
+                        <div class="container">
+                            <a href="@FormalEntry.entry.ImageUrl" target="_blank"><img src="@FormalEntry.entry.ImageUrl" alt="Avatar-Image" class="img-thumbnail" style="height:auto;width:100%;" /></a>
+                        </div>
                     }
 
                     <div class="card-body">
@@ -216,8 +255,8 @@
                             <br />
                             <small style="font-size: x-small">@Html.ActionLink("Ta bort fil", "RemoveFile", new { postId = FormalEntry.entry.Id })</small>
                         }
-
                     </div>
+
                     <div class="card-body" style="padding-bottom: 0px; padding-top: 0px;">
                         @if (Model.Categories != null)
                         {
@@ -242,6 +281,7 @@
                             }
                         }
                     </div>
+
                     <div class="card-body">
                         @if (Model.ListOfComments != null)
                         {
@@ -272,12 +312,16 @@
                 </div>
             }
         }
-
-
     </div>
-
 </div>
 
+
+
+<!--
+    -------------------------------------------------------------------------------------
+    jQuery scripts
+    -------------------------------------------------------------------------------------
+-->
 @section scripts {
 
     <script src="~/Scripts/jquery-3.3.1.js"></script>
@@ -287,14 +331,19 @@
     <script>
 
     var myFile = document.getElementById('newFile');
-
-
     myFile.addEventListener('change', function () {
         if (this.files[0].size > 4000000) {
             alert("Filen är för stor, gränsen är 4 mb");
             myFile.value = "";
         }
+    });
 
+    var myImageFile = document.getElementById('ImageFile');
+    myImageFile.addEventListener('change', function () {
+        if (this.files[0].size > 4000000) {
+            alert("Filen är för stor, gränsen är 4 mb");
+            myImageFile.value = "";
+        }
     });
         $("#searchInput").autocomplete({
         source: function (request, response) {
@@ -312,7 +361,216 @@
                 }
             });
         }
-    });
+        });
+
+        var availableTags = [];
+
+        @foreach (var c in Model.Categories)
+        {
+            @:availableTags.push("@c.Name");
+        }
+        var faux = $("#faux");
+        var arrayused;
+        var calcfaux;
+        var retresult;
+        var checkspace;
+        var contents = $('#tags')[0];
+        var carpos;
+        var fauxpos;
+        var tier;
+        var startss;
+        var endss;
+        function getCaret(el) {
+            if (el.selectionStart) {
+                return el.selectionStart;
+            } else if (document.selection) {
+                el.focus();
+
+                var r = document.selection.createRange();
+                if (r == null) {
+                    return 0;
+                }
+
+                var re = el.createTextRange(),
+                    rc = re.duplicate();
+                re.moveToBookmark(r.getBookmark());
+                rc.setEndPoint('EndToStart', re);
+
+                return rc.text.length;
+            }
+            return 0;
+        }
+
+        function split(val) {
+            return val.split(/ \s*/);
+        }
+        function extractLast(term) {
+            return split(term).pop();
+        }
+        $("#tags")
+            .on("keydown", function (event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).data("autocomplete").menu.active) {
+                    event.preventDefault();
+                }
+            })
+            .click(function (event) {
+                carpos = getCaret(contents);
+                fauxpos = faux.text().length;
+                if (carpos < fauxpos) {
+                    tier = "close";
+                    $(this).autocomplete("close");
+                    startss = this.selectionStart;
+                    endss = this.selectionEnd;
+                    $(this).val($(this).val().replace(/ *$/, ''));
+                    this.setSelectionRange(startss, endss);
+                }
+                else {
+                    tier = "open";
+                }
+
+            })
+            .on("keyup", function (event) {
+                calcfaux = faux.text($(this).val());
+                fauxpos = faux.text().length;
+                if (/ $/.test(faux.text()) || tier === "close") {
+                    checkspace = "space";
+                }
+                else {
+                    checkspace = "nospace";
+                }
+
+
+                if (fauxpos <= 1) {
+                    tier = "open";
+                }
+                carpos = getCaret(contents);
+                if (carpos < fauxpos) {
+                    tier = "close";
+                    $(this).autocomplete("close");
+                    startss = this.selectionStart;
+                    endss = this.selectionEnd;
+                    $(this).val($(this).val().replace(/ *$/, ''));
+                    this.setSelectionRange(startss, endss);
+                }
+                else {
+                    tier = "open";
+                }
+            })
+            //mouse caret position dropdown
+            .autocomplete({
+                minLength: 1,
+                search: function (event, ui) {
+                    var input = $(event.target);
+                    // custom minLength
+                    if (checkspace === "space") {
+                        input.autocomplete("close");
+                        return false;
+                    }
+                },
+                source: function (request, response) {
+
+                    var term = $.ui.autocomplete.escapeRegex(extractLast(request.term))
+                        // Create two regular expressions, one to find suggestions starting with the user's input:
+                        , startsWithMatcher = new RegExp("^" + term, "i")
+                        , startsWith = $.grep(availableTags, function (value) {
+                            return startsWithMatcher.test(value.label || value.value || value);
+                        })
+                        // ... And another to find suggestions that just contain the user's input:
+                        , containsMatcher = new RegExp(term, "i")
+                        , contains = $.grep(availableTags, function (value) {
+                            return $.inArray(value, startsWith) < 0 &&
+                                containsMatcher.test(value.label || value.value || value);
+                        });
+
+                    // Supply the widget with an array containing the suggestions that start with the user's input,
+                    // followed by those that just contain the user's input.
+                    response(startsWith.concat(contains));
+                },
+                open: function (event, ui) {
+                    var input = $(event.target),
+                        widget = input.autocomplete("widget"),
+                        style = $.extend(input.css([
+                            "font",
+                            "border-left",
+                            "padding-left"
+                        ]), {
+                                position: "absolute",
+                                visibility: "hidden",
+                                "padding-right": 0,
+                                "border-right": 0,
+                                "white-space": "pre"
+                            }),
+                        div = $("<div/>"),
+                        pos = {
+                            my: "left top",
+                            collision: "none"
+                        },
+                        offset = -7; // magic number to align the first letter
+                    // in the text field with the first letter
+                    // of suggestions
+                    // depends on how you style the autocomplete box
+
+                    widget.css("width", "");
+
+                    div
+                        .text(input.val().replace(/\S*$/, ""))
+                        .css(style)
+                        .insertAfter(input);
+                    offset = Math.min(
+                        Math.max(offset + div.width(), 0),
+                        input.width() - widget.width()
+                    );
+                    div.remove();
+
+                    pos.at = "left+" + offset + " bottom";
+                    input.autocomplete("option", "position", pos);
+
+                    widget.position($.extend({ of: input }, pos));
+                },
+                focus: function () {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function (event, ui) {
+                    var terms = split(this.value);
+                    startss = this.selectionStart;
+                    endss = this.selectionEnd;
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    // add placeholder to get the comma-and-space at the end
+                    terms.push("");
+                    this.setSelectionRange(startss, endss);
+                    this.value = terms.join(" ");
+                    calcfaux = faux.text($(this).val());
+                    if (/ $/.test(faux.text())) {
+                        checkspace = "space";
+                    }
+                    else {
+                        checkspace = "nospace";
+                    }
+                    carpos = getCaret(contents);
+                    fauxpos = faux.text().length;
+                    return false;
+                }
+            });
     </script>
 }
 
+
+
+<!--
+    -------------------------------------------------------------------------------------
+    JavaScript to show an Alert message
+    -------------------------------------------------------------------------------------
+-->
+@if (ViewBag.Message != null)
+{
+    <script type="text/javascript" charset="iso-8859-1" culture="sv-se">
+    window.onload = function () {
+        alert('@Html.Raw(ViewBag.Message)');
+    }
+    </script>
+}

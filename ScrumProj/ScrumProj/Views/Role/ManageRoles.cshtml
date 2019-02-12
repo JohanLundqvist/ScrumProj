@@ -1,4 +1,9 @@
 ﻿
+@if (User.Identity.IsAuthenticated)
+{
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+}
+
 @{
     ViewBag.Title = "ManageRoles";
 }
@@ -124,6 +129,11 @@
 
 
 
+<!--
+    -------------------------------------------------------------------------------------
+    JavaScript to show an Alert message
+    -------------------------------------------------------------------------------------
+-->
 @if (ViewBag.Message != null)
 {
     <script type="text/javascript" charset="iso-8859-1" culture="sv-se">

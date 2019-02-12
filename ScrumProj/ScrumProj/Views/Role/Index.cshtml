@@ -1,5 +1,9 @@
-﻿
-@model IEnumerable<ScrumProj.Models.ProfileModel>
+﻿@model ScrumProj.Models.ProfileViewModel
+
+@if (User.Identity.IsAuthenticated)
+{
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+}
 
 @{
     ViewBag.Title = "Index";
@@ -7,6 +11,11 @@
 
 
 
+<!--
+    -------------------------------------------------------------------------------------
+    Lists Users who are not yet accepted
+    -------------------------------------------------------------------------------------
+-->
 <h2>Lista Användare</h2>
 
 <hr style="border-color: #777;" />
@@ -23,7 +32,7 @@
 
 
 <div class="form-horizontal">
-    @foreach (var profile in Model)
+    @foreach (var profile in Model.Profiles)
     {
         <div class="form-group">
             <input type="button" class="btn btn-outline-warning" value="Acceptera användare" onclick="location.href='@Url.Action("AcceptUser", "role", new { id = profile.ID })'" />
@@ -33,8 +42,35 @@
     }
 </div>
 
+<div class="form-horizontal">
+    <div class="col-md-4">
+
+        @if (Model.Categories != null)
+        {
+            foreach (var Category in Model.Categories)
+            {
+                <ul style="list-style-type: none;">
+                    <label>Ta bort kategori:</label>
+                    <li>
+                        <a href="@Url.Action("DeleteCategory", new {catId = Category.Id })" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                            <small class="mb-1">@Category.Name</small>
+                        </a>
+                    </li>
+                </ul>
+            }
+        }
+    </div>
+</div>
+
 <br />
 
+
+
+<!--
+    -------------------------------------------------------------------------------------
+    jQuery script to show an Alert message
+    -------------------------------------------------------------------------------------
+-->
 <script>
     jQuery(document).ready(function () {
         jQuery('[data-confirm]').click(function (e) {
