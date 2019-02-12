@@ -4,8 +4,11 @@
 }
 
 @model ScrumProj.Models.EntryViewModel
-@{
+@if (User.Identity.IsAuthenticated)
+{
     ViewBag.Title = "Blogpage";
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+
 }
 <div class="row">
     @using (Html.BeginForm("EditEntry", "Entry", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -44,16 +47,16 @@
             </div>
         </div>
     }
-    @Html.Action("_DeleteCategoryPartial", new { model = Model})
+    @Html.Action("_DeleteCategoryPartial", new { model = Model })
 </div>
 
-        @section scripts {
+@section scripts {
 
-            <script src="~/Scripts/jquery-3.3.1.js"></script>
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-            <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-            <script>
+    <script>
 
     var myFile = document.getElementById('newFile');
 
@@ -195,7 +198,7 @@
                         widget = input.autocomplete("widget"),
                         style = $.extend(input.css([
                             "font",
-                            "border-left",
+                            "border-right",
                             "padding-left"
                         ]), {
                                 position: "absolute",
@@ -259,5 +262,5 @@
                     return false;
                 }
             });
-            </script>
-        }
+    </script>
+}
