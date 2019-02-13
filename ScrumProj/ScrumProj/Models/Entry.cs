@@ -9,15 +9,18 @@ namespace ScrumProj.Models
     public class Entry
     {
         public int Id { get; set; }
-
-        [Display (Name = "Inlägg")]
-        //[StringLength(maximumLength: 1000,MinimumLength = 10, ErrorMessage ="Inlägget får endast innehålla 1000 tecken!")]
+        
+        [Display(Name = "Inlägg")]
+        [Required(ErrorMessage = "Vänligen fyll i Innehållet" )]
         [StringLength(1000, ErrorMessage = "Inlägget får endast innehålla 1000 tecken!")]
         public string Content { get; set; }
+
         public string AuthorId { get; set; }
+
         [Display(Name = "Titel")]
-        [Required(ErrorMessage = "Vänlig fyll i titel")]
+        [Required(ErrorMessage = "Vänligen fyll i en Titel")]
         public string Title { get; set; }
+
         public int fileId { get; set; }
         public string Author { get; set; }
         public bool Formal { get; set; }
