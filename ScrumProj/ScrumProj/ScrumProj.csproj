@@ -294,6 +294,10 @@
     <Compile Include="Migrations\201902111301086_tjo2.Designer.cs">
       <DependentUpon>201902111301086_tjo2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902131036544_Annotaion.cs" />
+    <Compile Include="Migrations\201902131036544_Annotaion.Designer.cs">
+      <DependentUpon>201902131036544_Annotaion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -309,6 +313,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\ViewModels\NavbarViewModel.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\FirstPageViewModel.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
@@ -637,6 +642,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902111438471_IMAGE.resx">
       <DependentUpon>201902111438471_IMAGE.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902131036544_Annotaion.resx">
+      <DependentUpon>201902131036544_Annotaion.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

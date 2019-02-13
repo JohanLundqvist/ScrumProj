@@ -23,9 +23,8 @@ namespace ScrumProj.Controllers
             if (SelectBlogg == "1")
             IsFormal = true;
             Models.File ThisFile = new Models.File();
-            if(!ModelState.IsValid)
-                return RedirectToAction("BlogPage");
-            // adds data to entry with file
+
+            // Adds data to entry with file
             if (newFile != null)
             {
                 ThisFile = SaveFileToDatabase(newFile);
@@ -71,9 +70,21 @@ namespace ScrumProj.Controllers
                         ViewBag.Message = "Bilden får bara ha formeten: .jpg .jpeg .png eller .gif!";
                     }
                 }
+                else
+                {
+                    ctx.Entries.Add(new Entry
+                    {
+                        AuthorId = UserId,
+                        Content = model.entry.Content,
+                        Title = model.entry.Title,
+                        Author = GetNameOfLoggedInUser(),
+                        Formal = IsFormal,
+                        ImageUrl = imageUrl
+                    });
+                }
             }
             
-            //adds data to file without file
+            // Adds data to file without file
             else
             {
                 var imageUrl = "";
@@ -107,6 +118,18 @@ namespace ScrumProj.Controllers
                     {
                         ViewBag.Message = "Bilden får bara ha formeten: .jpg .jpeg .png eller .gif!";
                     }
+                }
+                else
+                {
+                    ctx.Entries.Add(new Entry
+                    {
+                        AuthorId = UserId,
+                        Content = model.entry.Content,
+                        Title = model.entry.Title,
+                        Author = GetNameOfLoggedInUser(),
+                        Formal = IsFormal,
+                        ImageUrl = imageUrl
+                    });
                 }
             }
             ctx.SaveChanges();
@@ -526,12 +549,11 @@ namespace ScrumProj.Controllers
             });
         }
 
-
-
         // Method
         public ActionResult _DeleteCategoryPartial(EntryViewModel model)
         {
             return PartialView(model);
         }
+
     }
 }
