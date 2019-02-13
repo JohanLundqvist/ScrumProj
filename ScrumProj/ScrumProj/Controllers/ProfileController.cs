@@ -124,7 +124,18 @@ namespace ScrumProj.Controllers
             {
                 model.ListOfComments.Add(c);
             }
-            return View(model);
+            model.Categories = new List<Categories>();
+            foreach (var c in db.Categories)
+            {
+                model.Categories.Add(c);
+            }
+
+            model.CategoryIds = new List<CategoryInEntry>();
+            foreach (var i in db.CategoryInEntrys)
+            {
+                model.CategoryIds.Add(i);
+            }
+                return View(model);
         }
         public ActionResult PostComment(EntryViewModel model, int postId)
         {
