@@ -53,6 +53,8 @@ namespace ScrumProj.Controllers
             var activeUser = new ProfileModel();
             var listboxList = new List<SelectListItem>();
             var DoneProjects = new List<DevelopmentProject>();
+
+            
             foreach(var proj in _context.Projects)
             {
                 DoneProjects.Add(proj);
@@ -129,10 +131,12 @@ namespace ScrumProj.Controllers
             //var LatestProject =_context.Projects.OrderByDescending(q => q.Id)
             //.FirstOrDefault();
 
+
             if (projectToUpdate != null)
             {
                 if (ModelState.IsValid)
                 {
+
                     var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
                     projectToUpdate.Participants.Add(user);
                     _context.SaveChanges();
@@ -149,6 +153,27 @@ namespace ScrumProj.Controllers
             model = FillModel();
 
             model.project = project;
+            var listOfParti = project.Participants;
+            var listOfNonMembers = new List<SelectListItem>();
+
+            foreach(var user in _context.Profiles)
+            {
+                var anv = listOfParti.FirstOrDefault(x => x.ID == user.ID);
+                if(anv is null)
+                {
+                    var item = new SelectListItem
+                    {
+
+                        Text = user.FirstName + " " + user.LastName,
+                        Value = user.ID,
+                        Selected = false
+                    };
+                    listOfNonMembers.Add(item);
+
+                }
+            }
+            model.UsersFullName = listOfNonMembers;
+
             return View(model);
         }
 
