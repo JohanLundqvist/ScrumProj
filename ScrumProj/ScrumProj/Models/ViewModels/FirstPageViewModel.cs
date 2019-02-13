@@ -11,7 +11,6 @@ namespace ScrumProj.Models.ViewModels
         public Entry entry { get; set; }
         public List<EntryViewModel> ListOfEntriesToLoopInBlogView { get; set; }
 
-        [ValidateFileSize(ErrorMessage = "Invalid File")]
         public File File { get; set; }
         public string comment { get; set; }
         public int CommentId { get; set; }

@@ -73,31 +73,39 @@ namespace ScrumProj.Controllers
 
             var eMail = model.Email;
             var identityModel = identityCtx.Users.FirstOrDefault(p => p.Email == eMail);
-            var id = identityModel.Id;
-            var currentUser = ctx.Profiles.FirstOrDefault(p => p.ID == id);
 
-            if (currentUser.IsApproved == true)
+            if (identityModel != null)
             {
-                if (!ModelState.IsValid)
+                var id = identityModel.Id;
+                var currentUser = ctx.Profiles.FirstOrDefault(p => p.ID == id);
+
+                if (currentUser.IsApproved == true)
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return View(model);
+                    }
+
+                    // This doesn't count login failures towards account lockout
+                    // To enable password failures to trigger account lockout, change to shouldLockout: true
+                    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                    switch (result)
+                    {
+                        case SignInStatus.Success:
+                            return RedirectToAction("FirstPage", "Profile");
+                        case SignInStatus.LockedOut:
+                            return View("Lockout");
+                        case SignInStatus.RequiresVerification:
+                            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                        case SignInStatus.Failure:
+                        default:
+                            ModelState.AddModelError("", "Invalid login attempt.");
+                            return View(model);
+                    }
+                }
+                else
                 {
                     return View(model);
-                }
-
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, change to shouldLockout: true
-                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-                switch (result)
-                {
-                    case SignInStatus.Success:
-                        return RedirectToAction("FirstPage", "Profile");
-                    case SignInStatus.LockedOut:
-                        return View("Lockout");
-                    case SignInStatus.RequiresVerification:
-                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                    case SignInStatus.Failure:
-                    default:
-                        ModelState.AddModelError("", "Invalid login attempt.");
-                        return View(model);
                 }
             }
             else

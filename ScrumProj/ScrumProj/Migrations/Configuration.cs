@@ -30,6 +30,11 @@ namespace ScrumProj.Migrations
         // Method to add default user and roles
         private void InitializeDb(ApplicationDbContext idCtx, AppDbContext ctx)
         {
+            /*
+             * ---------------------------------------------------------------------------------------
+             * Adds a SuperAdmin account and Profile
+             * ---------------------------------------------------------------------------------------
+             */
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(idCtx));
             var RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(idCtx));
 
@@ -37,18 +42,13 @@ namespace ScrumProj.Migrations
             string role2 = "Admin";
             string password = "anon69";
 
-            string firstName = "Joakim";
-            string lastName = "Asplund";
-            string position = "CEO";
-            
-
-            // Create Role SuperAdmin if it does not exist
+            // Create SuperAdmin role if it does not exist
             if (!RoleManager.RoleExists(role1))
             {
                 var roleresult = RoleManager.Create(new IdentityRole(role1));
             }
 
-            // Create Role Admin if it does not exist
+            // Creates Admin role if it does not exist
             if (!RoleManager.RoleExists(role2))
             {
                 var roleresult = RoleManager.Create(new IdentityRole(role2));
@@ -66,7 +66,11 @@ namespace ScrumProj.Migrations
                 var result = UserManager.AddToRole(user.Id, role1);
             }
 
-            // Add a Profile
+            // Add a Profile to the SuperAdmin account
+            string firstName = "Joakim";
+            string lastName = "Asplund";
+            string position = "CEO";
+
             ctx.Profiles.Add(new ProfileModel
             {
                 ID = user.Id,
@@ -76,6 +80,28 @@ namespace ScrumProj.Migrations
                 IsApproved = true
             });
 
+
+
+            /*
+             * ---------------------------------------------------------------------------------------
+             * Adds a SuperAdmin account and Profile
+             * ---------------------------------------------------------------------------------------
+             */
+             /*
+            var user1 = new ApplicationUser();
+            user.UserName = "jocke@hotmail.com";
+            user.Email = "jocke@hotmail.com";
+            var adminResult = UserManager.Create(user, password);
+
+            ctx.Profiles.Add(new ProfileModel
+            {
+                ID = user.Id,
+                FirstName = "Jakob",
+                LastName = "Hallman",
+                Position = "Anställd",
+                IsApproved = true
+            });
+            */
             ctx.SaveChanges();
         }
     }
