@@ -23,8 +23,6 @@ namespace ScrumProj.Controllers
             if (SelectBlogg == "1")
             IsFormal = true;
             Models.File ThisFile = new Models.File();
-            if(!ModelState.IsValid)
-                return RedirectToAction("BlogPage");
 
             // Adds data to entry with file
             if (newFile != null)

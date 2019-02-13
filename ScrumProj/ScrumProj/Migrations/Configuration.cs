@@ -75,6 +75,8 @@ namespace ScrumProj.Migrations
                 Position = position,
                 IsApproved = true
             });
+
+            ctx.SaveChanges();
         }
     }
 }
