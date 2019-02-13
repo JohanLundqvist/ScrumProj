@@ -145,7 +145,7 @@
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(u => u.entry.Title)
-                @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "100", @class = "form-control", style = "min-width: 100%", id = "inputDefault" })
+                @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "100", @class = "form-control", style = "min-width: 100%", id = "inputDefault"  })
                 <p>Max 100 tecken.</p>
             </div>
             <div class="form-control-static panel-primary">
@@ -205,112 +205,112 @@
             for (int i = Model.ListOfInformalEntriesToLoopInBlogView.Count() - 1; i >= 0; i--)
             {
                 var FormalEntry = Model.ListOfInformalEntriesToLoopInBlogView[i];
-                <div class="card mb-1">
-                    <h3 class="card-header">@FormalEntry.entry.Title</h3>
-                    <h5 class="card-header">
-                        @FormalEntry.entry.Author
-                        @if (FormalEntry.entry.AuthorId == Model.loggedInUser.ID)
-                        {
-                            if (FormalEntry.File != null)
-                            {
-                                <small style="float:right; font-size: x-small">
-                                    @Html.ActionLink("Redigera inlägg", "EditEntryView",
-                                    new
-                                    {
-                                    postId = FormalEntry.entry.Id,
-                                    Title = FormalEntry.entry.Title,
-                                    Content = FormalEntry.entry.Content,
-                                    fileId = FormalEntry.File.FileId
-                                    })
-                                </small>
-                            }
-                            else
-                            {
-                                <small style="float:right; font-size: x-small">
-                                    @Html.ActionLink("Redigera inlägg", "EditEntryView",
-                                    new
-                                    {
-                                    postId = FormalEntry.entry.Id,
-                                    Title = FormalEntry.entry.Title,
-                                    Content = FormalEntry.entry.Content
-                                    })
-                                </small>
-                            }
-                            <br />
-                            <small style="float:right; font-size: x-small">@Html.ActionLink("Ta bort inlägg", "DeleteEntry", new { postId = FormalEntry.entry.Id })</small>
-                        }
-                    </h5>
-
-                    @if (FormalEntry.entry.ImageUrl != null || FormalEntry.entry.ImageUrl != "")
+        <div class="card mb-1">
+            <h3 class="card-header">@FormalEntry.entry.Title</h3>
+            <h5 class="card-header">
+                @FormalEntry.entry.Author
+                @if (FormalEntry.entry.AuthorId == Model.loggedInUser.ID)
+                {
+                    if (FormalEntry.File != null)
                     {
-                        <div class="container">
-                            <a href="@FormalEntry.entry.ImageUrl" target="_blank"><img src="@FormalEntry.entry.ImageUrl" alt="Avatar-Image" class="img-thumbnail" style="height:auto;width:100%;" /></a>
-                        </div>
+                        <small style="float:right; font-size: x-small">
+                            @Html.ActionLink("Redigera inlägg", "EditEntryView",
+                            new
+                            {
+                            postId = FormalEntry.entry.Id,
+                            Title = FormalEntry.entry.Title,
+                            Content = FormalEntry.entry.Content,
+                            fileId = FormalEntry.File.FileId
+                            })
+                        </small>
                     }
-
-                    <div class="card-body">
-                        <p class="card-text">@FormalEntry.entry.Content</p>
-                        @if (FormalEntry.File != null)
-                        {
-                            @Html.ActionLink(FormalEntry.File.FileName, "DownLoadFile", new { id = FormalEntry.File.FileId })
-                            <br />
-                            <small style="font-size: x-small">@Html.ActionLink("Ta bort fil", "RemoveFile", new { postId = FormalEntry.entry.Id })</small>
-                        }
-                    </div>
-
-                    <div class="card-body" style="padding-bottom: 0px; padding-top: 0px;">
-                        @if (Model.Categories != null)
-                        {
-                            foreach (var e in Model.CategoryIds)
+                    else
+                    {
+                        <small style="float:right; font-size: x-small">
+                            @Html.ActionLink("Redigera inlägg", "EditEntryView",
+                            new
                             {
-                                if (e.EntryId == FormalEntry.entry.Id)
-                                {
-                                    <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
-                                        @foreach (var c in Model.Categories)
-                                        {
-                                            if (e.CategoryId == c.Id)
-                                            {
-                                                <li style="float:left;">
-                                                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
-                                                        <small class="mb-1">@c.Name</small>
-                                                    </a>
-                                                </li>
-                                            }
-                                        }
-                                    </ul>
-                                }
-                            }
-                        }
-                    </div>
+                            postId = FormalEntry.entry.Id,
+                            Title = FormalEntry.entry.Title,
+                            Content = FormalEntry.entry.Content
+                            })
+                        </small>
+                    }
+                    <br />
+                    <small style="float:right; font-size: x-small">@Html.ActionLink("Ta bort inlägg", "DeleteEntry", new { postId = FormalEntry.entry.Id })</small>
+                }
+            </h5>
 
-                    <div class="card-body">
-                        @if (Model.ListOfComments != null)
-                        {
-                            foreach (var c in Model.ListOfComments)
-                            {
-                                if (c.EntryId == FormalEntry.entry.Id)
-                                {
-                                    <div class="list-group">
-                                        <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                                            <div class="d-flex w-100 justify-content-between">
-                                                <h6 class="mb-1">@c.Author</h6>
-                                            </div>
-                                            <small class="mb-1">@c.comment</small>
-                                        </a>
-                                    </div>
-                                }
-                            }
-                        }
-
-                        @using (Html.BeginForm("PostComment", "Entry", new { postId = FormalEntry.entry.Id }, FormMethod.Post, null))
-                        {
-
-                            @Html.TextBoxFor(c => c.comment, new { @class = "form-control", style = "min-width = 100%" })
-
-                            <input type="submit" class="btn btn-info" value="Kommentera" />
-                        }
-                    </div>
+            @if (FormalEntry.entry.ImageUrl != "")
+            {
+                <div class="container">
+                    <a href="@FormalEntry.entry.ImageUrl" target="_blank"><img src="@FormalEntry.entry.ImageUrl" alt="Avatar-Image" class="img-thumbnail" style="height:auto;width:100%;" /></a>
                 </div>
+            }
+
+            <div class="card-body">
+                <p class="card-text">@FormalEntry.entry.Content</p>
+                @if (FormalEntry.File != null)
+                {
+                    @Html.ActionLink(FormalEntry.File.FileName, "DownLoadFile", new { id = FormalEntry.File.FileId })
+                    <br />
+                    <small style="font-size: x-small">@Html.ActionLink("Ta bort fil", "RemoveFile", new { postId = FormalEntry.entry.Id })</small>
+                }
+            </div>
+
+            <div class="card-body" style="padding-bottom: 0px; padding-top: 0px;">
+                @if (Model.Categories != null)
+                {
+                    foreach (var e in Model.CategoryIds)
+                    {
+                        if (e.EntryId == FormalEntry.entry.Id)
+                        {
+                            <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+                                @foreach (var c in Model.Categories)
+                                {
+                                    if (e.CategoryId == c.Id)
+                                    {
+                                        <li style="float:left;">
+                                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                                <small class="mb-1">@c.Name</small>
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        }
+                    }
+                }
+            </div>
+
+            <div class="card-body">
+                @if (Model.ListOfComments != null)
+                {
+                    foreach (var c in Model.ListOfComments)
+                    {
+                        if (c.EntryId == FormalEntry.entry.Id)
+                        {
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">@c.Author</h6>
+                                    </div>
+                                    <small class="mb-1">@c.comment</small>
+                                </a>
+                            </div>
+                        }
+                    }
+                }
+
+                @using (Html.BeginForm("PostComment", "Entry", new { postId = FormalEntry.entry.Id }, FormMethod.Post, null))
+                {
+
+                    @Html.TextBoxFor(c => c.comment, new { @class = "form-control", style = "min-width = 100%" })
+
+                    <input type="submit" class="btn btn-info" value="Kommentera" />
+                }
+            </div>
+        </div>
             }
         }
     </div>
