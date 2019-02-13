@@ -137,7 +137,7 @@ namespace ScrumProj.Controllers
             
             int postId = 100000000;
 
-            // gets the entry just saved to database
+            // Gets the entry just saved to database
             foreach (var f in ctx.Entries)
             {
                 postId = f.Id;
