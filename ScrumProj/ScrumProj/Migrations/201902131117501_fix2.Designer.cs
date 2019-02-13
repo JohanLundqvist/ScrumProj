@@ -7,13 +7,13 @@ namespace ScrumProj.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class Annotaion : IMigrationMetadata
+    public sealed partial class fix2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Annotaion));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(fix2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902131036544_Annotaion"; }
+            get { return "201902131117501_fix2"; }
         }
         
         string IMigrationMetadata.Source
