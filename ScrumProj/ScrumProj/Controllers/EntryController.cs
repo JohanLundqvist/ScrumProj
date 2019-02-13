@@ -108,6 +108,18 @@ namespace ScrumProj.Controllers
                         ViewBag.Message = "Bilden får bara ha formeten: .jpg .jpeg .png eller .gif!";
                     }
                 }
+                else
+                {
+                    ctx.Entries.Add(new Entry
+                    {
+                        AuthorId = UserId,
+                        Content = model.entry.Content,
+                        Title = model.entry.Title,
+                        Author = GetNameOfLoggedInUser(),
+                        Formal = IsFormal,
+                        ImageUrl = imageUrl
+                    });
+                }
             }
             ctx.SaveChanges();
             
@@ -526,12 +538,11 @@ namespace ScrumProj.Controllers
             });
         }
 
-
-
         // Method
         public ActionResult _DeleteCategoryPartial(EntryViewModel model)
         {
             return PartialView(model);
         }
+
     }
 }
