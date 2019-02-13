@@ -71,6 +71,18 @@ namespace ScrumProj.Controllers
                         ViewBag.Message = "Bilden får bara ha formeten: .jpg .jpeg .png eller .gif!";
                     }
                 }
+                else
+                {
+                    ctx.Entries.Add(new Entry
+                    {
+                        AuthorId = UserId,
+                        Content = model.entry.Content,
+                        Title = model.entry.Title,
+                        Author = GetNameOfLoggedInUser(),
+                        Formal = IsFormal,
+                        ImageUrl = imageUrl
+                    });
+                }
             }
             
             //adds data to file without file
