@@ -33,26 +33,26 @@ namespace ScrumProj.Controllers
                 int FileIdToUse = 1000000;
                 var imageUrl = "";
 
+                // Loop to get the latest id from the file table.
+                foreach (var f in ctx.Files)
+                {
+                    FileIdToUse = f.FileId;
+                }
+
                 if (img != null && img.ContentLength > 0)
                 {
                     string imgName = Path.GetFileName(img.FileName);
                     string imgExtension = Path.GetExtension(imgName);
 
                     // Checks if the image file is an actual image
-                    if (imgExtension == ".jpg" ||
-                        imgExtension == ".jpeg" ||
-                        imgExtension == ".png" ||
-                        imgExtension == ".gif")
+                    if (imgName.EndsWith("JPG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("JPEG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("PNG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("GIF", StringComparison.OrdinalIgnoreCase))
                     {
                         string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
                         img.SaveAs(url);
                         imageUrl = "/Images/EntryImg/" + imgName;
-
-                        //Loop to get the latest id from the file table.
-                        foreach (var f in ctx.Files)
-                        {
-                            FileIdToUse = f.FileId;
-                        }
 
                         ctx.Entries.Add(new Entry
                         {
@@ -77,6 +77,7 @@ namespace ScrumProj.Controllers
                         AuthorId = UserId,
                         Content = model.entry.Content,
                         Title = model.entry.Title,
+                        fileId = FileIdToUse,
                         Author = GetNameOfLoggedInUser(),
                         Formal = IsFormal,
                         ImageUrl = imageUrl
@@ -95,10 +96,10 @@ namespace ScrumProj.Controllers
                     string imgExtension = Path.GetExtension(imgName);
 
                     // Checks if the image file is an actual image
-                    if (imgExtension == ".jpg" ||
-                        imgExtension == ".jpeg" ||
-                        imgExtension == ".png" ||
-                        imgExtension == ".gif")
+                    if (imgName.EndsWith("JPG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("JPEG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("PNG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("GIF", StringComparison.OrdinalIgnoreCase))
                     {
                         string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
                         img.SaveAs(url);
