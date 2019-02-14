@@ -15,10 +15,10 @@ namespace ScrumProj.Models
         public string Position { get; set; }
         public bool IsApproved { get; set; }
         public virtual ICollection<DevelopmentProject> Projects { get; set; }
+        public bool NewPushNote { get; set; }
 
         public ProfileModel(){
             this.Projects = new HashSet<DevelopmentProject>();
-
         }
     }
 }

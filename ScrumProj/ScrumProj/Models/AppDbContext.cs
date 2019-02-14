@@ -15,6 +15,7 @@ namespace ScrumProj.Models
         public DbSet<Categories> Categories { get; set; }
         public DbSet<CategoryInEntry> CategoryInEntrys { get; set; }
         public DbSet<DevelopmentProject> Projects { get; set; }
+        public DbSet<PushNote> PushNotes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -23,7 +24,9 @@ namespace ScrumProj.Models
            .Map(t => t.MapLeftKey("ProjectId")
                  .MapRightKey("UserID")
                   .ToTable("ProjectParticipants"));
+
         }
+
     }
 
 }

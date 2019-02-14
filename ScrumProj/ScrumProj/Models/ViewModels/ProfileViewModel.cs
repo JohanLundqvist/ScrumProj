@@ -28,5 +28,9 @@ namespace ScrumProj.Models
         public List<Categories> Categories { get; set; }
 
         public List<ProfileModel> Profiles { get; set; }
+
+        public bool NewPushNote { get; set; }
+
+        public List<PushNote> PushNotes { get; set; }
     }
 }
