@@ -52,69 +52,88 @@
             </div>
         }
     </div>
-    @*<div class=" col-8, text-white bg-secondary mb-3" id="AddParticipantsCard" style="max-width: 20rem;border: 1px solid white;">
-            @using (Html.BeginForm("AddParticipants", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken();
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.project.Participants)
-                    @Html.DropDownListFor(x => x.UserToAdd, new SelectList(Model.UsersFullName, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "DevelopmentViewModel" })
-                </div>
-                <div class="form-group">
-                    <div>
-                        <input type="submit" value="Bjud in" class="btn btn-info" />
-                    </div>
-                </div>
-            }
-            <div>
-                <button id="Done" class="btn btn-info"> Klar </button>
-            </div>
-        </div>*@
 </div>
 
 <div class="col-sm">
     @for (int i = Model.projects.Count - 1; i >= 0; i--)
     {
         var project = Model.projects[i];
-        foreach (var user in project.Participants)
-        {
-            if (project.Visibility == 0 || user.ID == User.Identity.GetUserId())
 
-            {
-                <div class="card mb-3">
-                    <h2 class="card-header" style="color:white;">@project.Title</h2>
-                    <div class="card-body">
-                        <h5 class="card-title">@project.Cat</h5>
-                        <hr />
-                        <h6 class="card-subtitle text-muted"></h6>
-                        <p class="card-text">@project.Content</p>
-                    </div>
-                    <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
-                        @foreach (var projectUser in project.Participants)
-                        {
+        if (project.Visibility == 0)
+        {
+            <div class="card mb-3">
+                <h2 class="card-header" style="color:white;">@project.Title</h2>
+                <div class="card-body">
+                    <h5 class="card-title">@project.Cat</h5>
+                    <hr />
+                    <h6 class="card-subtitle text-muted"></h6>
+                    <p class="card-text">@project.Content</p>
+                </div>
+                <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+                    @foreach (var projectUser in project.Participants)
+                    {
                         <li style="float:left; padding:5px;">
                             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
                                 <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
                             </a>
                         </li>
-                        }
-                    </ul>
-                    <div class="card-footer">
-                        <a href="#" class="card-link">Uppladdad fil</a>
+                    }
+                </ul>
+                <div class="card-footer">
+                    <a href="#" class="card-link">Uppladdad fil</a>
 
-                        @foreach (var userr in project.Participants)
+                    @foreach (var userr in project.Participants)
+                    {
+                        if (userr.Equals(Model.ActiveUser))
                         {
-                            if (userr.Equals(Model.ActiveUser))
-                            {
-                                <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
-                            }
+                            <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
                         }
-
-                    </div>
+                    }
 
                 </div>
 
+            </div>
+        }
+        else
+        {
+            foreach (var user in project.Participants)
+            {
+                if (User.Identity.GetUserId() == user.ID)
+                {
+                    <div class="card mb-3">
+                        <h2 class="card-header" style="color:white;">@project.Title</h2>
+                        <div class="card-body">
+                            <h5 class="card-title">@project.Cat</h5>
+                            <hr />
+                            <h6 class="card-subtitle text-muted"></h6>
+                            <p class="card-text">@project.Content</p>
+                        </div>
+                        <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+                            @foreach (var projectUser in project.Participants)
+                            {
+                                <li style="float:left; padding:5px;">
+                                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                        <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                        <div class="card-footer">
+                            <a href="#" class="card-link">Uppladdad fil</a>
+
+                            @foreach (var userr in project.Participants)
+                            {
+                                if (userr.Equals(Model.ActiveUser))
+                                {
+                                    <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
+                                }
+                            }
+
+                        </div>
+
+                    </div>
+                }
             }
         }
     }
