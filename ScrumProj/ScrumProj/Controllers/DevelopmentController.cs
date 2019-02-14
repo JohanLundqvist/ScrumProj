@@ -190,7 +190,7 @@ namespace ScrumProj.Controllers
             foreach(var user in _context.Profiles)
             {
                 var anv = listOfParti.FirstOrDefault(x => x.ID == user.ID);
-                if(anv is null)
+                if(anv is null && !user.ID.Equals(User.Identity.GetUserId()))
                 {
                     var item = new SelectListItem
                     {
@@ -204,6 +204,7 @@ namespace ScrumProj.Controllers
                 }
             }
             model.UsersFullName = listOfNonMembers;
+            model.Users = _context.Profiles.ToList();
 
             return View(model);
         }

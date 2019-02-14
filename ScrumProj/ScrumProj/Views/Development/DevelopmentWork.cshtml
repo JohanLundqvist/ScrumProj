@@ -26,7 +26,7 @@
                     <div class="form-group col-md">
                         @Html.LabelFor(model => model.project.Title, htmlAttributes: new { @class = "control-label col-md-4" })
                         
-                        @Html.EditorFor(model => model.project.Title, new {  htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.project.Title, new { htmlAttributes = new { @class = "form-control" } })
                         
                     </div>
                     <div class="form-group col-md">
@@ -38,7 +38,7 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.project.Content, htmlAttributes: new { @class = "control-label col-md-4" })
                         
-                            @Html.TextAreaFor(model => model.project.Content, new { rows = 10, @class = "form-control", style = "min-width:100%; resize:none;"})
+                            @Html.TextAreaFor(model => model.project.Content, new { rows = 10, @class = "form-control", style = "min-width:100%; resize:none;" })
                         
                     </div>
                 </div>
@@ -103,11 +103,13 @@
                 </ul>
                 <div class="card-body">
                     <a href="#" class="card-link">Uppladdad fil</a>
-                    
-                    @foreach (var user in Model.Users)
+
+                    @foreach (var user in project.Participants)
                     {
-                       
-                        <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
+                        if (user.Equals(Model.ActiveUser))
+                        {
+                            <a href = "@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
+                        }
                     }
                 </div>
                
