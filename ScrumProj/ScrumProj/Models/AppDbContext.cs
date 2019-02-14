@@ -16,6 +16,7 @@ namespace ScrumProj.Models
         public DbSet<CategoryInEntry> CategoryInEntrys { get; set; }
         public DbSet<DevelopmentProject> Projects { get; set; }
         public DbSet<PushNote> PushNotes { get; set; }
+        public DbSet<DevFile> DevFiles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -25,6 +26,10 @@ namespace ScrumProj.Models
                  .MapRightKey("UserID")
                   .ToTable("ProjectParticipants"));
 
+            modelBuilder.Entity<DevFile>()
+            .HasRequired<DevelopmentProject>(f => f.ThisProject)
+            .WithMany(p => p.Files)
+            .HasForeignKey<int>(s => s.ProjectId);
         }
 
     }

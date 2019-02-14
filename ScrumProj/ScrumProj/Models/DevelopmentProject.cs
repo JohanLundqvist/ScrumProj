@@ -22,12 +22,15 @@ namespace ScrumProj.Models
         [Display(Name = "Kollegor")]
         public virtual ICollection<ProfileModel> Participants { get; set; }
 
+        [Display(Name = "Filer")]
+        public virtual ICollection<DevFile> Files { get; set; }
+
         public enum Category
         {
             Forskning,
             Utbildning
         }
-        public File UploadedFile { get; set; }
+        
 
         public enum IsPrivate
         {
