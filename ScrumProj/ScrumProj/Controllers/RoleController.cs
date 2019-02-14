@@ -53,6 +53,8 @@ namespace ScrumProj.Controllers
 
             profileCtx.SaveChanges();
 
+            NewPushNote("Du har blivit accepterad in i klubben", userProfile, "acceptedByAdmin");
+
             return RedirectToAction("Index");
         }
 
@@ -187,6 +189,28 @@ namespace ScrumProj.Controllers
             ctx.Categories.Remove(Category);
             ctx.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        public void NewPushNote(string note, ProfileModel model, string typeOfNote)
+        {
+            var ctx = new AppDbContext();
+
+            foreach (var p in ctx.Profiles)
+            {
+                if (p.ID == model.ID)
+                {
+                    var NewNote = new PushNote
+                    {
+                        Note = note,
+                        ProfileModelId = p.ID,
+                        TypeOfNote = typeOfNote
+                        
+                    };
+                    p.NewPushNote = true;
+                    ctx.PushNotes.Add(NewNote);
+                }
+            }
+            ctx.SaveChanges();
         }
     }
 }

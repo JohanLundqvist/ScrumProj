@@ -10,5 +10,6 @@ namespace ScrumProj.Models
         public int Id { get; set; }
         public string Note { get; set; }
         public string ProfileModelId { get; set; }
+        public string TypeOfNote { get; set; }
     }
 }
