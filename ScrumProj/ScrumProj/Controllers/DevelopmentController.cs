@@ -37,7 +37,8 @@ namespace ScrumProj.Controllers
                     Title = model.project.Title,
                     Content = model.project.Content,
                     Cat = model.project.Cat,
-                    Participants = partiList
+                    Participants = partiList,
+                    Visibility = model.project.Visibility
                 });
               
                 _context.SaveChanges();
