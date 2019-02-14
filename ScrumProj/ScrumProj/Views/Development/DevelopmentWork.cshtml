@@ -74,34 +74,28 @@
         @for (int i = Model.projects.Count - 1; i >= 0; i--)
         {
             var project = Model.projects[i];
-            @*<div class="text-white bg-secondary mb" style="max-width: 40rem; border: 1px solid white;">
+           
 
-                <div class="card-body">
-                    @Html.HiddenFor(m => m.project.Id)
-                    <h2 class="card-title">@project.Title</h2>
-                    <h4 class="card-title">@project.Cat</h4>
-                    <p class="card-text">@project.Content</p>
-                    @*<a class="nav-link" </a>*@
-
-                    @*<a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link">Redigera</a>
-                </div>
-            </div>*@
-
-            <div class="card">
-                <h3 class="card-header">@project.Title</h3>
+            <div class="card mb-3">
+                <h2 class="card-header" style="color:white">@project.Title</h2>
                 <div class="card-body">
                     <h5 class="card-title">@project.Cat</h5>
                     <hr />
                     <h6 class="card-subtitle text-muted"></h6>
                     <p class="card-text">@project.Content</p>
                 </div>
-                <ul class="list-group list-group-flush">
+
+                <ul class="d-md-inline-block" style="list-style-type: none; padding: 5px;">
                     @foreach (var user in project.Participants)
                     {
-                    <li class="list-group-item">@user.FirstName @user.LastName</li>
+                        <li style="padding: 5px;float:left;">
+                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                <small class="mb-1">@user.FirstName @user.LastName</small>
+                            </a>
+                        </li>
                     }
                 </ul>
-                <div class="card-body">
+                <div class="card-footer">
                     <a href="#" class="card-link">Uppladdad fil</a>
 
                     @foreach (var user in project.Participants)
