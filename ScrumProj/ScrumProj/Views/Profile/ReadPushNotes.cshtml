@@ -14,9 +14,24 @@
     <dl class="dl-horizontal">
         @foreach (var notes in Model)
         {
-            <dt>
+        <dt>
+            @if (notes.TypeOfNote == "bloggPost")
+            {
                 <a href="@Url.Action("blogpage", "entry")">@notes.Note</a>
-            </dt>
+            }
+            else if (notes.TypeOfNote == "projectInvite")
+            {
+                <a href="@Url.Action("DevelopmentWork", "Development")">@notes.Note</a>
+            }
+            else if (notes.TypeOfNote == "meetingInvite")
+            {
+                <a href="@Url.Action("Booking", "Profile")">@notes.Note</a>
+            }
+            else if (notes.TypeOfNote == "acceptedByAdmin")
+            {
+                <a href="@Url.Action("Firstpage", "Profile")">@notes.Note</a>
+            }
+        </dt>
         }
     </dl>
 </div>

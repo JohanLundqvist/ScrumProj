@@ -176,6 +176,7 @@
     <Compile Include="Controllers\DevelopmentController.cs" />
     <Compile Include="Controllers\EntryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -294,13 +295,13 @@
     <Compile Include="Migrations\201902111301086_tjo2.Designer.cs">
       <DependentUpon>201902111301086_tjo2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902131117501_fix2.cs" />
-    <Compile Include="Migrations\201902131117501_fix2.Designer.cs">
-      <DependentUpon>201902131117501_fix2.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201902131537171_pp.cs" />
     <Compile Include="Migrations\201902131537171_pp.Designer.cs">
       <DependentUpon>201902131537171_pp.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902141050400_hoota.cs" />
+    <Compile Include="Migrations\201902141050400_hoota.Designer.cs">
+      <DependentUpon>201902141050400_hoota.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -319,6 +320,7 @@
     <Compile Include="Models\ProfileModel.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\FirstPageViewModel.cs" />
+    <Compile Include="Models\ViewModels\PushNotesViewModel.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -551,6 +553,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
+    <Folder Include="Views\Mail\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -648,11 +651,11 @@
     <EmbeddedResource Include="Migrations\201902111438471_IMAGE.resx">
       <DependentUpon>201902111438471_IMAGE.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902131117501_fix2.resx">
-      <DependentUpon>201902131117501_fix2.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902131537171_pp.resx">
       <DependentUpon>201902131537171_pp.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141050400_hoota.resx">
+      <DependentUpon>201902141050400_hoota.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
