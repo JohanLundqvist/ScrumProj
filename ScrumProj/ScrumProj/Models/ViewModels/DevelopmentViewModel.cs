@@ -26,5 +26,6 @@ namespace ScrumProj.Models.ViewModels
         public List<ProfileModel> Participants { get; set; }
 
         public List<SelectListItem> UsersFullName { get; set; }
-          }
+
+    }
 }

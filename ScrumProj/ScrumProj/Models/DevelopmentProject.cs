@@ -28,6 +28,15 @@ namespace ScrumProj.Models
             Utbildning
         }
         public File UploadedFile { get; set; }
+
+        public enum IsPrivate
+        {
+            Publik,  
+            Privat
+        }
+        [Display(Name = "Synlighet")]
+        public IsPrivate Visibility { get; set; }
+
         [Display(Name = "Kategori")]
         public Category Cat { get; set; }
 
