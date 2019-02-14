@@ -338,6 +338,10 @@
     <Compile Include="Migrations\201902141220346_vafansomhelst.Designer.cs">
       <DependentUpon>201902141220346_vafansomhelst.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902141411028_fil_till_projekt.cs" />
+    <Compile Include="Migrations\201902141411028_fil_till_projekt.Designer.cs">
+      <DependentUpon>201902141411028_fil_till_projekt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -345,6 +349,7 @@
     <Compile Include="Models\CategoryInEntry.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DevelopmentProject.cs" />
+    <Compile Include="Models\DevFile.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\PushNote.cs" />
     <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
@@ -697,6 +702,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902141220346_vafansomhelst.resx">
       <DependentUpon>201902141220346_vafansomhelst.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141411028_fil_till_projekt.resx">
+      <DependentUpon>201902141411028_fil_till_projekt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
