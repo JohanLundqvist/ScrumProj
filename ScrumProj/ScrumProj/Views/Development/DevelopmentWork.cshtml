@@ -25,8 +25,9 @@
                     <div class="form-group col-md">
                         @Html.LabelFor(model => model.project.Title, htmlAttributes: new { @class = "control-label col-md-4" })
 
-                        @Html.EditorFor(model => model.project.Title, new { htmlAttributes = new { @class = "form-control" } })
-
+                        @Html.EditorFor(model => model.project.Title, new { htmlAttributes = new { @class = "form-control", id = "Label", maxLength = "30" } })
+                        <span id="text-counter">30</span> tecken kvar.
+                    
                     </div>
                     <div class="form-group col-md">
                         @Html.LabelFor(m => m.project.Cat)
@@ -37,8 +38,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.project.Content, htmlAttributes: new { @class = "control-label col-md-4" })
 
-                    @Html.TextAreaFor(model => model.project.Content, new { rows = 10, @class = "form-control", style = "min-width:100%; resize:none;" })
-
+                    @Html.TextAreaFor(model => model.project.Content, new { rows = 10, @class = "form-control", id = "Content", maxLength = "1500", style = "min-width:100%; resize:none;" })
+                    <span id="text-counter2">1500</span> tecken kvar.
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.project.Visibility)

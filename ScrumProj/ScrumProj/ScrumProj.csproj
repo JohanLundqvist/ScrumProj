@@ -307,6 +307,10 @@
     <Compile Include="Migrations\201902141058501_DevelopmentVisibilty.Designer.cs">
       <DependentUpon>201902141058501_DevelopmentVisibilty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902141220346_vafansomhelst.cs" />
+    <Compile Include="Migrations\201902141220346_vafansomhelst.Designer.cs">
+      <DependentUpon>201902141220346_vafansomhelst.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -663,6 +667,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902141058501_DevelopmentVisibilty.resx">
       <DependentUpon>201902141058501_DevelopmentVisibilty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141220346_vafansomhelst.resx">
+      <DependentUpon>201902141220346_vafansomhelst.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
