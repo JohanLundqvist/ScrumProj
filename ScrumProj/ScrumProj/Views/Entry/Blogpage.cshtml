@@ -145,8 +145,8 @@
             @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(u => u.entry.Title)
-            @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "100", @class = "form-control", id = "Titel", style = "min-width: 100%" })
-            <span id="text-counter">100</span> tecken kvar.
+            @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "30", @class = "form-control", id = "Titel", style = "min-width: 100%" })
+            <span id="text-counter">30</span> tecken kvar.
         </div>
             <div class="form-control-static panel-primary">
                 <div class="form-group">
@@ -332,7 +332,7 @@
     <script>
         $(function () {
             $('#Titel').keyup(function (e) {
-                var max = 100;
+                var max = 30;
                 var len = $(this).val().length;
                 var char = max - len;
                 $('#text-counter').html(char);
