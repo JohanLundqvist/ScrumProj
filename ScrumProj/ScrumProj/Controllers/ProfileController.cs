@@ -163,5 +163,30 @@ namespace ScrumProj.Controllers
 
             return FirstName + " " + LastName;
         }
+        public bool GetNewPushNoteStatus()
+        {
+            var ctx = new AppDbContext();
+            var currentProfile = GetCurrentUser(User.Identity.GetUserId());
+
+            return currentProfile.NewPushNote;
+        }
+        public ActionResult _PushNotes()
+        {
+            var model = new ProfileViewModel();
+            model.NewPushNote = GetNewPushNoteStatus();
+            return PartialView(model);
+        }
+        public ActionResult ReadPushNotes()
+        {
+            var ctx = new AppDbContext();
+            var profile = ctx.Profiles.Find(User.Identity.GetUserId());
+            profile.NewPushNote = false;
+            var ListOfPushNotes = new List<PushNote>();
+            string CurrentUserId = User.Identity.GetUserId();
+            ListOfPushNotes = ctx.PushNotes.Where(n => n.ProfileModelId == CurrentUserId).ToList();
+            ctx.PushNotes.RemoveRange(ListOfPushNotes);
+            ctx.SaveChanges();
+            return View(ListOfPushNotes);
+        }
     }
 }

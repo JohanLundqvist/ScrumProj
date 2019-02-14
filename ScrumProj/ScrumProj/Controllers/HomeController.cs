@@ -29,10 +29,5 @@ namespace ScrumProj.Controllers
 
             return View();
         }
-        public void PushNote(int testPush)
-        {
-            var ListOfNotes = new List<int>();
-            ListOfNotes.Add(testPush);
-        }
     }
 }
