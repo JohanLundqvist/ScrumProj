@@ -1,0 +1,17 @@
+﻿@model ScrumProj.Models.ViewModels.AdminListViewModel
+
+
+    <div class="col-md-10">
+        <div style="background-color:#272b30;">
+            <dl class="dl-horizontal">
+                @if (Model != null)
+                {
+                    foreach (var user in Model.AdminList)
+                    {
+                        <dt>Användare:</dt>
+                        <dd>@user.Email</dd>
+                    }
+                }
+            </dl>
+        </div>
+    </div>
