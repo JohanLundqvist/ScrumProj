@@ -16,7 +16,14 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult DevelopmentWork(DevelopmentViewModel model)
         {
-            model = FillModel();
+            var userId = User.Identity.GetUserId();
+            var user = _context.Profiles.Single(u => u.ID == userId);
+            model.ActiveUser = user;
+            var listProj = new List<DevelopmentProject>();
+            listProj = _context.Projects.ToList();
+            model.projects = listProj;
+            model.Users = _context.Profiles.ToList();
+
 
                 return View(model);
         }
@@ -46,58 +53,6 @@ namespace ScrumProj.Controllers
            return RedirectToAction("DevelopmentWork");
         }
 
-        protected DevelopmentViewModel FillModel()
-        {
-            DevelopmentViewModel model = new DevelopmentViewModel();
-            _context = new AppDbContext();
-            //var listOfUsers = new List<ProfileModel>();
-            var activeUser = new ProfileModel();
-            //var listboxList = new List<SelectListItem>();
-            var DoneProjects = new List<DevelopmentProject>();
-
-            
-            foreach(var proj in _context.Projects)
-            {
-                DoneProjects.Add(proj);
-            }
-
-           
-            for(int i = DoneProjects.Count-1; i >= 0; i--)
-            {
-
-            }
-            //foreach(var user in _context.Profiles)
-            //{
-            //    if (!user.ID.Equals(User.Identity.GetUserId()))
-            //    {
-            //        listOfUsers.Add(user);
-            //    }
-                
-            //}
-            //foreach(var user in listOfUsers)
-            //{
-                
-            //    var item = new SelectListItem
-            //    {
-                    
-            //        Text = user.FirstName + " " + user.LastName,
-            //        Value = user.ID,
-            //        Selected = false
-            //    };
-            //    listboxList.Add(item);
-            //}
-
-            var idToCompare = User.Identity.GetUserId();
-
-            activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
-
-            //model.Users = listOfUsers;
-            model.ActiveUser = activeUser;
-            //model.UsersFullName = listboxList;
-            model.projects = DoneProjects;
-            return model;
-        }
-
         public ActionResult AddParticipants(DevelopmentViewModel model)
         { 
 
@@ -118,17 +73,14 @@ namespace ScrumProj.Controllers
         }
 
 
-        public ActionResult EditDevelopmentPage(int projectId)
+        public ActionResult EditDevelopmentPage(int projectId, DevelopmentViewModel model)
         {
             var project = _context.Projects.First(p => p.Id == projectId);
-            var model = new DevelopmentViewModel();
-            model = FillModel();
-
             model.project = project;
+
             var listOfParti = project.Participants;
             var listOfNonMembers = new List<SelectListItem>();
-
-            foreach(var user in _context.Profiles)
+           foreach(var user in _context.Profiles)
             {
                 var anv = listOfParti.FirstOrDefault(x => x.ID == user.ID);
                 if(anv is null)
