@@ -145,6 +145,8 @@ namespace ScrumProj.Controllers
             AddCategoryToDatabase(tags, postId);
             ctx.SaveChanges();
 
+            NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+
             return RedirectToAction("BlogPage"); 
         }
 
@@ -555,6 +557,30 @@ namespace ScrumProj.Controllers
         {
             return PartialView(model);
         }
+        public void NewPushNote()
+        {
+            var ctx = new AppDbContext();
+            foreach (var p in ctx.Profiles)
+            {
+                p.NewPushNote = true;
+            }
+            ctx.SaveChanges();
+        }
+        public void NewPushNote(string note)
+        {
+            var ctx = new AppDbContext();
 
+            foreach (var p in ctx.Profiles)
+            {
+                var NewNote = new PushNote
+                {
+                    Note = note,
+                    ProfileModelId = p.ID
+                };
+                p.NewPushNote = true;
+                ctx.PushNotes.Add(NewNote);
+            }
+            ctx.SaveChanges();
+        }
     }
 }
