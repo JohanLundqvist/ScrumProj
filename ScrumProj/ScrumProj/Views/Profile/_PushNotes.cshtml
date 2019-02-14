@@ -1,0 +1,14 @@
+﻿@model ScrumProj.Models.ProfileViewModel
+
+@if (Model.NewPushNote)
+{
+    <div id="notis">
+        <a href="@Url.Action("ReadPushNotes", "Profile")"><img src="~/Images/noti-wh-dot.png" style="width:38px; height:35px; display:block" /></a>
+    </div>
+}
+else
+{
+    <div id="no-notis">
+        <a href="@Url.Action()"><img src="~/Images/noti-gr.png" style="width:38px; height:35px; display:block" /></a>
+    </div>
+}

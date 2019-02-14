@@ -9,6 +9,6 @@ namespace ScrumProj.Models
     {
         public int Id { get; set; }
         public string Note { get; set; }
-        public virtual ProfileModel Profile { get; set; }
+        public string ProfileModelId { get; set; }
     }
 }

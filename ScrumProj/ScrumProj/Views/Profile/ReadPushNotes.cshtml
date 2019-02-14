@@ -1,0 +1,22 @@
+﻿@model IEnumerable<ScrumProj.Models.PushNote>
+
+@if (User.Identity.IsAuthenticated)
+{
+    ViewBag.Title = "Notiser";
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+
+}
+
+<h2>Notiser</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @foreach (var notes in Model)
+        {
+            <dt>
+                <a href="@Url.Action("blogpage", "entry")">@notes.Note</a>
+            </dt>
+        }
+    </dl>
+</div>
