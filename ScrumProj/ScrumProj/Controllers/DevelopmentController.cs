@@ -129,7 +129,7 @@ namespace ScrumProj.Controllers
             foreach(var user in _context.Profiles)
             {
                 var anv = listOfParti.FirstOrDefault(x => x.ID == user.ID);
-                if(anv is null && !user.ID.Equals(User.Identity.GetUserId()))
+                if(anv is null)
                 {
                     var item = new SelectListItem
                     {

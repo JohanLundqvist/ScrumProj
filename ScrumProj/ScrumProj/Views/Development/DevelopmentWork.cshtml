@@ -82,21 +82,25 @@
             if (project.Visibility == 0 || user.ID == User.Identity.GetUserId())
 
             {
-                <div class="card">
-                    <h3 class="card-header">@project.Title</h3>
+                <div class="card mb-3">
+                    <h2 class="card-header" style="color:white;">@project.Title</h2>
                     <div class="card-body">
                         <h5 class="card-title">@project.Cat</h5>
                         <hr />
                         <h6 class="card-subtitle text-muted"></h6>
                         <p class="card-text">@project.Content</p>
                     </div>
-                    <ul class="list-group list-group-flush">
+                    <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
                         @foreach (var projectUser in project.Participants)
-                            {
-                        <li class="list-group-item">@projectUser.FirstName @projectUser.LastName</li>
+                        {
+                        <li style="float:left; padding:5px;">
+                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
+                            </a>
+                        </li>
                         }
                     </ul>
-                    <div class="card-body">
+                    <div class="card-footer">
                         <a href="#" class="card-link">Uppladdad fil</a>
 
                         @foreach (var userr in project.Participants)
