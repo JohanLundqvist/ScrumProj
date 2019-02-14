@@ -7,13 +7,13 @@ namespace ScrumProj.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class fix2 : IMigrationMetadata
+    public sealed partial class DevelopmentVisibilty : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fix2));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(DevelopmentVisibilty));
         
         string IMigrationMetadata.Id
         {
-            get { return "201902131117501_fix2"; }
+            get { return "201902141058501_DevelopmentVisibilty"; }
         }
         
         string IMigrationMetadata.Source

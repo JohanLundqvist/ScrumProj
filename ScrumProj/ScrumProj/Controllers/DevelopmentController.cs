@@ -26,7 +26,7 @@ namespace ScrumProj.Controllers
         public ActionResult PublishDevProject(DevelopmentViewModel model)
         {
             var idToCompare = User.Identity.GetUserId();
-          var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
+            var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
             var partiList = new List<ProfileModel>();
             partiList.Add(activeUser);
 
@@ -37,7 +37,8 @@ namespace ScrumProj.Controllers
                     Title = model.project.Title,
                     Content = model.project.Content,
                     Cat = model.project.Cat,
-                    Participants = partiList
+                    Participants = partiList,
+                    Visibility = model.project.Visibility
                 });
               
                 _context.SaveChanges();
@@ -109,72 +110,12 @@ namespace ScrumProj.Controllers
                     var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
                     projectToUpdate.Participants.Add(user);
                     _context.SaveChanges();
+                    NewPushNote("Du har blivit tillagd i ett projekt",user);
                 }
             }
+            
             return RedirectToAction("EditDevelopmentPage", new { projectId = model.project.Id });
         }
-
-
-        //public ActionResult EditDevelopmentPage(int projectId)
-        //{
-        //    var model = new DevelopmentViewModel();
-        //    model = FillModel();
-        //    var listOfUsers = new List<ProfileModel>();
-        //    var listboxList = new List<SelectListItem>();
-        //    model.Users = listOfUsers;
-        //    model.UsersFullName = listboxList;
-        //    var projectToUpdate = _context.Projects.First(p => p.Id == projectId);
-        //    var projUsers = new List<ProfileModel>();
-
-
-        //    foreach(var user in projectToUpdate.Participants)
-        //    {
-        //        projUsers.Add(user);
-        //    }
-        //    foreach (var user in projUsers)
-        //    {   foreach (var userr in _context.Profiles) {
-        //            if (!user.ID.Equals(userr.ID))
-        //            {
-        //                listOfUsers.Add(user);
-        //            }
-        //        }
-        //        }
-
-        //        foreach(var user in listOfUsers)
-        //    {
-        //        if (user.ID ==)
-        //            listOfUsers.Remove(user);
-        //    }
-            
-        //    foreach (var user in listOfUsers)
-        //    {  
-        //        var item = new SelectListItem
-        //        {
-
-        //            Text = user.FirstName + " " + user.LastName,
-        //            Value = user.ID,
-        //            Selected = false
-        //        };
-        //        listboxList.Add(item);
-        //    }
-        //    var projectToUpdate = _context.Projects.First(p => p.Id == model.project.Id);
-
-        //    //var LatestProject =_context.Projects.OrderByDescending(q => q.Id)
-        //    //.FirstOrDefault();
-
-
-        //    if (projectToUpdate != null)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-
-        //            var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
-        //            projectToUpdate.Participants.Add(user);
-        //            _context.SaveChanges();
-        //        }
-        //    }
-        //    return RedirectToAction("EditDevelopmentPage", new { projectId = model.project.Id });
-        //}
 
 
         public ActionResult EditDevelopmentPage(int projectId)
@@ -204,6 +145,7 @@ namespace ScrumProj.Controllers
                 }
             }
             model.UsersFullName = listOfNonMembers;
+            model.Users = _context.Profiles.ToList();
 
             return View(model);
         }
@@ -223,6 +165,25 @@ namespace ScrumProj.Controllers
 
             return RedirectToAction("DevelopmentWork");
         }
-      
+
+        public void NewPushNote(string note, ProfileModel model)
+        {
+            var ctx = new AppDbContext();
+
+            foreach (var p in ctx.Profiles)
+            {
+                if (p.ID == model.ID)
+                {
+                    var NewNote = new PushNote
+                    {
+                        Note = note,
+                        ProfileModelId = p.ID
+                    };
+                    p.NewPushNote = true;
+                    ctx.PushNotes.Add(NewNote);
+                }             
+            }
+            ctx.SaveChanges();
+        }
     }
 }
