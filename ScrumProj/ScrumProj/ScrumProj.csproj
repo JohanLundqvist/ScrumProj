@@ -294,9 +294,9 @@
     <Compile Include="Migrations\201902111301086_tjo2.Designer.cs">
       <DependentUpon>201902111301086_tjo2.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201902131036544_Annotaion.cs" />
-    <Compile Include="Migrations\201902131036544_Annotaion.Designer.cs">
-      <DependentUpon>201902131036544_Annotaion.cs</DependentUpon>
+    <Compile Include="Migrations\201902131117501_fix2.cs" />
+    <Compile Include="Migrations\201902131117501_fix2.Designer.cs">
+      <DependentUpon>201902131117501_fix2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201902131537171_pp.cs" />
     <Compile Include="Migrations\201902131537171_pp.Designer.cs">
@@ -312,7 +312,6 @@
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\PushNote.cs" />
     <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
-    <Compile Include="Models\ViewModels\EditDevelopmentProjectViewModel.cs" />
     <Compile Include="Models\ViewModels\EntryViewModel.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -649,8 +648,8 @@
     <EmbeddedResource Include="Migrations\201902111438471_IMAGE.resx">
       <DependentUpon>201902111438471_IMAGE.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201902131036544_Annotaion.resx">
-      <DependentUpon>201902131036544_Annotaion.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201902131117501_fix2.resx">
+      <DependentUpon>201902131117501_fix2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902131537171_pp.resx">
       <DependentUpon>201902131537171_pp.cs</DependentUpon>
