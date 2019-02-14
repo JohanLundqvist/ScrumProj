@@ -129,22 +129,17 @@ namespace ScrumProj.Controllers
             {
                 projUsers.Add(user);
             }
-            foreach (var user in projUsers)
-            {   foreach (var userr in _context.Profiles) {
-                    if (!user.ID.Equals(userr.ID))
+        
+               foreach (var userr in _context.Profiles) {
                     {
-                        listOfUsers.Add(user);
+                        listOfUsers.Add(userr);
                     }
                 }
-                }
+                
 
-                foreach(var user in listOfUsers)
-            {
-                if (user.ID ==)
-                    listOfUsers.Remove(user);
-            }
+            var usersForDropdown = listOfUsers.Where(b => projUsers.Any(a => a.ID != b.ID)).ToList();
             
-            foreach (var user in listOfUsers)
+            foreach (var user in usersForDropdown)
             {  
                 var item = new SelectListItem
                 {
