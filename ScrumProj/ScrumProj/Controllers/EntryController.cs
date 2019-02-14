@@ -33,26 +33,26 @@ namespace ScrumProj.Controllers
                 int FileIdToUse = 1000000;
                 var imageUrl = "";
 
+                // Loop to get the latest id from the file table.
+                foreach (var f in ctx.Files)
+                {
+                    FileIdToUse = f.FileId;
+                }
+
                 if (img != null && img.ContentLength > 0)
                 {
                     string imgName = Path.GetFileName(img.FileName);
                     string imgExtension = Path.GetExtension(imgName);
 
                     // Checks if the image file is an actual image
-                    if (imgExtension == ".jpg" ||
-                        imgExtension == ".jpeg" ||
-                        imgExtension == ".png" ||
-                        imgExtension == ".gif")
+                    if (imgName.EndsWith("JPG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("JPEG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("PNG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("GIF", StringComparison.OrdinalIgnoreCase))
                     {
                         string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
                         img.SaveAs(url);
                         imageUrl = "/Images/EntryImg/" + imgName;
-
-                        //Loop to get the latest id from the file table.
-                        foreach (var f in ctx.Files)
-                        {
-                            FileIdToUse = f.FileId;
-                        }
 
                         ctx.Entries.Add(new Entry
                         {
@@ -77,6 +77,7 @@ namespace ScrumProj.Controllers
                         AuthorId = UserId,
                         Content = model.entry.Content,
                         Title = model.entry.Title,
+                        fileId = FileIdToUse,
                         Author = GetNameOfLoggedInUser(),
                         Formal = IsFormal,
                         ImageUrl = imageUrl
@@ -95,10 +96,10 @@ namespace ScrumProj.Controllers
                     string imgExtension = Path.GetExtension(imgName);
 
                     // Checks if the image file is an actual image
-                    if (imgExtension == ".jpg" ||
-                        imgExtension == ".jpeg" ||
-                        imgExtension == ".png" ||
-                        imgExtension == ".gif")
+                    if (imgName.EndsWith("JPG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("JPEG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("PNG", StringComparison.OrdinalIgnoreCase) ||
+                        imgName.EndsWith("GIF", StringComparison.OrdinalIgnoreCase))
                     {
                         string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
                         img.SaveAs(url);
@@ -136,13 +137,15 @@ namespace ScrumProj.Controllers
             
             int postId = 100000000;
 
-            // gets the entry just saved to database
+            // Gets the entry just saved to database
             foreach (var f in ctx.Entries)
             {
                 postId = f.Id;
             }
             AddCategoryToDatabase(tags, postId);
             ctx.SaveChanges();
+
+            NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
 
             return RedirectToAction("BlogPage"); 
         }
@@ -554,6 +557,30 @@ namespace ScrumProj.Controllers
         {
             return PartialView(model);
         }
+        public void NewPushNote()
+        {
+            var ctx = new AppDbContext();
+            foreach (var p in ctx.Profiles)
+            {
+                p.NewPushNote = true;
+            }
+            ctx.SaveChanges();
+        }
+        public void NewPushNote(string note)
+        {
+            var ctx = new AppDbContext();
 
+            foreach (var p in ctx.Profiles)
+            {
+                var NewNote = new PushNote
+                {
+                    Note = note,
+                    ProfileModelId = p.ID
+                };
+                p.NewPushNote = true;
+                ctx.PushNotes.Add(NewNote);
+            }
+            ctx.SaveChanges();
+        }
     }
 }

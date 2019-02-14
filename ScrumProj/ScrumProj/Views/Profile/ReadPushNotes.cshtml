@@ -1,0 +1,37 @@
+﻿@model IEnumerable<ScrumProj.Models.PushNote>
+
+@if (User.Identity.IsAuthenticated)
+{
+    ViewBag.Title = "Notiser";
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+
+}
+
+<h2>Notiser</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        @foreach (var notes in Model)
+        {
+        <dt>
+            @if (notes.TypeOfNote == "bloggPost")
+            {
+                <a href="@Url.Action("blogpage", "entry")">@notes.Note</a>
+            }
+            else if (notes.TypeOfNote == "projectInvite")
+            {
+                <a href="@Url.Action("DevelopmentWork", "Development")">@notes.Note</a>
+            }
+            else if (notes.TypeOfNote == "meetingInvite")
+            {
+                <a href="@Url.Action("Booking", "Profile")">@notes.Note</a>
+            }
+            else if (notes.TypeOfNote == "acceptedByAdmin")
+            {
+                <a href="@Url.Action("Firstpage", "Profile")">@notes.Note</a>
+            }
+        </dt>
+        }
+    </dl>
+</div>

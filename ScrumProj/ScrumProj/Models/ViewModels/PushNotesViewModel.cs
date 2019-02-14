@@ -5,8 +5,9 @@ using System.Web;
 
 namespace ScrumProj.Models.ViewModels
 {
-    public class EditDevelopmentProjectViewModel
+    public class PushNotesViewModel
     {
-        public DevelopmentProject Project { get; set; }
+        public List<PushNote> PushNotesList { get; set; }
+
     }
 }
