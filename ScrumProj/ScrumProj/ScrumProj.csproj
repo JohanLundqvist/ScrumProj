@@ -311,6 +311,7 @@
     <Compile Include="Models\DevelopmentProject.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\PushNote.cs" />
+    <Compile Include="Models\ViewModels\AdminListViewModel.cs" />
     <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
     <Compile Include="Models\ViewModels\EntryViewModel.cs" />
     <Compile Include="Models\File.cs" />
@@ -548,6 +549,7 @@
     <Content Include="Views\Development\EditDevelopmentPage.cshtml" />
     <Content Include="Views\Profile\_PushNotes.cshtml" />
     <Content Include="Views\Profile\ReadPushNotes.cshtml" />
+    <Content Include="Views\Role\ListAllAdmins.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />

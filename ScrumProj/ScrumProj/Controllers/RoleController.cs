@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using ScrumProj.Models;
+using ScrumProj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,8 +31,9 @@ namespace ScrumProj.Controllers
         public ActionResult Index()
         {
             var vm = new ProfileViewModel();
-            var profiles = profileCtx.Profiles.Where(p => p.IsApproved.Equals(false)).ToList();           
+            var profiles = profileCtx.Profiles.Where(p => p.IsApproved.Equals(false)).ToList();
             vm.Categories = new List<Categories>();
+
             foreach (var c in profileCtx.Categories)
             {
                 vm.Categories.Add(c);
@@ -180,6 +182,32 @@ namespace ScrumProj.Controllers
             return View("ManageRoles");
         }
 
+
+
+        // Method to return all users who are in the Role "Admin"
+        [Authorize(Roles = "SuperAdmin")]
+        public ActionResult ListAllAdmins()
+        {
+             AdminListViewModel listOfAdmins = new AdminListViewModel();
+            
+            var roleId = ctx.Roles.FirstOrDefault(r => r.Name == "Admin").Id;
+            var Users = ctx.Users.ToList();
+
+            foreach (var user in Users)
+            {
+                var users = user.Roles.FirstOrDefault(u => u.RoleId == roleId);
+
+                if (users != null)
+                {
+                    listOfAdmins.AdminList.Add(user);
+                }
+            }
+
+            return PartialView(listOfAdmins);
+        }
+
+
+        // Method
         public ActionResult DeleteCategory(int catId)
         {
             var ctx = new AppDbContext();
