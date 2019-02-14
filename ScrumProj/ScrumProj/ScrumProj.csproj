@@ -307,6 +307,10 @@
     <Compile Include="Migrations\201902141058501_DevelopmentVisibilty.Designer.cs">
       <DependentUpon>201902141058501_DevelopmentVisibilty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902141209599_apa.cs" />
+    <Compile Include="Migrations\201902141209599_apa.Designer.cs">
+      <DependentUpon>201902141209599_apa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -314,6 +318,7 @@
     <Compile Include="Models\CategoryInEntry.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DevelopmentProject.cs" />
+    <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\PushNote.cs" />
     <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
@@ -663,6 +668,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902141058501_DevelopmentVisibilty.resx">
       <DependentUpon>201902141058501_DevelopmentVisibilty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141209599_apa.resx">
+      <DependentUpon>201902141209599_apa.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

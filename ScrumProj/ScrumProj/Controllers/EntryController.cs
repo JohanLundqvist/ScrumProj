@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -146,6 +147,20 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
 
             NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+            var ap = new ApplicationDbContext();
+            List<string> Emails = new List<string>();
+            foreach (var p in ap.Users)
+            {
+                Emails.Add(p.Email);          
+            }
+            var s = GetNameOfLoggedInUser();
+            var mc = new MailController();
+            Task.Run(() => mc.SendEmail(new EmailFormModel
+            {
+                FromEmail = "scrumcgrupptvanelson@outlook.com",
+                FromName = "Nelson Administration",
+                Message = s + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
+            }, Emails));
 
             return RedirectToAction("BlogPage"); 
         }

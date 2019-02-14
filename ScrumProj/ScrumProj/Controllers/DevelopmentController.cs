@@ -110,7 +110,7 @@ namespace ScrumProj.Controllers
                     var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
                     projectToUpdate.Participants.Add(user);
                     _context.SaveChanges();
-                    NewPushNote("Du har blivit tillagd i ett projekt",user);
+                    NewPushNote("Du har blivit tillagd i ett projekt",user, "projectInvite");
                 }
             }
             
@@ -166,7 +166,7 @@ namespace ScrumProj.Controllers
             return RedirectToAction("DevelopmentWork");
         }
 
-        public void NewPushNote(string note, ProfileModel model)
+        public void NewPushNote(string note, ProfileModel model, string typeOfNote)
         {
             var ctx = new AppDbContext();
 
@@ -177,11 +177,13 @@ namespace ScrumProj.Controllers
                     var NewNote = new PushNote
                     {
                         Note = note,
-                        ProfileModelId = p.ID
+                        ProfileModelId = p.ID,
+                        TypeOfNote = typeOfNote
+
                     };
                     p.NewPushNote = true;
                     ctx.PushNotes.Add(NewNote);
-                }             
+                }
             }
             ctx.SaveChanges();
         }
