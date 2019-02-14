@@ -143,17 +143,17 @@
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.LabelFor(u => u.entry.Title)
-                @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "100", @class = "form-control", style = "min-width: 100%", id = "inputDefault"  })
-                <p>Max 100 tecken.</p>
-            </div>
+        <div class="form-group">
+            @Html.LabelFor(u => u.entry.Title)
+            @Html.TextBoxFor(u => u.entry.Title, new { maxLength = "100", @class = "form-control", id = "Titel", style = "min-width: 100%" })
+            <span id="text-counter">100</span> tecken kvar.
+        </div>
             <div class="form-control-static panel-primary">
                 <div class="form-group">
                     <div>
 
-                        @Html.TextAreaFor(u => u.entry.Content, new { maxLength = "1500", @class = "form-control", style = "min-width: 100%", onkeyup = "textCounter(this,'counter',1500);", id = "message" })
-                        <input disabled maxlength="3" size="3" value="1500" id="counter" style="outline:none">
+                        @Html.TextAreaFor(u => u.entry.Content, new { maxLength = "1000", id = "Message", @class = "form-control", style = "min-width: 100%" })
+                        <span id="text-counter2">1000</span> tecken kvar.
                     </div>
                 </div>
 
@@ -330,16 +330,24 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
+        $(function () {
+            $('#Titel').keyup(function (e) {
+                var max = 100;
+                var len = $(this).val().length;
+                var char = max - len;
+                $('#text-counter').html(char);
+            });
+        });
 
-        function textCounter(field, field2, maxlimit) {
-            var countfield = document.getElementById(field2);
-            if (field.value.length > maxlimit) {
-                field.value = field.value.substring(0, maxlimit);
-                return false;
-            } else {
-                countfield.value = maxlimit - field.value.length;
-            }
-        }
+        $(function () {
+            $('#Message').keyup(function (e) {
+                var max = 1000;
+                var len = $(this).val().length;
+                var char = max - len;
+                $('#text-counter2').html(char);
+            });
+        });
+        
 
     var myFile = document.getElementById('newFile');
     myFile.addEventListener('change', function () {

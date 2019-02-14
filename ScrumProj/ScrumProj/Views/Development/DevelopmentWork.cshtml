@@ -120,16 +120,36 @@
     }
 </div>
 
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script>
-    $('#Create').on('click', function () {
-        $('#CreateProjectCard').hide();
-        $('#AddParticipantsCard').show();
-    }
-    );
-    $('#Done').on('click', function () {
-        $('#AddParticipantsCard').hide();
-        $('#CreateProjectCard').show();
-    }
-    );
-</script>
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script>
+        $('#Create').on('click', function () {
+            $('#CreateProjectCard').hide();
+            $('#AddParticipantsCard').show();
+        }
+        );
+        $('#Done').on('click', function () {
+            $('#AddParticipantsCard').hide();
+            $('#CreateProjectCard').show();
+        }
+        );
+    </script>
+    <script>
+        $(function () {
+            $('#Label').keyup(function (e) {
+                var max = 30;
+                var len = $(this).val().length;
+                var char = max - len;
+                $('#text-counter').html(char);
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+            $('#Content').keyup(function (e) {
+                var max = 1500;
+                var len = $(this).val().length;
+                var char = max - len;
+                $('#text-counter2').html(char);
+            });
+        });
+    </script>
