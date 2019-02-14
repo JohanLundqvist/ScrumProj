@@ -33,7 +33,7 @@ namespace ScrumProj.Controllers
         public ActionResult PublishDevProject(DevelopmentViewModel model)
         {
             var idToCompare = User.Identity.GetUserId();
-          var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
+            var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
             var partiList = new List<ProfileModel>();
             partiList.Add(activeUser);
 
@@ -65,8 +65,10 @@ namespace ScrumProj.Controllers
                     var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
                     projectToUpdate.Participants.Add(user);
                     _context.SaveChanges();
+                    NewPushNote("Du har blivit tillagd i ett projekt",user);
                 }
             }
+            
             return RedirectToAction("EditDevelopmentPage", new { projectId = model.project.Id });
         }
 
@@ -115,6 +117,25 @@ namespace ScrumProj.Controllers
 
             return RedirectToAction("DevelopmentWork");
         }
-      
+
+        public void NewPushNote(string note, ProfileModel model)
+        {
+            var ctx = new AppDbContext();
+
+            foreach (var p in ctx.Profiles)
+            {
+                if (p.ID == model.ID)
+                {
+                    var NewNote = new PushNote
+                    {
+                        Note = note,
+                        ProfileModelId = p.ID
+                    };
+                    p.NewPushNote = true;
+                    ctx.PushNotes.Add(NewNote);
+                }             
+            }
+            ctx.SaveChanges();
+        }
     }
 }
