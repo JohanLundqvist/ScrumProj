@@ -19,11 +19,11 @@
         @using (Html.BeginForm("PublishDevProject", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken();
-            <div class="card-body">
-                @Html.ValidationSummary("", new { @class = "text-danger" })
-                <div class="row">
-                    <div class="form-group col-md">
-                        @Html.LabelFor(model => model.project.Title, htmlAttributes: new { @class = "control-label col-md-4" })
+        <div class="card-body">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="row">
+                <div class="form-group col-md">
+                    @Html.LabelFor(model => model.project.Title, htmlAttributes: new { @class = "control-label col-md-4" })
 
                         @Html.EditorFor(model => model.project.Title, new { htmlAttributes = new { @class = "form-control", id = "Label", maxLength = "30" } })
                         <span id="text-counter">30</span> tecken kvar.
