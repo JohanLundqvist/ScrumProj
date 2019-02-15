@@ -27,7 +27,7 @@ namespace ScrumProj.Models
                   .ToTable("ProjectParticipants"));
 
             modelBuilder.Entity<DevFile>()
-            .HasRequired<DevelopmentProject>(f => f.ThisProject)
+            .HasRequired(f => f.ThisProject)
             .WithMany(p => p.Files)
             .HasForeignKey<int>(s => s.ProjectId);
         }

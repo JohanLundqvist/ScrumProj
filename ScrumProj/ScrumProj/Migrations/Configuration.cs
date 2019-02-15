@@ -4,8 +4,6 @@ namespace ScrumProj.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using ScrumProj.Models;
     using System.Data.Entity.Migrations;
-    // using Microsoft.AspNet.Identity;
-    // using Microsoft.AspNet.Identity.EntityFramework;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ScrumProj.Models.AppDbContext>
     {
@@ -61,7 +59,7 @@ namespace ScrumProj.Migrations
             user.EmailConfirmed = true;
             var adminResult = UserManager.Create(user, password);
 
-            // Add User Admin to Role SuperAdmin
+            // Add User Jocke to Role SuperAdmin
             if (adminResult.Succeeded)
             {
                 var result = UserManager.AddToRole(user.Id, role1);
@@ -89,8 +87,8 @@ namespace ScrumProj.Migrations
              * ---------------------------------------------------------------------------------------
              */
             var user1 = new ApplicationUser();
-            user1.UserName = "david@mail.com";
-            user1.Email = "david@mail.com";
+            user1.UserName = "davidlingvall@gmail.com";
+            user1.Email = "davidlingvall@gmail.com";
             user1.EmailConfirmed = true;
 
             UserManager.Create(user1, "hej12345");
@@ -131,7 +129,7 @@ namespace ScrumProj.Migrations
              * ---------------------------------------------------------------------------------------
              */
             var user3 = new ApplicationUser();
-            user3.UserName = "test@hotmail.com";
+            user3.UserName = "test@mail.com";
             user3.Email = "test@mail.com";
             user3.EmailConfirmed = true;
 
@@ -145,6 +143,35 @@ namespace ScrumProj.Migrations
                 Position = "Fattaru??",
                 IsApproved = true
             });
+
+            /*
+             * ---------------------------------------------------------------------------------------
+             * JACKE's PROFIL
+             * ---------------------------------------------------------------------------------------
+             */
+            var user4 = new ApplicationUser();
+            user4.UserName = "jacke@hotmail.com";
+            user4.Email = "jacke@hotmail.com";
+            user4.EmailConfirmed = true;
+
+            var jackeResult = UserManager.Create(user4, "hejhej123");
+
+            ctx.Profiles.Add(new ProfileModel
+            {
+                ID = user4.Id,
+                FirstName = "Jacke",
+                LastName = "Sörknacke",
+                Position = "SEAL",
+                IsApproved = true
+            });
+
+
+
+            // Add User Jacke to Role Admin
+            if (jackeResult.Succeeded)
+            {
+                UserManager.AddToRole(user4.Id, role2);
+            }
 
             ctx.SaveChanges();
         }
