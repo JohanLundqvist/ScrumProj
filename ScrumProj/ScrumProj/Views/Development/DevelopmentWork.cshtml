@@ -176,6 +176,13 @@
             $('#CreateProjectCard').show();
         }
         );
+        var myFile = document.getElementById('file');
+        myFile.addEventListener('change', function () {
+            if (this.files[0].size > 4000000) {
+                alert("Filen är för stor, gränsen är 4 mb");
+                myFile.value = "";
+            }
+        });
     
         $(function () {
             $('#Label').keyup(function (e) {
