@@ -58,6 +58,7 @@ namespace ScrumProj.Migrations
             var user = new ApplicationUser();
             user.UserName = "jocke@hotmail.com";
             user.Email = "jocke@hotmail.com";
+            user.EmailConfirmed = true;
             var adminResult = UserManager.Create(user, password);
 
             // Add User Admin to Role SuperAdmin
@@ -84,24 +85,67 @@ namespace ScrumProj.Migrations
 
             /*
              * ---------------------------------------------------------------------------------------
-             * Adds a SuperAdmin account and Profile
+             * DAVID's PROFIL
              * ---------------------------------------------------------------------------------------
              */
-             /*
             var user1 = new ApplicationUser();
-            user.UserName = "jocke@hotmail.com";
-            user.Email = "jocke@hotmail.com";
-            var adminResult = UserManager.Create(user, password);
+            user1.UserName = "david@mail.com";
+            user1.Email = "david@mail.com";
+            user1.EmailConfirmed = true;
+
+            UserManager.Create(user1, "hej12345");
 
             ctx.Profiles.Add(new ProfileModel
             {
-                ID = user.Id,
-                FirstName = "Jakob",
-                LastName = "Hallman",
-                Position = "Anställd",
+                ID = user1.Id,
+                FirstName = "David",
+                LastName = "Lindkuk",
+                Position = "Rörmokare",
                 IsApproved = true
             });
-            */
+
+            /*
+             * ---------------------------------------------------------------------------------------
+             * SVING's PROFIL
+             * ---------------------------------------------------------------------------------------
+             */
+            var user2 = new ApplicationUser();
+            user2.UserName = "sving91@gmail.com";
+            user2.Email = "sving91@gmail.com";
+            user2.EmailConfirmed = true;
+
+            UserManager.Create(user2, "hej12345");
+
+            ctx.Profiles.Add(new ProfileModel
+            {
+                ID = user2.Id,
+                FirstName = "Svinger",
+                LastName = "Lillkuk",
+                Position = "Rövslickare",
+                IsApproved = true
+            });
+
+            /*
+             * ---------------------------------------------------------------------------------------
+             * TEST's PROFIL
+             * ---------------------------------------------------------------------------------------
+             */
+            var user3 = new ApplicationUser();
+            user3.UserName = "test@hotmail.com";
+            user3.Email = "test@mail.com";
+            user3.EmailConfirmed = true;
+
+            UserManager.Create(user3, "12344321");
+
+            ctx.Profiles.Add(new ProfileModel
+            {
+                ID = user3.Id,
+                FirstName = "Hugh",
+                LastName = "Mungus",
+                Position = "Fattaru??",
+                IsApproved = true
+            });
+
             ctx.SaveChanges();
         }
     }
