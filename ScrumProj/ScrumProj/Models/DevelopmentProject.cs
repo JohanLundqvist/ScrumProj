@@ -45,6 +45,7 @@ namespace ScrumProj.Models
 
         public DevelopmentProject(){
             this.Participants = new HashSet<ProfileModel>();
+            this.Files = new HashSet<DevFile>();
 
             }
 

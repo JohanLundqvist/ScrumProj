@@ -1,15 +1,15 @@
 ﻿@model ScrumProj.Models.ViewModels.DevelopmentViewModel
 
-@if(User.Identity.IsAuthenticated)
+@if (User.Identity.IsAuthenticated)
 {
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 }
 
 <div class="row">
-    <div class="col">
+    <div class="col" style="padding-bottom:20px">
         <div style="width:100%;">
-        <h4>Redigera projekt</h4>
-            </div>
+            <h4>Redigera projekt</h4>
+        </div>
         <div class="card form-horizontal">
             @using (Html.BeginForm("Edit", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
@@ -18,21 +18,21 @@
 
                 @Html.HiddenFor(model => model.project.Id)
                 <div class="row" style="padding-top: 20px;">
-                <div class="form-group col-md">
-                    @Html.LabelFor(model => model.project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md">
-                        @Html.EditorFor(model => model.project.Title, new { htmlAttributes = new { @class = "form-control", placeholder = Model.project.Title } })
-                        @Html.ValidationMessageFor(model => model.project.Title, "", new { @class = "text-danger" })
+                    <div class="form-group col-md">
+                        @Html.LabelFor(model => model.project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md">
+                            @Html.EditorFor(model => model.project.Title, new { htmlAttributes = new { @class = "form-control", placeholder = Model.project.Title } })
+                            @Html.ValidationMessageFor(model => model.project.Title, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group col-md">
-                    @Html.LabelFor(model => model.project.Cat, htmlAttributes: new { @class = "control-label col-md" })
-                    <div class="col-md">
-                        @Html.EnumDropDownListFor(model => model.project.Cat, htmlAttributes: new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.project.Cat, "", new { @class = "text-danger" })
+                    <div class="form-group col-md">
+                        @Html.LabelFor(model => model.project.Cat, htmlAttributes: new { @class = "control-label col-md" })
+                        <div class="col-md">
+                            @Html.EnumDropDownListFor(model => model.project.Cat, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.project.Cat, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(model => model.project.Content, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -40,7 +40,7 @@
                         @Html.TextAreaFor(model => model.project.Content, new { @class = "form-control", placeholder = Model.project.Content, rows = 10, style = "min-width:100%; resize:none;" })
                         @Html.ValidationMessageFor(model => model.project.Content, "", new { @class = "text-danger" })
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="padding-left:15px">
                         @Html.LabelFor(m => m.project.Visibility)
                         @Html.EnumDropDownListFor(model => model.project.Visibility, htmlAttributes: new { @class = "form-control" })
                     </div>
@@ -57,38 +57,46 @@
             }
         </div>
     </div>
-        <div class="card col-md" id="AddParticipantsCard" style="max-width: 20rem; padding-top:20px;">
-            @using (Html.BeginForm("AddParticipants", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                @Html.AntiForgeryToken();
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.project.Participants)
-                @Html.DropDownListFor(x => x.UserToAdd, new SelectList(Model.UsersFullName, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "DevelopmentViewModel" })
-                @Html.HiddenFor(u => u.project.Id)
-                @Html.HiddenFor(u => u.project.Title)
-            </div>
-            <ul>
-                @foreach (var user in Model.project.Participants)
-                {
-                    <li>
-                        @user.FirstName @user.LastName
-                    </li>
-                }
-            </ul>
-            <div class="form-group">
-                <div>
-                    <input type="submit" value="Bjud in" class="btn btn-info" />
-                </div>
-            </div>
-        }
-        <div>
-            <button id="Done" class="btn btn-info"> Klar </button>
-        </div>
-    </div>
-    </div>
-
-    <div>
-        @Html.ActionLink("DevelopmentWork", "DevelopmentWork")
-    </div>
 </div>
+<div class="card" id="AddParticipantsCard" style="min-width:100%; padding:15px;">
+    @using (Html.BeginForm("AddParticipants", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken();
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.project.Participants)
+            @Html.DropDownListFor(x => x.UserToAdd, new SelectList(Model.UsersFullName, "Value", "Text"), htmlAttributes: new { @class = "form-control", id = "DevelopmentViewModel" })
+            @Html.HiddenFor(u => u.project.Id)
+            @Html.HiddenFor(u => u.project.Title)
+        </div>
+        <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+            @foreach (var projectUser in Model.project.Participants)
+            {
+                <li style="float:left; padding:5px;">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                        <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
+                    </a>
+                </li>
+            }
+        </ul>
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Bjud in" class="btn btn-info" />
+            </div>
+        </div>
+    }
+
+</div>
+<div class="card">
+    @using (Html.BeginForm("", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.LabelFor(m => m.project.Files)
+           <input id="file" type="file" name="upload" />
+    }
+    </div>
+
+<div>
+    @Html.ActionLink("DevelopmentWork", "DevelopmentWork")
+</div>
+

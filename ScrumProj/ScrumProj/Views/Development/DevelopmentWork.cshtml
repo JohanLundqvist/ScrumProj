@@ -41,10 +41,19 @@
                     @Html.TextAreaFor(model => model.project.Content, new { rows = 10, @class = "form-control", id = "Content", maxLength = "1500", style = "min-width:100%; resize:none;" })
                     <span id="text-counter2">1500</span> tecken kvar.
                 </div>
-                <div class="form-group">
+            <div class="row">
+                <div class="form-group col-md">
                     @Html.LabelFor(m => m.project.Visibility)
                     @Html.EnumDropDownListFor(model => model.project.Visibility, htmlAttributes: new { @class = "form-control" })
                 </div>
+                <div class="form-group col-md">
+                    <input id="file" type="file" name="upload" />
+                    <div id="fileInfo" style="display:none;">
+                        @Html.LabelFor(m => m.AttachedFile.Name)
+                        @Html.EditorFor(m => m.AttachedFile.Name, new { htmlAttributes = new { @class = "form-control", id = "Label", maxLength = "30" } })
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="form-group">
                 <div style="padding-left:20px">
@@ -82,6 +91,18 @@
                     }
                 </ul>
                 <div class="card-footer">
+                    <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+                        @foreach (var file in project.Files)
+                        {
+                            <li style="float:left; padding:5px;">
+                                <a href="@Url.Action("DownloadFile", "Development", new { fileId = file.FileId })" data- class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                    <small class="mb-1">@file.Name</small>
+                                </a>
+                            </li>
+                        }
+                        </ul>
+                </div>
+                <div class="card-footer">
                     <a href="#" class="card-link">Uppladdad fil</a>
 
                     @foreach (var userr in project.Participants)
@@ -93,6 +114,7 @@
                     }
 
                 </div>
+                
 
             </div>
         }
@@ -152,8 +174,14 @@
             $('#CreateProjectCard').show();
         }
         );
-    </script>
-    <script>
+        var myFile = document.getElementById('file');
+        myFile.addEventListener('change', function () {
+            if (this.files[0].size > 4000000) {
+                alert("Filen är för stor, gränsen är 4 mb");
+                myFile.value = "";
+            }
+        });
+    
         $(function () {
             $('#Label').keyup(function (e) {
                 var max = 30;
@@ -162,8 +190,7 @@
                 $('#text-counter').html(char);
             });
         });
-    </script>
-    <script>
+    
         $(function () {
             $('#Content').keyup(function (e) {
                 var max = 1500;
@@ -172,4 +199,9 @@
                 $('#text-counter2').html(char);
             });
         });
+
+        $('#upload').on('change', function () {
+            $('#fileInfo').toggle();
+
+        })
     </script>

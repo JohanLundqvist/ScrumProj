@@ -31,7 +31,7 @@ namespace ScrumProj.Controllers
 
         [Authorize][HttpPost]
         
-        public ActionResult PublishDevProject(DevelopmentViewModel model)
+        public ActionResult PublishDevProject(DevelopmentViewModel model, HttpPostedFileBase upload)
         {
             var idToCompare = User.Identity.GetUserId();
             var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
@@ -40,14 +40,29 @@ namespace ScrumProj.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Projects.Add(new DevelopmentProject
+                if (upload != null && upload.ContentLength > 0)
                 {
-                    Title = model.project.Title,
-                    Content = model.project.Content,
-                    Cat = model.project.Cat,
-                    Participants = partiList,
-                    Visibility = model.project.Visibility
-                });
+                    var file = new DevFile
+                    {
+                        Name = System.IO.Path.GetFileName(upload.FileName)
+
+                    };
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        file.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                    model.project.Files = new List<DevFile> { file };
+                }
+                
+                    _context.Projects.Add(new DevelopmentProject
+                    {
+                        Title = model.project.Title,
+                        Content = model.project.Content,
+                        Cat = model.project.Cat,
+                        Participants = partiList,
+                        Visibility = model.project.Visibility,
+                        Files = model.project.Files
+                    });
               
                 _context.SaveChanges();
             }
@@ -106,7 +121,6 @@ namespace ScrumProj.Controllers
                 {
                     var item = new SelectListItem
                     {
-
                         Text = user.FirstName + " " + user.LastName,
                         Value = user.ID,
                         Selected = false
@@ -177,5 +191,25 @@ namespace ScrumProj.Controllers
 
             return FirstName + " " + LastName;
         }
+
+        
+        public FileResult DownloadFile(int fileId)
+        {
+            var fileToDownload = _context.DevFiles.SingleOrDefault(f => f.FileId == fileId);
+
+            byte[] fileBytes = fileToDownload.Content;
+            string fileName = fileToDownload.Name;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        //public ActionResult AddFile(DevelopmentViewModel model,HttpPostedFileBase )
+        //{
+        //    var projectToUpdate = _context.Projects.First(p => p.Id == model.project.Id);
+
+        //    if(projectToUpdate != null)
+        //    {
+        //        projectToUpdate.Files.Add()
+        //    }
+        //}
     }
 }
