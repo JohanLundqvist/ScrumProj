@@ -4,8 +4,6 @@ namespace ScrumProj.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
     using ScrumProj.Models;
     using System.Data.Entity.Migrations;
-    // using Microsoft.AspNet.Identity;
-    // using Microsoft.AspNet.Identity.EntityFramework;
 
     internal sealed class Configuration : DbMigrationsConfiguration<ScrumProj.Models.AppDbContext>
     {
