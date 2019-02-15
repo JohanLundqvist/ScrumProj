@@ -87,8 +87,8 @@ namespace ScrumProj.Migrations
              * ---------------------------------------------------------------------------------------
              */
             var user1 = new ApplicationUser();
-            user1.UserName = "david@mail.com";
-            user1.Email = "david@mail.com";
+            user1.UserName = "davidlingvall@gmail.com";
+            user1.Email = "davidlingvall@gmail.com";
             user1.EmailConfirmed = true;
 
             UserManager.Create(user1, "hej12345");

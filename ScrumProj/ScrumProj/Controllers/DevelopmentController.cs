@@ -66,23 +66,25 @@ namespace ScrumProj.Controllers
                     var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
                     projectToUpdate.Participants.Add(user);
                     _context.SaveChanges();
-                    NewPushNote("Du har blivit tillagd i ett projekt",user, "projectInvite");
+                    NewPushNote(GetNameOfLoggedInUser() + " Har lagt till dig i projektet " + model.project.Title + "------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"), user, "projectInvite");
 
-                    //NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
-                    //var ap = new ApplicationDbContext();
-                    //List<string> Emails = new List<string>();
-                    //foreach (var p in ap.Users)
-                    //{
-                    //    Emails.Add(p.Email);
-                    //}
-                    //var s = GetNameOfLoggedInUser();
-                    //var mc = new MailController();
-                    //Task.Run(() => mc.SendEmail(new EmailFormModel
-                    //{
-                    //    FromEmail = "scrumcgrupptvanelson@outlook.com",
-                    //    FromName = "Nelson Administration",
-                    //    Message = s + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
-                    //}, Emails));
+                    var ap = new ApplicationDbContext();
+                    List<string> Emails = new List<string>();
+                    foreach (var p in ap.Users)
+                    {
+                        if (user.ID == p.Id)
+                        {
+                            Emails.Add(p.Email);
+                        }
+                    }
+                    var s = GetNameOfLoggedInUser();
+                    var mc = new MailController();
+                    Task.Run(() => mc.SendEmail(new EmailFormModel
+                    {
+                        FromEmail = "scrumcgrupptvanelson@outlook.com",
+                        FromName = "Nelson Administration",
+                        Message = s + " Har lagt till dig i projektet " + model.project.Title + "------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
+                    }, Emails));
                 }
             }
             
@@ -155,6 +157,25 @@ namespace ScrumProj.Controllers
                 }
             }
             ctx.SaveChanges();
+        }
+        public ProfileModel GetCurrentUser(string Id)
+        {
+            var ctx = new AppDbContext();
+            var UserId = User.Identity.GetUserId();
+            var appUser = ctx.Profiles.SingleOrDefault(u => u.ID == Id);
+
+            return appUser;
+        }
+        public string GetNameOfLoggedInUser()
+        {
+            var ctx = new AppDbContext();
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = GetCurrentUser(currentUserId);
+            var Profile = ctx.Profiles.Find(currentUserId);
+            var FirstName = Profile.FirstName;
+            var LastName = Profile.LastName;
+
+            return FirstName + " " + LastName;
         }
     }
 }
