@@ -5,6 +5,7 @@ using ScrumProj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -55,7 +56,24 @@ namespace ScrumProj.Controllers
 
             profileCtx.SaveChanges();
 
-            NewPushNote("Du har blivit accepterad in i klubben", userProfile, "acceptedByAdmin");
+            NewPushNote("Du har blivit accepterad av admin och har nu tillgång till hela Nelson Administration ------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"), userProfile, "acceptedByAdmin");
+            var ap = new ApplicationDbContext();
+            List<string> Emails = new List<string>();
+            foreach (var p in ap.Users)
+            {
+                if (id == p.Id)
+                {
+                    Emails.Add(p.Email);
+                }
+            }
+            var s = GetNameOfLoggedInUser();
+            var mc = new MailController();
+            Task.Run(() => mc.SendEmail(new EmailFormModel
+            {
+                FromEmail = "scrumcgrupptvanelson@outlook.com",
+                FromName = "Nelson Administration",
+                Message = "Du har blivit accepterad av admin och har nu tillgång till hela Nelson Administration ------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
+            }, Emails));
 
             return RedirectToAction("Index");
         }
@@ -239,6 +257,25 @@ namespace ScrumProj.Controllers
                 }
             }
             ctx.SaveChanges();
+        }
+        public ProfileModel GetCurrentUser(string Id)
+        {
+            var ctx = new AppDbContext();
+            var UserId = User.Identity.GetUserId();
+            var appUser = ctx.Profiles.SingleOrDefault(u => u.ID == Id);
+
+            return appUser;
+        }
+        public string GetNameOfLoggedInUser()
+        {
+            var ctx = new AppDbContext();
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = GetCurrentUser(currentUserId);
+            var Profile = ctx.Profiles.Find(currentUserId);
+            var FirstName = Profile.FirstName;
+            var LastName = Profile.LastName;
+
+            return FirstName + " " + LastName;
         }
     }
 }
