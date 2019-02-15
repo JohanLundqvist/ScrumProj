@@ -196,7 +196,7 @@ namespace ScrumProj.Controllers
 
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Vänligen återställ ditt lösenord genom att klicka <a href=\"" + callbackUrl + "\">här</a>");
+                await UserManager.SendEmailAsync(user.Id, "Återställ lösenord", "Vänligen återställ ditt lösenord genom att klicka <a href=\"" + callbackUrl + "\">här</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
