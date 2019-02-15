@@ -121,7 +121,6 @@ namespace ScrumProj.Controllers
                 {
                     var item = new SelectListItem
                     {
-
                         Text = user.FirstName + " " + user.LastName,
                         Value = user.ID,
                         Selected = false
