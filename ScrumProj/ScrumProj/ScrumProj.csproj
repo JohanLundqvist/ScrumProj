@@ -338,6 +338,10 @@
     <Compile Include="Migrations\201902141220346_vafansomhelst.Designer.cs">
       <DependentUpon>201902141220346_vafansomhelst.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902141209599_apa.cs" />
+    <Compile Include="Migrations\201902141209599_apa.Designer.cs">
+      <DependentUpon>201902141209599_apa.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902141411028_fil_till_projekt.cs" />
     <Compile Include="Migrations\201902141411028_fil_till_projekt.Designer.cs">
       <DependentUpon>201902141411028_fil_till_projekt.cs</DependentUpon>
@@ -349,9 +353,11 @@
     <Compile Include="Models\CategoryInEntry.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\DevelopmentProject.cs" />
+    <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\DevFile.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\PushNote.cs" />
+    <Compile Include="Models\ViewModels\AdminListViewModel.cs" />
     <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
     <Compile Include="Models\ViewModels\EntryViewModel.cs" />
     <Compile Include="Models\File.cs" />
@@ -590,6 +596,7 @@
     <Content Include="Views\Development\EditDevelopmentPage.cshtml" />
     <Content Include="Views\Profile\_PushNotes.cshtml" />
     <Content Include="Views\Profile\ReadPushNotes.cshtml" />
+    <Content Include="Views\Role\ListAllAdmins.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
@@ -699,6 +706,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902141058501_DevelopmentVisibilty.resx">
       <DependentUpon>201902141058501_DevelopmentVisibilty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902141209599_apa.resx">
+      <DependentUpon>201902141209599_apa.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902141220346_vafansomhelst.resx">
       <DependentUpon>201902141220346_vafansomhelst.cs</DependentUpon>
