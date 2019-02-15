@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using ScrumProj.Models;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace ScrumProj.Controllers
 {
@@ -55,7 +56,7 @@ namespace ScrumProj.Controllers
 
         public ActionResult AddParticipants(DevelopmentViewModel model)
         { 
-
+            
             var projectToUpdate = _context.Projects.First(p => p.Id == model.project.Id);
 
             if (projectToUpdate != null)
@@ -66,6 +67,22 @@ namespace ScrumProj.Controllers
                     projectToUpdate.Participants.Add(user);
                     _context.SaveChanges();
                     NewPushNote("Du har blivit tillagd i ett projekt",user, "projectInvite");
+
+                    //NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+                    //var ap = new ApplicationDbContext();
+                    //List<string> Emails = new List<string>();
+                    //foreach (var p in ap.Users)
+                    //{
+                    //    Emails.Add(p.Email);
+                    //}
+                    //var s = GetNameOfLoggedInUser();
+                    //var mc = new MailController();
+                    //Task.Run(() => mc.SendEmail(new EmailFormModel
+                    //{
+                    //    FromEmail = "scrumcgrupptvanelson@outlook.com",
+                    //    FromName = "Nelson Administration",
+                    //    Message = s + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
+                    //}, Emails));
                 }
             }
             

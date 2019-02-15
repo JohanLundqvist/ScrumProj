@@ -100,7 +100,7 @@ namespace ScrumProj.Migrations
                 ID = user1.Id,
                 FirstName = "David",
                 LastName = "Lindkuk",
-                Position = "Rörmokare",
+                Position = "Elektriker",
                 IsApproved = true
             });
 
