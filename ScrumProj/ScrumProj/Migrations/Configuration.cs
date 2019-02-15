@@ -59,7 +59,7 @@ namespace ScrumProj.Migrations
             user.EmailConfirmed = true;
             var adminResult = UserManager.Create(user, password);
 
-            // Add User Admin to Role SuperAdmin
+            // Add User Jocke to Role SuperAdmin
             if (adminResult.Succeeded)
             {
                 var result = UserManager.AddToRole(user.Id, role1);
@@ -146,7 +146,7 @@ namespace ScrumProj.Migrations
 
             /*
              * ---------------------------------------------------------------------------------------
-             * TEST's PROFIL
+             * JACKE's PROFIL
              * ---------------------------------------------------------------------------------------
              */
             var user4 = new ApplicationUser();
@@ -167,7 +167,7 @@ namespace ScrumProj.Migrations
 
 
 
-            // Add User Admin to Role SuperAdmin
+            // Add User Jacke to Role Admin
             if (jackeResult.Succeeded)
             {
                 UserManager.AddToRole(user4.Id, role2);
