@@ -51,9 +51,12 @@ namespace ScrumProj.Controllers
                         imgName.EndsWith("PNG", StringComparison.OrdinalIgnoreCase) ||
                         imgName.EndsWith("GIF", StringComparison.OrdinalIgnoreCase))
                     {
-                        string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
+                        // Renames the image and saves it in folder
+                        string newImgName = DateTime.Now.ToString("ddMMyyhhmmss") + imgExtension;
+                        string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), newImgName);
                         img.SaveAs(url);
-                        imageUrl = "/Images/EntryImg/" + imgName;
+
+                        imageUrl = "/Images/EntryImg/" + newImgName;
 
                         ctx.Entries.Add(new Entry
                         {
@@ -102,9 +105,12 @@ namespace ScrumProj.Controllers
                         imgName.EndsWith("PNG", StringComparison.OrdinalIgnoreCase) ||
                         imgName.EndsWith("GIF", StringComparison.OrdinalIgnoreCase))
                     {
-                        string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), imgName);
+                        // Renames the image and saves it in folder
+                        string newImgName = DateTime.Now.ToString("ddMMyyhhmmss") + imgExtension;
+                        string url = Path.Combine(Server.MapPath("~/Images/EntryImg"), newImgName);
                         img.SaveAs(url);
-                        imageUrl = "/Images/EntryImg/" + imgName;
+                        
+                        imageUrl = "/Images/EntryImg/" + newImgName;
 
                         ctx.Entries.Add(new Entry
                         {

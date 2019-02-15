@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
 
 namespace ScrumProj.Controllers
 {
@@ -63,7 +62,25 @@ namespace ScrumProj.Controllers
 
             return View("ProfileCreated");
         }
-        
+
+
+
+        // Method to view Profile information
+        public ActionResult ViewProfile()
+        {
+            var ctx = new AppDbContext();
+            var currentUserId = User.Identity.GetUserId();
+            var currentUserProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
+
+            return View(new ProfileViewModel
+            {
+                FirstName = currentUserProfile.FirstName,
+                LastName = currentUserProfile.LastName,
+                Position = currentUserProfile.Position
+            });
+        }
+
+
         public ProfileModel GetCurrentUser(string Id) {
             var ctx = new AppDbContext();
             var UserId = User.Identity.GetUserId();
