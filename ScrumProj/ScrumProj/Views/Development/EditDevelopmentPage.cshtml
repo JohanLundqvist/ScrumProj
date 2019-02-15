@@ -51,7 +51,7 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
+                        <input type="submit" value="Save" class="btn btn-outline-info" />
                     </div>
                 </div>
             }
@@ -82,21 +82,40 @@
         </ul>
         <div class="form-group">
             <div>
-                <input type="submit" value="Bjud in" class="btn btn-info" />
+                <input type="submit" value="Bjud in" class="btn btn-outline-info" />
             </div>
         </div>
     }
 
 </div>
-<div class="card">
-    @using (Html.BeginForm("", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
+<div style="padding:10px;"></div>
+<div class="card" style="padding:15px;">
+    @using (Html.BeginForm("AddFile", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
-        @Html.LabelFor(m => m.project.Files)
-           <input id="file" type="file" name="upload" />
-    }
-    </div>
+        @Html.LabelFor(m => m.project.Files)<br />
+        <input id="file" type="file" name="upload" />
+        @Html.HiddenFor(u => u.project.Id)
+        @Html.HiddenFor(u => u.project.Title)
+        <div class="form-group" style="padding-top:15px;">
+            <div>
+                <input type="submit" value="Ladda Upp" class="btn btn-sm btn-outline-info" />
+            </div>
+        </div>
 
-<div>
+        <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+            @foreach (var file in Model.project.Files)
+            {
+                <li style="float:left; padding:5px;">
+                    <a href="@Url.Action("DownloadFile", "Development", new { fileId = file.FileId })" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                        <small class="mb-1">@file.Name</small>
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+</div>
+
+<div style="padding-top:15px;">
     @Html.ActionLink("DevelopmentWork", "DevelopmentWork")
 </div>
 
