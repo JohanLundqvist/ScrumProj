@@ -203,14 +203,32 @@ namespace ScrumProj.Controllers
             return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
         }
 
-        //public ActionResult AddFile(DevelopmentViewModel model,HttpPostedFileBase )
-        //{
-        //    var projectToUpdate = _context.Projects.First(p => p.Id == model.project.Id);
+        public ActionResult AddFile(DevelopmentViewModel model, HttpPostedFileBase upload)
+        {
+            var projectToUpdate = _context.Projects.First(p => p.Id == model.project.Id);
 
-        //    if(projectToUpdate != null)
-        //    {
-        //        projectToUpdate.Files.Add()
-        //    }
-        //}
+            if (projectToUpdate != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (upload != null && upload.ContentLength > 0)
+                    {
+                        var file = new DevFile
+                        {
+                            Name = System.IO.Path.GetFileName(upload.FileName)
+
+                        };
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            file.Content = reader.ReadBytes(upload.ContentLength);
+                        }
+                        projectToUpdate.Files.Add(file);
+                        _context.SaveChanges();
+                    }
+                }
+                
+            }
+            return RedirectToAction("EditDevelopmentPage", new { projectId = model.project.Id });
+        }
     }
 }
