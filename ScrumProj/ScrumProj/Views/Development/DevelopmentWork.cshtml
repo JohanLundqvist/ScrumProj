@@ -48,10 +48,6 @@
                 </div>
                 <div class="form-group col-md">
                     <input id="file" type="file" name="upload" />
-                    <div id="fileInfo" style="display:none;">
-                        @Html.LabelFor(m => m.AttachedFile.Name)
-                        @Html.EditorFor(m => m.AttachedFile.Name, new { htmlAttributes = new { @class = "form-control", id = "Label", maxLength = "30" } })
-                    </div>
                 </div>
             </div>
             </div>
@@ -90,7 +86,6 @@
                         </li>
                     }
                 </ul>
-                
                 <div class="card-footer">
                     <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
                         @foreach (var file in project.Files)
@@ -104,6 +99,8 @@
                         </ul>
                 </div>
                 
+
+
                 <div class="card-footer">
 
 
@@ -126,38 +123,54 @@
             {
                 if (User.Identity.GetUserId() == user.ID)
                 {
-                    <div class="card mb-3">
-                        <h2 class="card-header" style="color:white;">@project.Title</h2>
-                        <div class="card-body">
-                            <h5 class="card-title">@project.Cat</h5>
-                            <hr />
-                            <h6 class="card-subtitle text-muted"></h6>
-                            <p class="card-text">@project.Content</p>
-                        </div>
+            <div class="card mb-3">
+                <h2 class="card-header" style="color:white;">@project.Title</h2>
+                <div class="card-body">
+                    <h5 class="card-title">@project.Cat</h5>
+                    <hr />
+                    <h6 class="card-subtitle text-muted"></h6>
+                    <p class="card-text">@project.Content</p>
+                </div>
+                <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+                    @foreach (var projectUser in project.Participants)
+                    {
+                        <li style="float:left; padding:5px;">
+                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
+                            </a>
+                        </li>
+                    }
+                </ul>
+                    <div class="card-footer">
                         <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
-                            @foreach (var projectUser in project.Participants)
+                            @foreach (var file in project.Files)
                             {
                                 <li style="float:left; padding:5px;">
-                                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
-                                        <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
+                                    <a href="@Url.Action("DownloadFile", "Development", new { fileId = file.FileId })" data- class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                        <small class="mb-1">@file.Name</small>
                                     </a>
                                 </li>
                             }
                         </ul>
-                        <div class="card-footer">
-                            <a href="#" class="card-link">Uppladdad fil</a>
-
-                            @foreach (var userr in project.Participants)
-                            {
-                                if (userr.Equals(Model.ActiveUser))
-                                {
-                                    <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
-                                }
-                            }
-
-                        </div>
-
                     </div>
+                
+
+
+                <div class="card-footer">
+
+
+                    @foreach (var userr in project.Participants)
+                    {
+                        if (userr.Equals(Model.ActiveUser))
+                        {
+                            <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
+                        }
+                    }
+
+                </div>
+
+
+            </div>
                 }
             }
         }
@@ -202,8 +215,4 @@
             });
         });
 
-        $('#upload').on('change', function () {
-            $('#fileInfo').toggle();
-
-        })
     </script>
