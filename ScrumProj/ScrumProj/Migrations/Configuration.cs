@@ -78,6 +78,13 @@ namespace ScrumProj.Migrations
                 Position = position,
                 IsApproved = true
             });
+            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            {
+                BlogPost = true,
+                Mail = true,
+                Sms = true,
+                UserId = user.Id
+            });
 
 
 
@@ -101,6 +108,13 @@ namespace ScrumProj.Migrations
                 Position = "Elektriker",
                 IsApproved = true
             });
+            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            {
+                BlogPost = true,
+                Mail = true,
+                Sms = true,
+                UserId = user1.Id
+            });
 
             /*
              * ---------------------------------------------------------------------------------------
@@ -122,6 +136,13 @@ namespace ScrumProj.Migrations
                 Position = "Rövslickare",
                 IsApproved = true
             });
+            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            {
+                BlogPost = true,
+                Mail = true,
+                Sms = true,
+                UserId = user2.Id
+            });
 
             /*
              * ---------------------------------------------------------------------------------------
@@ -142,6 +163,13 @@ namespace ScrumProj.Migrations
                 LastName = "Mungus",
                 Position = "Fattaru??",
                 IsApproved = true
+            });
+            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            {
+                BlogPost = true,
+                Mail = true,
+                Sms = true,
+                UserId = user3.Id
             });
 
             /*

@@ -5,48 +5,104 @@
     ViewBag.Title = "ViewProfile";
 }
 
+@using ScrumProj.Models
+
+var ctx = new AppDbContext();
+
 @if (User.Identity.IsAuthenticated)
 {
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 }
 
 
+<div class="row">
+    <div class="col-md-4">
+        <h2>Din profil</h2>
 
-<div>
-    <h2>Din profil</h2>
+        <hr />
 
-    <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Förnamn:
+            </dt>
 
-    <dl class="dl-horizontal">
-        <dt>
-            Förnamn:
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
+            <br />
+
+            <dt>
+                Efternamn:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <br />
+
+            <dt>
+                Position:
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Position)
+            </dd>
+        </dl>
 
         <br />
 
-        <dt>
-            Efternamn:
-        </dt>
+    </div>
+    <div class="col-md-4">
+        <h2>Dina notiser</h2>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
+        <hr />
+        @using (Html.BeginForm("ChangeNotificationSettings", "Profile", FormMethod.Post, new { Model }))
+        {
+            @Html.TextBoxFor(model => model.ID, new { @class = "invisible" })
+            <div class="custom-control custom-switch">
+                @if (Model.WantMailOrNo.Mail)
+                {
+                    <input type="checkbox" class="custom-control-input" id="MailSwitch" name="MailSwitch" checked value="true">
+                    <label class="custom-control-label" for="MailSwitch">Mailnotiser</label>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="MailSwitch" name="MailSwitch" value="true">
+                    <label class="custom-control-label" for="MailSwitch">Mailnotiser</label>
+                }
+            </div>
+            <br />
+            <div class="custom-control custom-switch">
+                @if (Model.WantMailOrNo.BlogPost)
+                {
+                    <input type="checkbox" class="custom-control-input" id="BlogPostSwitch" name="BlogPostSwitch" checked value="true">
+                    <label class="custom-control-label" for="BlogPostSwitch">Bloggnotiser</label>
 
-        <br />
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="BlogPostSwitch" name="BlogPostSwitch" value="true">
+                    <label class="custom-control-label" for="BlogPostSwitch">Bloggnotiser</label>
+                }
+            </div>
+            <br />
+            <div class="custom-control custom-switch">
+                @if (Model.WantMailOrNo.Project)
+                {
+                    <input type="checkbox" class="custom-control-input" id="ProjectSwitch" name="ProjectSwitch" checked value="true">
+                    <label class="custom-control-label" for="ProjectSwitch">Projeknotiser</label>
+                }
+                else
+                {
+                    <input type="checkbox" class="custom-control-input" id="ProjectSwitch" name="ProjectSwitch" value="true">
+                    <label class="custom-control-label" for="ProjectSwitch">Projeknotiser</label>
+                }
 
-        <dt>
-            Position:
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Position)
-        </dd>
-    </dl>
-
-    <br />
+            </div>
+            <input type="submit" name="Ändra inställningar" />
+        }
+    </div>
 
 </div>

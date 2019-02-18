@@ -18,7 +18,7 @@ namespace ScrumProj.Controllers
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var userProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
-            
+
             var exist = false;
 
             if (userProfile != null)
@@ -71,12 +71,15 @@ namespace ScrumProj.Controllers
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var currentUserProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
-
+            var PushNoteStatus = ctx.WantMailOrNoes.Where(i=> i.UserId == currentUserId).Single();
+                
             return View(new ProfileViewModel
             {
                 FirstName = currentUserProfile.FirstName,
                 LastName = currentUserProfile.LastName,
-                Position = currentUserProfile.Position
+                Position = currentUserProfile.Position,
+                ID = currentUserId,
+                WantMailOrNo = PushNoteStatus               
             });
         }
 
@@ -156,14 +159,14 @@ namespace ScrumProj.Controllers
             var ListofEntries = db.Entries.ToList();
             foreach (var entry in ListofEntries)
             {
-                
-                    var thisFileId = entry.fileId;
-                    var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
-                    model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
-                    {
-                        entry = entry,
-                        File = FileToFetch
-                    });
+
+                var thisFileId = entry.fileId;
+                var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
+                model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
+                {
+                    entry = entry,
+                    File = FileToFetch
+                });
             }
             model.ListOfComments = new List<Comment>();
             foreach (var c in db.Comments)
@@ -181,7 +184,7 @@ namespace ScrumProj.Controllers
             {
                 model.CategoryIds.Add(i);
             }
-                return View(model);
+            return View(model);
         }
         public ActionResult PostComment(EntryViewModel model, int postId)
         {
@@ -233,6 +236,17 @@ namespace ScrumProj.Controllers
             ctx.PushNotes.RemoveRange(ListOfPushNotes);
             ctx.SaveChanges();
             return View(ListOfPushNotes);
+        }
+        public ActionResult ChangeNotificationSettings(ProfileViewModel model, bool BlogPostSwitch = false, bool MailSwitch = false, bool ProjectSwitch = false)
+        {
+            var ctx = new AppDbContext();
+
+            var wmon = ctx.WantMailOrNoes.Where(i => i.UserId == model.ID).Single();
+            wmon.BlogPost = BlogPostSwitch;
+            wmon.Mail = MailSwitch;
+            wmon.Project = ProjectSwitch;
+            ctx.SaveChanges();
+            return RedirectToAction("ViewProfile");
         }
     }
 }
