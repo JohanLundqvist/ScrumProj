@@ -378,6 +378,7 @@
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\PushNote.cs" />
+    <Compile Include="Models\Utilities.cs" />
     <Compile Include="Models\ViewModels\AdminListViewModel.cs" />
     <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
     <Compile Include="Models\ViewModels\EntryViewModel.cs" />

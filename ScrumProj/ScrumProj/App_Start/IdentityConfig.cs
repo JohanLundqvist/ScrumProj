@@ -31,7 +31,7 @@ namespace ScrumProj
             var myMessage = new SendGridMessage();
             myMessage.AddTo(message.Destination);
             myMessage.From = new System.Net.Mail.MailAddress(
-                                "scrumcgrupptvanelson@outlook.com", "Nelson Administration");
+                                "jakob.hallman@gmail.com", "Nelson Administration");
             myMessage.Subject = message.Subject;
             myMessage.Text = message.Body;
             myMessage.Html = message.Body;

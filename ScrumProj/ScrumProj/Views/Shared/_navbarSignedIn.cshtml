@@ -1,5 +1,4 @@
-﻿
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,24 +20,24 @@
 
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" @Html.ActionLink("Hem", "Firstpage", "Profile")  <span class="sr-only">(current)</span></a>
+                <li class="@Html.IsActive("Profile", "FirstPage") nav-item">
+                    <a class="nav-link" @Html.ActionLink("Hem", "FirstPage", "Profile")  <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" @Html.ActionLink("Bloggar", "blogpage", "Entry") </a>
+                <li class="@Html.IsActive("Entry", "blogpage") nav-item">
+                    <a class="nav-link" @Html.ActionLink("Bloggar", "blogpage", "Entry")</a>
                 </li>
-                <li class="nav-item">
+                <li class="@Html.IsActive("Profile", "Booking") nav-item">
                     <a class="nav-link" @Html.ActionLink("Möten", "Booking", "Profile")</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete", "DevelopmentWork", "Development") </a>
+                <li class="@Html.IsActive("Development", "DevelopmentWork") nav-item">
+                    <a class="nav-link" @Html.ActionLink("Utvecklingsarbete", "DevelopmentWork", "Development")</a>
                 </li>
-                <li class="nav-item">
+                <li class="@Html.IsActive("Profile", "ViewProfile") nav-item">
                     <a class="nav-link" @Html.ActionLink("Profil", "ViewProfile", "Profile")</a>
                 </li>
                 @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
                 {
-                    <li class="nav-item">
+                    <li class="@Html.IsActive("Role", "Index") @Html.IsActive("Role", "ManageRoles") nav-item">
                         <a class="nav-link" href="@Url.Action("Index", "Role")">Admin</a>
                     </li>
                 }
