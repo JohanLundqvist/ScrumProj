@@ -10,12 +10,13 @@ namespace ScrumProj.Models
     {
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "En titel behövs för att kunna publicera projeketet.")]
         [Display(Name = "Titel")]
-        [StringLength(30)]
+        [StringLength(30,ErrorMessage ="Max 30 tecken.")]
         public string Title { get; set; }
 
-        [StringLength(1000)]
+        [Required(ErrorMessage ="En inledning behövs för att kunna publicera projeketet.")]
+        [StringLength(1500)]
         [Display(Name = "Inledning")]
         public string Content { get; set; }
 
@@ -30,7 +31,6 @@ namespace ScrumProj.Models
             Forskning,
             Utbildning
         }
-        
 
         public enum IsPrivate
         {
@@ -45,6 +45,7 @@ namespace ScrumProj.Models
 
         public DevelopmentProject(){
             this.Participants = new HashSet<ProfileModel>();
+            this.Files = new HashSet<DevFile>();
 
             }
 

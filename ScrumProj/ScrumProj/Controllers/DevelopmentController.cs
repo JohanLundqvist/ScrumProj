@@ -17,41 +17,56 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult DevelopmentWork(DevelopmentViewModel model)
         {
-            var userId = User.Identity.GetUserId();
-            var user = _context.Profiles.Single(u => u.ID == userId);
-            model.ActiveUser = user;
-            var listProj = new List<DevelopmentProject>();
-            listProj = _context.Projects.ToList();
-            model.projects = listProj;
-            model.Users = _context.Profiles.ToList();
-
-
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var user = _context.Profiles.Single(u => u.ID == userId);
+                model.ActiveUser = user;
+                var listProj = new List<DevelopmentProject>();
+                listProj = _context.Projects.ToList();
+                model.projects = listProj;
+                model.Users = _context.Profiles.ToList();
+            }
+            
                 return View(model);
         }
 
-        [Authorize][HttpPost]
-        
-        public ActionResult PublishDevProject(DevelopmentViewModel model)
+        [Authorize] [HttpPost]
+        public ActionResult PublishDevProject(DevelopmentViewModel modell, HttpPostedFileBase upload)
         {
             var idToCompare = User.Identity.GetUserId();
-            var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
+            var activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
             var partiList = new List<ProfileModel>();
             partiList.Add(activeUser);
 
             if (ModelState.IsValid)
             {
+                if (upload != null && upload.ContentLength > 0)
+                {
+                    var file = new DevFile
+                    {
+                        Name = System.IO.Path.GetFileName(upload.FileName)
+
+                    };
+                    using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                    {
+                        file.Content = reader.ReadBytes(upload.ContentLength);
+                    }
+                    modell.project.Files = new List<DevFile> { file };
+                }
+
                 _context.Projects.Add(new DevelopmentProject
                 {
-                    Title = model.project.Title,
-                    Content = model.project.Content,
-                    Cat = model.project.Cat,
+                    Title = modell.project.Title,
+                    Content = modell.project.Content,
+                    Cat = modell.project.Cat,
                     Participants = partiList,
-                    Visibility = model.project.Visibility
+                    Visibility = modell.project.Visibility,
+                    Files = modell.project.Files
                 });
-              
                 _context.SaveChanges();
             }
-           return RedirectToAction("DevelopmentWork");
+            return RedirectToAction("DevelopmentWork");
         }
 
         public ActionResult AddParticipants(DevelopmentViewModel model)
@@ -110,7 +125,6 @@ namespace ScrumProj.Controllers
                 {
                     var item = new SelectListItem
                     {
-
                         Text = user.FirstName + " " + user.LastName,
                         Value = user.ID,
                         Selected = false
@@ -183,6 +197,44 @@ namespace ScrumProj.Controllers
             var LastName = Profile.LastName;
 
             return FirstName + " " + LastName;
+        }
+
+        
+        public FileResult DownloadFile(int fileId)
+        {
+            var fileToDownload = _context.DevFiles.SingleOrDefault(f => f.FileId == fileId);
+
+            byte[] fileBytes = fileToDownload.Content;
+            string fileName = fileToDownload.Name;
+            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        }
+
+        public ActionResult AddFile(DevelopmentViewModel model, HttpPostedFileBase upload)
+        {
+            var projectToUpdate = _context.Projects.First(p => p.Id == model.project.Id);
+
+            if (projectToUpdate != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (upload != null && upload.ContentLength > 0)
+                    {
+                        var file = new DevFile
+                        {
+                            Name = System.IO.Path.GetFileName(upload.FileName)
+
+                        };
+                        using (var reader = new System.IO.BinaryReader(upload.InputStream))
+                        {
+                            file.Content = reader.ReadBytes(upload.ContentLength);
+                        }
+                        projectToUpdate.Files.Add(file);
+                        _context.SaveChanges();
+                    }
+                }
+                
+            }
+            return RedirectToAction("EditDevelopmentPage", new { projectId = model.project.Id });
         }
     }
 }

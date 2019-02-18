@@ -79,7 +79,39 @@ namespace ScrumProj.Controllers
                 var id = identityModel.Id;
                 var currentUser = ctx.Profiles.FirstOrDefault(p => p.ID == id);
 
-                if (currentUser.IsApproved == true)
+                try
+                {
+                    if (currentUser.IsApproved == true)
+                    {
+                        if (!ModelState.IsValid)
+                        {
+                            return View(model);
+                        }
+
+                        // This doesn't count login failures towards account lockout
+                        // To enable password failures to trigger account lockout, change to shouldLockout: true
+                        var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                        switch (result)
+                        {
+                            case SignInStatus.Success:
+                                return RedirectToAction("FirstPage", "Profile");
+                            case SignInStatus.LockedOut:
+                                return View("Lockout");
+                            case SignInStatus.RequiresVerification:
+                                return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                            case SignInStatus.Failure:
+                            default:
+                                ModelState.AddModelError("", "Invalid login attempt.");
+                                return View(model);
+                        }
+                    }
+                    else
+                    {
+                        return View(model);
+                    }
+                }
+
+                catch
                 {
                     if (!ModelState.IsValid)
                     {
@@ -92,7 +124,7 @@ namespace ScrumProj.Controllers
                     switch (result)
                     {
                         case SignInStatus.Success:
-                            return RedirectToAction("FirstPage", "Profile");
+                            return RedirectToAction("Index", "Profile");
                         case SignInStatus.LockedOut:
                             return View("Lockout");
                         case SignInStatus.RequiresVerification:
@@ -102,10 +134,6 @@ namespace ScrumProj.Controllers
                             ModelState.AddModelError("", "Invalid login attempt.");
                             return View(model);
                     }
-                }
-                else
-                {
-                    return View(model);
                 }
             }
             else
@@ -185,7 +213,19 @@ namespace ScrumProj.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            var ctx = new ApplicationDbContext();
+            var users = ctx.Users.ToList();
+            bool exist = false;
+
+            foreach (var user in users)
+            {
+                if (model.Email == user.Email)
+                {
+                    exist = true;
+                }
+            }
+
+            if (ModelState.IsValid && exist)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
@@ -196,8 +236,13 @@ namespace ScrumProj.Controllers
 
                 var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Vänligen återställ ditt lösenord genom att klicka <a href=\"" + callbackUrl + "\">här</a>");
+                await UserManager.SendEmailAsync(user.Id, "Återställ lösenord", "Vänligen återställ ditt lösenord genom att klicka <a href=\"" + callbackUrl + "\">här</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            }
+
+            else
+            {
+                ViewBag.Message = "Vänligen fyll i en registrerad e-post adress!";
             }
 
             // If we got this far, something failed, redisplay form

@@ -5,6 +5,10 @@
     ViewBag.Title = "ViewProfile";
 }
 
+@using ScrumProj.Models
+
+var ctx = new AppDbContext();
+
 @if (User.Identity.IsAuthenticated)
 {
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
