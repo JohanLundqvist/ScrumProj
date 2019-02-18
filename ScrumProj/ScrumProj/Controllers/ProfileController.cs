@@ -208,6 +208,7 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
             return View(ListOfPushNotes);
         }
+
         public ActionResult ChangeNotificationSettings(ProfileViewModel model, bool BlogPostSwitch = false, bool MailSwitch = false, bool ProjectSwitch = false)
         {
             var ctx = new AppDbContext();
@@ -218,6 +219,11 @@ namespace ScrumProj.Controllers
             wmon.Project = ProjectSwitch;
             ctx.SaveChanges();
             return RedirectToAction("ViewProfile");
+        }
+
+        public ActionResult TestView()
+        {
+            return View();
         }
     }
 }

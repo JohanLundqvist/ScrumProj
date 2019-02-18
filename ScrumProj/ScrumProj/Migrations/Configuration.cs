@@ -192,6 +192,13 @@ namespace ScrumProj.Migrations
                 Position = "SEAL",
                 IsApproved = true
             });
+            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            {
+                BlogPost = true,
+                Mail = true,
+                Sms = true,
+                UserId = user4.Id
+            });
 
 
 
