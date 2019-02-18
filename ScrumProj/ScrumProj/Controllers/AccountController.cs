@@ -185,7 +185,19 @@ namespace ScrumProj.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            var ctx = new ApplicationDbContext();
+            var users = ctx.Users.ToList();
+            bool exist = false;
+
+            foreach (var user in users)
+            {
+                if (model.Email == user.Email)
+                {
+                    exist = true;
+                }
+            }
+
+            if (ModelState.IsValid && exist)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
                 if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
@@ -198,6 +210,11 @@ namespace ScrumProj.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                 await UserManager.SendEmailAsync(user.Id, "Återställ lösenord", "Vänligen återställ ditt lösenord genom att klicka <a href=\"" + callbackUrl + "\">här</a>");
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            }
+
+            else
+            {
+                ViewBag.Message = "Vänligen fyll i en registrerad e-post adress!";
             }
 
             // If we got this far, something failed, redisplay form

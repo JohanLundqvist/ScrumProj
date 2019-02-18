@@ -128,7 +128,7 @@ namespace ScrumProj.Controllers
             }
             else
             {
-                ViewBag.Message = "Var vänlig fyll i fältet och ange i en giltig E-post adress!";
+                ViewBag.Message = "Var vänlig fyll i fältet och ange en giltig E-post adress!";
             }
 
             // Prepopulate the dropdown with roles
@@ -155,7 +155,7 @@ namespace ScrumProj.Controllers
                 {
                     userManager.RemoveFromRole(user.Id, RoleName);
 
-                    ViewBag.Message = "Rollen för den här användaren togs bort!";
+                    ViewBag.Message = "Det lyckades! Rollen för den här användaren togs bort!";
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace ScrumProj.Controllers
             }
             catch
             {
-                ViewBag.Message = "Var vänlig fyll i alla fält och ange en korrekt E-mail!";
+                ViewBag.Message = "Var vänlig fyll i fältet och ange en giltig E-post adress!";
 
                 // Prepopulate the dropdown with roles
                 var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
@@ -192,7 +192,7 @@ namespace ScrumProj.Controllers
 
             var idResult = userManager.AddToRole(user.Id, RoleName);
 
-            ViewBag.Message = "Det lyckades!";
+            ViewBag.Message = "Det lyckades! Rollen för användaren lades till!";
 
             // Prepopulate the dropdown with roles
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
@@ -227,7 +227,9 @@ namespace ScrumProj.Controllers
         }
 
 
-        // Method
+
+        // Method to delete a Categorys
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult DeleteCategory(int catId)
         {
             var ctx = new AppDbContext();
@@ -258,6 +260,9 @@ namespace ScrumProj.Controllers
             }
             ctx.SaveChanges();
         }
+
+
+        
         public ProfileModel GetCurrentUser(string Id)
         {
             var ctx = new AppDbContext();
@@ -266,6 +271,9 @@ namespace ScrumProj.Controllers
 
             return appUser;
         }
+
+
+
         public string GetNameOfLoggedInUser()
         {
             var ctx = new AppDbContext();
