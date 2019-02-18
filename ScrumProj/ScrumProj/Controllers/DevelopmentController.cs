@@ -66,7 +66,7 @@ namespace ScrumProj.Controllers
               
                 _context.SaveChanges();
             }
-           return RedirectToAction("DevelopmentWork");
+            return RedirectToAction("DevelopmentWork");
         }
 
         public ActionResult AddParticipants(DevelopmentViewModel model)
