@@ -18,7 +18,7 @@ namespace ScrumProj.Controllers
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var userProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
-            
+
             var exist = false;
 
             if (userProfile != null)
@@ -71,12 +71,15 @@ namespace ScrumProj.Controllers
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var currentUserProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
-
+            var PushNoteStatus = ctx.WantMailOrNoes.Where(i=> i.UserId == currentUserId).Single();
+                
             return View(new ProfileViewModel
             {
                 FirstName = currentUserProfile.FirstName,
                 LastName = currentUserProfile.LastName,
-                Position = currentUserProfile.Position
+                Position = currentUserProfile.Position,
+                ID = currentUserId,
+                WantMailOrNo = PushNoteStatus               
             });
         }
 
@@ -113,9 +116,38 @@ namespace ScrumProj.Controllers
         }
         [Authorize]
 
-        public ActionResult Booking()
+        public ActionResult Booking(MeetingViewModel model)
         {
-            return View();
+            var _context = new AppDbContext();
+            var listOfUsers = new List<SelectListItem>();
+            var listOfMeetings = new List<Meeting>();
+
+            foreach(var m in _context.Meetings)
+            {
+                listOfMeetings.Add(m);
+            }
+
+            foreach(var user in _context.Profiles)
+            {
+                if (!user.ID.Equals(User.Identity.GetUserId()))
+                {
+                    var item = new SelectListItem
+                    {
+                        Text = user.FirstName + " " + user.LastName,
+                        Value = user.ID,
+                        Selected = false
+                    };
+                    listOfUsers.Add(item);
+                }
+            }
+
+            var userId = User.Identity.GetUserId();
+            var activeUser = _context.Profiles.First(u => u.ID == userId);
+
+            model.UsersToAdd = listOfUsers;
+            model.Meetings = listOfMeetings;
+            model.User = activeUser;
+            return View(model);
         }
 
         [Authorize]
@@ -127,14 +159,14 @@ namespace ScrumProj.Controllers
             var ListofEntries = db.Entries.ToList();
             foreach (var entry in ListofEntries)
             {
-                
-                    var thisFileId = entry.fileId;
-                    var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
-                    model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
-                    {
-                        entry = entry,
-                        File = FileToFetch
-                    });
+
+                var thisFileId = entry.fileId;
+                var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
+                model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
+                {
+                    entry = entry,
+                    File = FileToFetch
+                });
             }
             model.ListOfComments = new List<Comment>();
             foreach (var c in db.Comments)
@@ -152,7 +184,7 @@ namespace ScrumProj.Controllers
             {
                 model.CategoryIds.Add(i);
             }
-                return View(model);
+            return View(model);
         }
         public ActionResult PostComment(EntryViewModel model, int postId)
         {
@@ -204,6 +236,23 @@ namespace ScrumProj.Controllers
             ctx.PushNotes.RemoveRange(ListOfPushNotes);
             ctx.SaveChanges();
             return View(ListOfPushNotes);
+        }
+
+        public ActionResult ChangeNotificationSettings(ProfileViewModel model, bool BlogPostSwitch = false, bool MailSwitch = false, bool ProjectSwitch = false)
+        {
+            var ctx = new AppDbContext();
+
+            var wmon = ctx.WantMailOrNoes.Where(i => i.UserId == model.ID).Single();
+            wmon.BlogPost = BlogPostSwitch;
+            wmon.Mail = MailSwitch;
+            wmon.Project = ProjectSwitch;
+            ctx.SaveChanges();
+            return RedirectToAction("ViewProfile");
+        }
+
+        public ActionResult TestView()
+        {
+            return View();
         }
     }
 }

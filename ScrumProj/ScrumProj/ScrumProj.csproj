@@ -128,6 +128,12 @@
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
@@ -199,12 +205,14 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DevelopmentController.cs" />
     <Compile Include="Controllers\EntryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MeetingsController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
@@ -346,6 +354,38 @@
     <Compile Include="Migrations\201902141411028_fil_till_projekt.Designer.cs">
       <DependentUpon>201902141411028_fil_till_projekt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902151232560_nose.cs" />
+    <Compile Include="Migrations\201902151232560_nose.Designer.cs">
+      <DependentUpon>201902151232560_nose.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902151324303_p.cs" />
+    <Compile Include="Migrations\201902151324303_p.Designer.cs">
+      <DependentUpon>201902151324303_p.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902151251493_requiredMessages.cs" />
+    <Compile Include="Migrations\201902151251493_requiredMessages.Designer.cs">
+      <DependentUpon>201902151251493_requiredMessages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902181053085_fiximodelfiffiluran.cs" />
+    <Compile Include="Migrations\201902181053085_fiximodelfiffiluran.Designer.cs">
+      <DependentUpon>201902181053085_fiximodelfiffiluran.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902181110106_ökadtextLängd.cs" />
+    <Compile Include="Migrations\201902181110106_ökadtextLängd.Designer.cs">
+      <DependentUpon>201902181110106_ökadtextLängd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902181210567_nyTabell.cs" />
+    <Compile Include="Migrations\201902181210567_nyTabell.Designer.cs">
+      <DependentUpon>201902181210567_nyTabell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902181212294_uppdateringNyTabell.cs" />
+    <Compile Include="Migrations\201902181212294_uppdateringNyTabell.Designer.cs">
+      <DependentUpon>201902181212294_uppdateringNyTabell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902181229407_ppps.cs" />
+    <Compile Include="Migrations\201902181229407_ppps.Designer.cs">
+      <DependentUpon>201902181229407_ppps.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -356,7 +396,9 @@
     <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\DevFile.cs" />
     <Compile Include="Models\Entry.cs" />
+    <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\PushNote.cs" />
+    <Compile Include="Models\Utilities.cs" />
     <Compile Include="Models\ViewModels\AdminListViewModel.cs" />
     <Compile Include="Models\ViewModels\DevelopmentViewModel.cs" />
     <Compile Include="Models\ViewModels\EntryViewModel.cs" />
@@ -364,9 +406,11 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\ViewModels\MeetingViewModel.cs" />
     <Compile Include="Models\ViewModels\ProfileViewModel.cs" />
     <Compile Include="Models\ViewModels\FirstPageViewModel.cs" />
     <Compile Include="Models\ViewModels\PushNotesViewModel.cs" />
+    <Compile Include="Models\WantMailOrNo.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
     <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
@@ -598,6 +642,7 @@
     <Content Include="Views\Profile\ReadPushNotes.cshtml" />
     <Content Include="Views\Role\ListAllAdmins.cshtml" />
     <Content Include="Views\Profile\ViewProfile.cshtml" />
+    <Content Include="Views\Profile\TestView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
@@ -716,6 +761,30 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902141411028_fil_till_projekt.resx">
       <DependentUpon>201902141411028_fil_till_projekt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151232560_nose.resx">
+      <DependentUpon>201902151232560_nose.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151324303_p.resx">
+      <DependentUpon>201902151324303_p.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151251493_requiredMessages.resx">
+      <DependentUpon>201902151251493_requiredMessages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181053085_fiximodelfiffiluran.resx">
+      <DependentUpon>201902181053085_fiximodelfiffiluran.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181110106_ökadtextLängd.resx">
+      <DependentUpon>201902181110106_ökadtextLängd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181210567_nyTabell.resx">
+      <DependentUpon>201902181210567_nyTabell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181212294_uppdateringNyTabell.resx">
+      <DependentUpon>201902181212294_uppdateringNyTabell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181229407_ppps.resx">
+      <DependentUpon>201902181229407_ppps.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

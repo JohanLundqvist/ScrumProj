@@ -32,5 +32,7 @@ namespace ScrumProj.Models
         public bool NewPushNote { get; set; }
 
         public List<PushNote> PushNotes { get; set; }
+
+        public WantMailOrNo WantMailOrNo { get; set; }
     }
 }

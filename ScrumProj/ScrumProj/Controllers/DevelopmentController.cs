@@ -17,24 +17,25 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult DevelopmentWork(DevelopmentViewModel model)
         {
-            var userId = User.Identity.GetUserId();
-            var user = _context.Profiles.Single(u => u.ID == userId);
-            model.ActiveUser = user;
-            var listProj = new List<DevelopmentProject>();
-            listProj = _context.Projects.ToList();
-            model.projects = listProj;
-            model.Users = _context.Profiles.ToList();
-
-
+            if (ModelState.IsValid)
+            {
+                var userId = User.Identity.GetUserId();
+                var user = _context.Profiles.Single(u => u.ID == userId);
+                model.ActiveUser = user;
+                var listProj = new List<DevelopmentProject>();
+                listProj = _context.Projects.ToList();
+                model.projects = listProj;
+                model.Users = _context.Profiles.ToList();
+            }
+            
                 return View(model);
         }
 
-        [Authorize][HttpPost]
-        
-        public ActionResult PublishDevProject(DevelopmentViewModel model, HttpPostedFileBase upload)
+        [Authorize] [HttpPost]
+        public ActionResult PublishDevProject(DevelopmentViewModel modell, HttpPostedFileBase upload)
         {
             var idToCompare = User.Identity.GetUserId();
-            var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
+            var activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
             var partiList = new List<ProfileModel>();
             partiList.Add(activeUser);
 
@@ -51,22 +52,21 @@ namespace ScrumProj.Controllers
                     {
                         file.Content = reader.ReadBytes(upload.ContentLength);
                     }
-                    model.project.Files = new List<DevFile> { file };
+                    modell.project.Files = new List<DevFile> { file };
                 }
-                
-                    _context.Projects.Add(new DevelopmentProject
-                    {
-                        Title = model.project.Title,
-                        Content = model.project.Content,
-                        Cat = model.project.Cat,
-                        Participants = partiList,
-                        Visibility = model.project.Visibility,
-                        Files = model.project.Files
-                    });
-              
+
+                _context.Projects.Add(new DevelopmentProject
+                {
+                    Title = modell.project.Title,
+                    Content = modell.project.Content,
+                    Cat = modell.project.Cat,
+                    Participants = partiList,
+                    Visibility = modell.project.Visibility,
+                    Files = modell.project.Files
+                });
                 _context.SaveChanges();
             }
-           return RedirectToAction("DevelopmentWork");
+            return RedirectToAction("DevelopmentWork");
         }
 
         public ActionResult AddParticipants(DevelopmentViewModel model)
@@ -87,10 +87,14 @@ namespace ScrumProj.Controllers
                     List<string> Emails = new List<string>();
                     foreach (var p in ap.Users)
                     {
-                        if (user.ID == p.Id)
+                        var b = _context.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
+                        if (b)
                         {
-                            Emails.Add(p.Email);
-                        }
+                            if (user.ID == p.Id)
+                            {
+                                Emails.Add(p.Email);
+                            }
+                        }                       
                     }
                     var s = GetNameOfLoggedInUser();
                     var mc = new MailController();
@@ -126,7 +130,6 @@ namespace ScrumProj.Controllers
                         Selected = false
                     };
                     listOfNonMembers.Add(item);
-
                 }
             }
             model.UsersFullName = listOfNonMembers;
@@ -159,15 +162,19 @@ namespace ScrumProj.Controllers
             {
                 if (p.ID == model.ID)
                 {
-                    var NewNote = new PushNote
+                    var b = _context.WantMailOrNoes.Where(u => u.UserId == p.ID).Single().Project;
+                    if (b)
                     {
-                        Note = note,
-                        ProfileModelId = p.ID,
-                        TypeOfNote = typeOfNote
+                        var NewNote = new PushNote
+                        {
+                            Note = note,
+                            ProfileModelId = p.ID,
+                            TypeOfNote = typeOfNote
 
-                    };
-                    p.NewPushNote = true;
-                    ctx.PushNotes.Add(NewNote);
+                        };
+                        p.NewPushNote = true;
+                        ctx.PushNotes.Add(NewNote);
+                    }                    
                 }
             }
             ctx.SaveChanges();

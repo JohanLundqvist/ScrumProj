@@ -17,7 +17,7 @@ namespace ScrumProj.Models
         public DbSet<DevelopmentProject> Projects { get; set; }
         public DbSet<PushNote> PushNotes { get; set; }
         public DbSet<DevFile> DevFiles { get; set; }
-
+        public DbSet<WantMailOrNo> WantMailOrNoes { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DevelopmentProject>()
@@ -30,8 +30,15 @@ namespace ScrumProj.Models
             .HasRequired(f => f.ThisProject)
             .WithMany(p => p.Files)
             .HasForeignKey<int>(s => s.ProjectId);
+
+            modelBuilder.Entity<Meeting>()
+          .HasMany(c => c.MeetingParticipants).WithMany(i => i.Meetings)
+          .Map(t => t.MapLeftKey("MeetingId")
+                .MapRightKey("UserID")
+                 .ToTable("MeetingParticipants"));
         }
 
+        public System.Data.Entity.DbSet<ScrumProj.Models.Meeting> Meetings { get; set; }
     }
 
 }

@@ -74,11 +74,10 @@ namespace ScrumProj.Controllers
                 FromName = "Nelson Administration",
                 Message = "Du har blivit accepterad av admin och har nu tillgång till hela Nelson Administration ------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
             }, Emails));
+            AddProfilesToWantMailorNo(id);
 
             return RedirectToAction("Index");
         }
-
-
 
         // Method to completely remove a user
         [Authorize(Roles = "Admin, SuperAdmin")]
@@ -128,7 +127,7 @@ namespace ScrumProj.Controllers
             }
             else
             {
-                ViewBag.Message = "Var vänlig fyll i fältet och ange i en giltig E-post adress!";
+                ViewBag.Message = "Var vänlig fyll i fältet och ange en giltig E-post adress!";
             }
 
             // Prepopulate the dropdown with roles
@@ -155,7 +154,7 @@ namespace ScrumProj.Controllers
                 {
                     userManager.RemoveFromRole(user.Id, RoleName);
 
-                    ViewBag.Message = "Rollen för den här användaren togs bort!";
+                    ViewBag.Message = "Det lyckades! Rollen för den här användaren togs bort!";
                 }
                 else
                 {
@@ -169,7 +168,7 @@ namespace ScrumProj.Controllers
             }
             catch
             {
-                ViewBag.Message = "Var vänlig fyll i alla fält och ange en korrekt E-mail!";
+                ViewBag.Message = "Var vänlig fyll i fältet och ange en giltig E-post adress!";
 
                 // Prepopulate the dropdown with roles
                 var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
@@ -188,11 +187,18 @@ namespace ScrumProj.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddRoleToUser(string UserName, string RoleName)
         {
-            ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(RoleName))
+            {
+                ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
-            var idResult = userManager.AddToRole(user.Id, RoleName);
+                var idResult = userManager.AddToRole(user.Id, RoleName);
 
-            ViewBag.Message = "Det lyckades!";
+                ViewBag.Message = "Det lyckades! Rollen för användaren lades till!";
+            }
+            else
+            {
+                ViewBag.Message = "Käft Tobbe";
+            }
 
             // Prepopulate the dropdown with roles
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
@@ -227,7 +233,9 @@ namespace ScrumProj.Controllers
         }
 
 
-        // Method
+
+        // Method to delete a Categorys
+        [Authorize(Roles = "Admin, SuperAdmin")]
         public ActionResult DeleteCategory(int catId)
         {
             var ctx = new AppDbContext();
@@ -258,6 +266,9 @@ namespace ScrumProj.Controllers
             }
             ctx.SaveChanges();
         }
+
+
+        
         public ProfileModel GetCurrentUser(string Id)
         {
             var ctx = new AppDbContext();
@@ -266,6 +277,9 @@ namespace ScrumProj.Controllers
 
             return appUser;
         }
+
+
+
         public string GetNameOfLoggedInUser()
         {
             var ctx = new AppDbContext();
@@ -276,6 +290,19 @@ namespace ScrumProj.Controllers
             var LastName = Profile.LastName;
 
             return FirstName + " " + LastName;
+        }
+        public void AddProfilesToWantMailorNo(string Id)
+        {
+            var ctx = new AppDbContext();
+            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            {
+                BlogPost = true,
+                Mail = true,
+                Sms = true,
+                Project = true,
+                UserId = Id
+            });
+            ctx.SaveChanges();
         }
     }
 }
