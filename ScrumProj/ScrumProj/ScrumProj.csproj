@@ -346,6 +346,10 @@
     <Compile Include="Migrations\201902141411028_fil_till_projekt.Designer.cs">
       <DependentUpon>201902141411028_fil_till_projekt.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902151251493_requiredMessages.cs" />
+    <Compile Include="Migrations\201902151251493_requiredMessages.Designer.cs">
+      <DependentUpon>201902151251493_requiredMessages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201902181053085_fiximodelfiffiluran.cs" />
     <Compile Include="Migrations\201902181053085_fiximodelfiffiluran.Designer.cs">
       <DependentUpon>201902181053085_fiximodelfiffiluran.cs</DependentUpon>
@@ -720,6 +724,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902141411028_fil_till_projekt.resx">
       <DependentUpon>201902141411028_fil_till_projekt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902151251493_requiredMessages.resx">
+      <DependentUpon>201902151251493_requiredMessages.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902181053085_fiximodelfiffiluran.resx">
       <DependentUpon>201902181053085_fiximodelfiffiluran.cs</DependentUpon>
