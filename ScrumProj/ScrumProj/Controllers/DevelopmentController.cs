@@ -17,29 +17,28 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult DevelopmentWork(DevelopmentViewModel model)
         {
-            var userId = User.Identity.GetUserId();
-            var user = _context.Profiles.Single(u => u.ID == userId);
-            model.ActiveUser = user;
-            var listProj = new List<DevelopmentProject>();
-            listProj = _context.Projects.ToList();
-            model.projects = listProj;
-            model.Users = _context.Profiles.ToList();
+           
+                var userId = User.Identity.GetUserId();
+                var user = _context.Profiles.Single(u => u.ID == userId);
+                model.ActiveUser = user;
+                var listProj = new List<DevelopmentProject>();
+                listProj = _context.Projects.ToList();
+                model.projects = listProj;
+                model.Users = _context.Profiles.ToList();
 
-
+            
                 return View(model);
         }
 
-        [Authorize][HttpPost]
-        
-        public ActionResult PublishDevProject(DevelopmentViewModel model, HttpPostedFileBase upload)
+        [Authorize] [HttpPost]
+        public ActionResult PublishDevProject(DevelopmentViewModel modell, HttpPostedFileBase upload)
         {
             var idToCompare = User.Identity.GetUserId();
-            var  activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
+            var activeUser = _context.Profiles.SingleOrDefault(u => u.ID == idToCompare);
             var partiList = new List<ProfileModel>();
             partiList.Add(activeUser);
 
-            if (ModelState.IsValid)
-            {
+            
                 if (upload != null && upload.ContentLength > 0)
                 {
                     var file = new DevFile
@@ -51,22 +50,21 @@ namespace ScrumProj.Controllers
                     {
                         file.Content = reader.ReadBytes(upload.ContentLength);
                     }
-                    model.project.Files = new List<DevFile> { file };
+                    modell.project.Files = new List<DevFile> { file };
                 }
-                
-                    _context.Projects.Add(new DevelopmentProject
-                    {
-                        Title = model.project.Title,
-                        Content = model.project.Content,
-                        Cat = model.project.Cat,
-                        Participants = partiList,
-                        Visibility = model.project.Visibility,
-                        Files = model.project.Files
-                    });
-              
+
+                _context.Projects.Add(new DevelopmentProject
+                {
+                    Title = modell.project.Title,
+                    Content = modell.project.Content,
+                    Cat = modell.project.Cat,
+                    Participants = partiList,
+                    Visibility = modell.project.Visibility,
+                    Files = modell.project.Files
+                });
                 _context.SaveChanges();
-            }
-           return RedirectToAction("DevelopmentWork");
+            
+            return RedirectToAction("DevelopmentWork");
         }
 
         public ActionResult AddParticipants(DevelopmentViewModel model)

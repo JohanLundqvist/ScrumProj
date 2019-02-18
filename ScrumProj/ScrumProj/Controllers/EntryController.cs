@@ -71,7 +71,7 @@ namespace ScrumProj.Controllers
                     }
                     else
                     {
-                        ViewBag.Message = "Bilden får bara ha formeten: .jpg .jpeg .png eller .gif!";
+                        ViewBag.Message = "Bilden får bara ha något av följande format: .jpg .jpeg .png eller .gif!";
                     }
                 }
                 else
