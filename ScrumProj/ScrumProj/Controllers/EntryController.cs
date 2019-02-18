@@ -621,50 +621,5 @@ namespace ScrumProj.Controllers
             }
             ctx.SaveChanges();
         }
-        List<string> list = new List<string>();
-        public ActionResult TestView2()
-        {
-            
-            if (DateTime.UtcNow.DayOfWeek == DayOfWeek.Monday)
-            {
-                list.Add("It's Monday");
-            }
-
-            if (DateTime.UtcNow.DayOfWeek == DayOfWeek.Monday)
-            {
-                list.Add("It's Thursday");
-            }
-            DateTime date1 = DateTime.Now;
-            DateTime date2 = date1.Add(TimeSpan.FromSeconds(24));
-            // Calculate the interval between the two dates.
-            TimeSpan interval = date2 - date1;
-            SetUpTimer(interval);
-
-            var i = 0;
-            return View(list);
-        }
-        private void SetUpTimer(TimeSpan SendTime)
-        {
-            Timer timer;
-            DateTime current = DateTime.Now;
-            TimeSpan timeToGo = SendTime - current.TimeOfDay;
-            if (timeToGo < TimeSpan.Zero)
-            {
-                return;//time already passed
-            }
-            timer = new Timer(x =>
-                {
-                    this.ShowMessageToUser();
-                },
-                null,
-                timeToGo,
-                Timeout.InfiniteTimeSpan);
-        }
-
-        private void ShowMessageToUser()
-        {
-            list.Add("Hola Bandola");
-            RedirectToAction("TestView2");
-        }
     }
 }

@@ -374,6 +374,10 @@
     <Compile Include="Migrations\201902181212294_uppdateringNyTabell.Designer.cs">
       <DependentUpon>201902181212294_uppdateringNyTabell.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902181229407_ppps.cs" />
+    <Compile Include="Migrations\201902181229407_ppps.Designer.cs">
+      <DependentUpon>201902181229407_ppps.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -629,7 +633,6 @@
     <Content Include="Views\Profile\ReadPushNotes.cshtml" />
     <Content Include="Views\Role\ListAllAdmins.cshtml" />
     <Content Include="Views\Profile\ViewProfile.cshtml" />
-    <Content Include="Views\Entry\TestView2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
@@ -769,6 +772,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902181212294_uppdateringNyTabell.resx">
       <DependentUpon>201902181212294_uppdateringNyTabell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181229407_ppps.resx">
+      <DependentUpon>201902181229407_ppps.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
