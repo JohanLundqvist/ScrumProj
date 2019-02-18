@@ -17,7 +17,8 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult DevelopmentWork(DevelopmentViewModel model)
         {
-           
+            if (ModelState.IsValid)
+            {
                 var userId = User.Identity.GetUserId();
                 var user = _context.Profiles.Single(u => u.ID == userId);
                 model.ActiveUser = user;
@@ -25,7 +26,7 @@ namespace ScrumProj.Controllers
                 listProj = _context.Projects.ToList();
                 model.projects = listProj;
                 model.Users = _context.Profiles.ToList();
-
+            }
             
                 return View(model);
         }
@@ -38,7 +39,8 @@ namespace ScrumProj.Controllers
             var partiList = new List<ProfileModel>();
             partiList.Add(activeUser);
 
-            
+            if (ModelState.IsValid)
+            {
                 if (upload != null && upload.ContentLength > 0)
                 {
                     var file = new DevFile
@@ -63,7 +65,7 @@ namespace ScrumProj.Controllers
                     Files = modell.project.Files
                 });
                 _context.SaveChanges();
-            
+            }
             return RedirectToAction("DevelopmentWork");
         }
 

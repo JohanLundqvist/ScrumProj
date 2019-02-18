@@ -354,6 +354,18 @@
     <Compile Include="Migrations\201902181053085_fiximodelfiffiluran.Designer.cs">
       <DependentUpon>201902181053085_fiximodelfiffiluran.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902181110106_ökadtextLängd.cs" />
+    <Compile Include="Migrations\201902181110106_ökadtextLängd.Designer.cs">
+      <DependentUpon>201902181110106_ökadtextLängd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902181210567_nyTabell.cs" />
+    <Compile Include="Migrations\201902181210567_nyTabell.Designer.cs">
+      <DependentUpon>201902181210567_nyTabell.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902181212294_uppdateringNyTabell.cs" />
+    <Compile Include="Migrations\201902181212294_uppdateringNyTabell.Designer.cs">
+      <DependentUpon>201902181212294_uppdateringNyTabell.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -364,6 +376,7 @@
     <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\DevFile.cs" />
     <Compile Include="Models\Entry.cs" />
+    <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\PushNote.cs" />
     <Compile Include="Models\Utilities.cs" />
     <Compile Include="Models\ViewModels\AdminListViewModel.cs" />
@@ -731,6 +744,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902181053085_fiximodelfiffiluran.resx">
       <DependentUpon>201902181053085_fiximodelfiffiluran.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181110106_ökadtextLängd.resx">
+      <DependentUpon>201902181110106_ökadtextLängd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181210567_nyTabell.resx">
+      <DependentUpon>201902181210567_nyTabell.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181212294_uppdateringNyTabell.resx">
+      <DependentUpon>201902181212294_uppdateringNyTabell.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -16,7 +16,7 @@ namespace ScrumProj.Models
         public string Title { get; set; }
 
         [Required(ErrorMessage ="En inledning behövs för att kunna publicera projeketet.")]
-        [StringLength(1000)]
+        [StringLength(1500)]
         [Display(Name = "Inledning")]
         public string Content { get; set; }
 
@@ -31,7 +31,6 @@ namespace ScrumProj.Models
             Forskning,
             Utbildning
         }
-        
 
         public enum IsPrivate
         {
