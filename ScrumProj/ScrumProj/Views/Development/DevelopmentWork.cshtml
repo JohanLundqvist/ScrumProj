@@ -24,8 +24,9 @@
             <div class="row">
                 <div class="form-group col-md">
                     @Html.LabelFor(model => model.project.Title, htmlAttributes: new { @class = "control-label col-md-4" })
-
+                        
                         @Html.EditorFor(model => model.project.Title, new { htmlAttributes = new { @class = "form-control", id = "Label", maxLength = "30" } })
+                    @Html.ValidationMessageFor(m => m.project.Title)
                         <span id="text-counter">30</span> tecken kvar.
                     
                     </div>
