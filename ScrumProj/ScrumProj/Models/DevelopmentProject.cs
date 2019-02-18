@@ -12,12 +12,11 @@ namespace ScrumProj.Models
 
         [Required(ErrorMessage = "En titel behövs för att kunna publicera projeketet.")]
         [Display(Name = "Titel")]
-        [Required(ErrorMessage = "Du måste ha en titel på ditt projekt.")]
         [StringLength(30,ErrorMessage ="Max 30 tecken.")]
         public string Title { get; set; }
 
         [Required(ErrorMessage ="En inledning behövs för att kunna publicera projeketet.")]
-        [StringLength(1000)]
+        [StringLength(1500)]
         [Display(Name = "Inledning")]
         public string Content { get; set; }
 
@@ -32,7 +31,6 @@ namespace ScrumProj.Models
             Forskning,
             Utbildning
         }
-        
 
         public enum IsPrivate
         {

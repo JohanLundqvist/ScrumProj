@@ -16,9 +16,11 @@ namespace ScrumProj.Models
         public bool IsApproved { get; set; }
         public virtual ICollection<DevelopmentProject> Projects { get; set; }
         public bool NewPushNote { get; set; }
+        public virtual ICollection<Meeting> Meetings { get; set; }
 
         public ProfileModel(){
             this.Projects = new HashSet<DevelopmentProject>();
+            this.Meetings = new HashSet<Meeting>();
         }
     }
 }
