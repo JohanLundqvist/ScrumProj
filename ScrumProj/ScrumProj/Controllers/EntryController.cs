@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -146,12 +147,16 @@ namespace ScrumProj.Controllers
             AddCategoryToDatabase(tags, postId);
             ctx.SaveChanges();
 
-            NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+            NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"), "bloggPost");
             var ap = new ApplicationDbContext();
             List<string> Emails = new List<string>();
             foreach (var p in ap.Users)
             {
-                Emails.Add(p.Email);          
+                var b = ctx.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
+                if (b)
+                {
+                    Emails.Add(p.Email);
+                }
             }
             var s = GetNameOfLoggedInUser();
             var mc = new MailController();
@@ -572,12 +577,25 @@ namespace ScrumProj.Controllers
         {
             return PartialView(model);
         }
-        public void NewPushNote()
+        public void NewPushNote(string note, string typeOfNote)
         {
             var ctx = new AppDbContext();
+
             foreach (var p in ctx.Profiles)
             {
-                p.NewPushNote = true;
+                var b = ctx.WantMailOrNoes.Where(s => s.UserId == p.ID).Single().BlogPost;
+                if (b)
+                {
+                    var NewNote = new PushNote
+                    {
+                        Note = note,
+                        ProfileModelId = p.ID,
+                        TypeOfNote = typeOfNote
+
+                    };
+                    p.NewPushNote = true;
+                    ctx.PushNotes.Add(NewNote);
+                }               
             }
             ctx.SaveChanges();
         }
@@ -596,6 +614,51 @@ namespace ScrumProj.Controllers
                 ctx.PushNotes.Add(NewNote);
             }
             ctx.SaveChanges();
+        }
+        List<string> list = new List<string>();
+        public ActionResult TestView2()
+        {
+            
+            if (DateTime.UtcNow.DayOfWeek == DayOfWeek.Monday)
+            {
+                list.Add("It's Monday");
+            }
+
+            if (DateTime.UtcNow.DayOfWeek == DayOfWeek.Monday)
+            {
+                list.Add("It's Thursday");
+            }
+            DateTime date1 = DateTime.Now;
+            DateTime date2 = date1.Add(TimeSpan.FromSeconds(24));
+            // Calculate the interval between the two dates.
+            TimeSpan interval = date2 - date1;
+            SetUpTimer(interval);
+
+            var i = 0;
+            return View(list);
+        }
+        private void SetUpTimer(TimeSpan SendTime)
+        {
+            Timer timer;
+            DateTime current = DateTime.Now;
+            TimeSpan timeToGo = SendTime - current.TimeOfDay;
+            if (timeToGo < TimeSpan.Zero)
+            {
+                return;//time already passed
+            }
+            timer = new Timer(x =>
+                {
+                    this.ShowMessageToUser();
+                },
+                null,
+                timeToGo,
+                Timeout.InfiniteTimeSpan);
+        }
+
+        private void ShowMessageToUser()
+        {
+            list.Add("Hola Bandola");
+            RedirectToAction("TestView2");
         }
     }
 }

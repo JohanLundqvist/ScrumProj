@@ -12,7 +12,7 @@
 <div>
     <hr />
     <dl class="dl-horizontal">
-        @foreach (var notes in Model)
+        @foreach (var notes in Model.Reverse())
         {
         <dt>
             @if (notes.TypeOfNote == "bloggPost")

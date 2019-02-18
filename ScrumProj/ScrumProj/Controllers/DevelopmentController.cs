@@ -72,10 +72,14 @@ namespace ScrumProj.Controllers
                     List<string> Emails = new List<string>();
                     foreach (var p in ap.Users)
                     {
-                        if (user.ID == p.Id)
+                        var b = _context.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
+                        if (b)
                         {
-                            Emails.Add(p.Email);
-                        }
+                            if (user.ID == p.Id)
+                            {
+                                Emails.Add(p.Email);
+                            }
+                        }                       
                     }
                     var s = GetNameOfLoggedInUser();
                     var mc = new MailController();
@@ -112,7 +116,6 @@ namespace ScrumProj.Controllers
                         Selected = false
                     };
                     listOfNonMembers.Add(item);
-
                 }
             }
             model.UsersFullName = listOfNonMembers;
@@ -145,15 +148,19 @@ namespace ScrumProj.Controllers
             {
                 if (p.ID == model.ID)
                 {
-                    var NewNote = new PushNote
+                    var b = _context.WantMailOrNoes.Where(u => u.UserId == p.ID).Single().Project;
+                    if (b)
                     {
-                        Note = note,
-                        ProfileModelId = p.ID,
-                        TypeOfNote = typeOfNote
+                        var NewNote = new PushNote
+                        {
+                            Note = note,
+                            ProfileModelId = p.ID,
+                            TypeOfNote = typeOfNote
 
-                    };
-                    p.NewPushNote = true;
-                    ctx.PushNotes.Add(NewNote);
+                        };
+                        p.NewPushNote = true;
+                        ctx.PushNotes.Add(NewNote);
+                    }                    
                 }
             }
             ctx.SaveChanges();

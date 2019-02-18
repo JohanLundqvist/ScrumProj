@@ -74,11 +74,10 @@ namespace ScrumProj.Controllers
                 FromName = "Nelson Administration",
                 Message = "Du har blivit accepterad av admin och har nu tillgång till hela Nelson Administration ------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
             }, Emails));
+            AddProfilesToWantMailorNo(id);
 
             return RedirectToAction("Index");
         }
-
-
 
         // Method to completely remove a user
         [Authorize(Roles = "Admin, SuperAdmin")]
@@ -276,6 +275,19 @@ namespace ScrumProj.Controllers
             var LastName = Profile.LastName;
 
             return FirstName + " " + LastName;
+        }
+        public void AddProfilesToWantMailorNo(string Id)
+        {
+            var ctx = new AppDbContext();
+            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            {
+                BlogPost = true,
+                Mail = true,
+                Sms = true,
+                Project = true,
+                UserId = Id
+            });
+            ctx.SaveChanges();
         }
     }
 }
