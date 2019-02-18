@@ -521,6 +521,8 @@
     <Content Include="bin\WebGrease.dll" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\CustomStylesheet.css" />
+    <Content Include="Content\jsCalendar.css" />
+    <Content Include="Content\jsCalendar.darkseries.css" />
     <Content Include="Content\slate.css" />
     <Content Include="Content\styles-booking.css" />
     <Content Include="favicon.ico" />
@@ -571,6 +573,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jsCalendar.js" />
+    <Content Include="Scripts\jsCalendar.lang.sv.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />

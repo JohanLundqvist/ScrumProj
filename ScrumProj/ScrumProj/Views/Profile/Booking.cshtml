@@ -6,19 +6,39 @@
     ViewBag.Title = "Booking";
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 }
+<link href="~/Content/jsCalendar.darkseries.css" rel="stylesheet" />
+<link href="~/Content/jsCalendar.css" rel="stylesheet" />
+<script src="~/Scripts/jsCalendar.lang.sv.js"></script>
+<script src="~/Scripts/jsCalendar.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+
 <div class="jumbotron">
-    <h1 class="display-3">Mötesbökning</h1>
-    <p class="lead">Titel</p>
-    <input type="text" class="form-control" id="Title" />
+        <div id="one">
+            <h1 class="display-3">Mötesbökning</h1>
+            <p class="lead">Titel</p>
+            <input type="text" class="form-control" id="Title" />
 
-    <p class="lead">Bjud in deltagare</p>
-    @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+            <p class="lead">Bjud in deltagare</p>
+            @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+            <button id="btn">Button</button>
+            <hr class="my-4">
+            <p></p>
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+            </p>
 
-    <hr class="my-4">
-    <p></p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
+        </div>
+            <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
 
-</div>
-</div>
+    </div>
+
+
+<script>
+    $('#btn').on('click', function () {
+        $('#one').toggle();
+        $('#second').toggle();
+        
+    });
+
+
+</script>
