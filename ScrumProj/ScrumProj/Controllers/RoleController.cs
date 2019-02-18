@@ -187,11 +187,18 @@ namespace ScrumProj.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddRoleToUser(string UserName, string RoleName)
         {
-            ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(RoleName))
+            {
+                ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
-            var idResult = userManager.AddToRole(user.Id, RoleName);
+                var idResult = userManager.AddToRole(user.Id, RoleName);
 
-            ViewBag.Message = "Det lyckades! Rollen för användaren lades till!";
+                ViewBag.Message = "Det lyckades! Rollen för användaren lades till!";
+            }
+            else
+            {
+                ViewBag.Message = "Käft Tobbe";
+            }
 
             // Prepopulate the dropdown with roles
             var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
