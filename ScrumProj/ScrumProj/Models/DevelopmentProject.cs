@@ -10,12 +10,13 @@ namespace ScrumProj.Models
     {
         public int Id { get; set; }
 
+        [Required(ErrorMessage = "En titel behövs för att kunna publicera projeketet.")]
         [Display(Name = "Titel")]
         [Required(ErrorMessage = "Du måste ha en titel på ditt projekt.")]
         [StringLength(30,ErrorMessage ="Max 30 tecken.")]
         public string Title { get; set; }
 
-        [Required(ErrorMessage ="Skriv en inledning på projektet för att skapa det.")]
+        [Required(ErrorMessage ="En inledning behövs för att kunna publicera projeketet.")]
         [StringLength(1000)]
         [Display(Name = "Inledning")]
         public string Content { get; set; }

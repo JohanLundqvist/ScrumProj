@@ -350,6 +350,10 @@
     <Compile Include="Migrations\201902151251493_requiredMessages.Designer.cs">
       <DependentUpon>201902151251493_requiredMessages.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902181053085_fiximodelfiffiluran.cs" />
+    <Compile Include="Migrations\201902181053085_fiximodelfiffiluran.Designer.cs">
+      <DependentUpon>201902181053085_fiximodelfiffiluran.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -723,6 +727,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902151251493_requiredMessages.resx">
       <DependentUpon>201902151251493_requiredMessages.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902181053085_fiximodelfiffiluran.resx">
+      <DependentUpon>201902181053085_fiximodelfiffiluran.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
