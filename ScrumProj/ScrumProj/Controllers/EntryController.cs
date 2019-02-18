@@ -583,6 +583,7 @@ namespace ScrumProj.Controllers
         {
             return PartialView(model);
         }
+
         public void NewPushNote(string note, string typeOfNote)
         {
             var ctx = new AppDbContext();

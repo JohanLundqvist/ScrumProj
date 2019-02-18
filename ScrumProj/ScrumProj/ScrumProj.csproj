@@ -642,11 +642,7 @@
     <Content Include="Views\Profile\ReadPushNotes.cshtml" />
     <Content Include="Views\Role\ListAllAdmins.cshtml" />
     <Content Include="Views\Profile\ViewProfile.cshtml" />
-    <Content Include="Views\Meetings\Create.cshtml" />
-    <Content Include="Views\Meetings\Delete.cshtml" />
-    <Content Include="Views\Meetings\Details.cshtml" />
-    <Content Include="Views\Meetings\Edit.cshtml" />
-    <Content Include="Views\Meetings\Index.cshtml" />
+    <Content Include="Views\Profile\TestView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
