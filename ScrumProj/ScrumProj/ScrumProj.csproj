@@ -105,6 +105,7 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net461\System.Security.Cryptography.Algorithms.dll</HintPath>
     </Reference>
@@ -212,7 +213,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MailController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MeetingsController.cs" />
+    <Compile Include="Controllers\MeetingController.cs" />
+    <Compile Include="Controllers\MeetingsAPIController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Global.asax.cs">
@@ -389,6 +391,10 @@
     <Compile Include="Migrations\201902191054445_meetingtimes.cs" />
     <Compile Include="Migrations\201902191054445_meetingtimes.Designer.cs">
       <DependentUpon>201902191054445_meetingtimes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902191209317_ändringavMeeting.cs" />
+    <Compile Include="Migrations\201902191209317_ändringavMeeting.Designer.cs">
+      <DependentUpon>201902191209317_ändringavMeeting.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -638,7 +644,7 @@
     <Content Include="Views\Profile\Index.cshtml" />
     <Content Include="Views\Profile\CreateProfile.cshtml" />
     <Content Include="Views\Profile\FirstPage.cshtml" />
-    <Content Include="Views\Profile\Booking.cshtml" />
+    <Content Include="Views\Meeting\Booking.cshtml" />
     <Content Include="Views\Role\Index.cshtml" />
     <Content Include="Views\Role\ManageRoles.cshtml" />
     <Content Include="Views\Development\DevelopmentWork.cshtml" />
@@ -797,6 +803,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902191054445_meetingtimes.resx">
       <DependentUpon>201902191054445_meetingtimes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902191209317_ändringavMeeting.resx">
+      <DependentUpon>201902191209317_ändringavMeeting.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
