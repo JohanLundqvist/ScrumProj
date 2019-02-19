@@ -387,6 +387,10 @@
     <Compile Include="Migrations\201902181229407_ppps.Designer.cs">
       <DependentUpon>201902181229407_ppps.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902191054445_meetingtimes.cs" />
+    <Compile Include="Migrations\201902191054445_meetingtimes.Designer.cs">
+      <DependentUpon>201902191054445_meetingtimes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -398,6 +402,7 @@
     <Compile Include="Models\DevFile.cs" />
     <Compile Include="Models\Entry.cs" />
     <Compile Include="Models\Meeting.cs" />
+    <Compile Include="Models\MeetingTimes.cs" />
     <Compile Include="Models\PushNote.cs" />
     <Compile Include="Models\Utilities.cs" />
     <Compile Include="Models\ViewModels\AdminListViewModel.cs" />
@@ -790,6 +795,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902181229407_ppps.resx">
       <DependentUpon>201902181229407_ppps.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902191054445_meetingtimes.resx">
+      <DependentUpon>201902191054445_meetingtimes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
