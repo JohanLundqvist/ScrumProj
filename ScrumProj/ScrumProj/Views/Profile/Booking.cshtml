@@ -47,14 +47,14 @@
 <div class="jumbotron" id="two" style="display:none">
 
     <h1 class="display-3">Mötesbökning</h1>
+    <div id="datepicker"></div>
     <h2 class="lead">Kalender man kan klicka på</h2>
-    <input type="text" id="datepicker"/>
+    <input class="form-control" type="text" id="date"/>
     <hr class="my-4">
     <p class="lead">
         <a class="btn btn-primary btn-lg" id="SecondPageBack" role="button">Tillbaka</a>
         <a class="btn btn-primary btn-lg" id="SecondNextPage" role="button">Nästa</a>
     </p>
-    <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
 </div>
 
 <div class="jumbotron" id="three" style="display:none">
@@ -101,10 +101,26 @@
 
 
         //nästa sida
+    var chosenDate;
+
     $('#firstNextPage').on('click', function () {
         $('#one').slideUp(300);
         $('#two').slideDown(1000);
     });
+
+    $('#datepicker').datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (value, date) {
+
+            $('#date').val(value);
+            chosenDate = value;
+            
+        }
+    });
+
+ 
+
+   
 
     $('#SecondNextPage').on('click', function () {
         $('#two').slideUp(300);
