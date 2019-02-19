@@ -18,7 +18,7 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string tags, HttpPostedFileBase img)
         {
-            var ctx = new AppDbContext();            
+            var ctx = new AppDbContext();
             model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
             var UserId = model.loggedInUser.ID;
             bool IsFormal = false;
@@ -153,16 +153,12 @@ namespace ScrumProj.Controllers
             AddCategoryToDatabase(tags, postId);
             ctx.SaveChanges();
 
-
-
-            /*
+            
+            
             NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"), "bloggPost");
+            
 
-
-            // Two lists containing profiles of two intervals
-            // List<string> yo1 = new List<string>();
-            // List<string> yo2 = new List<string>();
-
+    
             var ap = new ApplicationDbContext();
             List<string> Emails = new List<string>();
             foreach (var p in ap.Users)
@@ -182,34 +178,44 @@ namespace ScrumProj.Controllers
                 Message = s + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
             }, Emails));
 
-            */
 
 
 
             // Task.Delay(TimeSpan.FromSeconds(5)).ContinueWith((x) => method());
             // await MethodTask();
-            
-            return RedirectToAction("BlogPage"); 
+            // var aTimer = new System.Timers.Timer(5000); //one hour in milliseconds
+            // aTimer.Elapsed += new ElapsedEventHandler(Method);
+            // Method();
+            return RedirectToAction("BlogPage");
         }
 
 
-
-        public async Task MethodTask()
-        {
-            Task.Delay(TimeSpan.FromSeconds(5));
-
-            System.Diagnostics.Debug.WriteLine("MOTHERFUCKER");
-        }
-
-
-
+        /*
         public void Method()
         {
-            System.Diagnostics.Debug.WriteLine("Sug kuk");
+            var ctx = new AppDbContext();
+            var ap = new ApplicationDbContext();
+            List<string> Emails = new List<string>();
+            foreach (var p in ap.Users)
+            {
+                var b = ctx.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
+                if (b)
+                {
+                    Emails.Add(p.Email);
+                }
+            }
+            var s = GetNameOfLoggedInUser();
+            var mc = new MailController();
+            Task.Run(() => mc.SendEmail(new EmailFormModel
+            {
+                FromEmail = "haxxor1337elite69ultra420@yandex.com",
+                FromName = "Nelson Administration",
+                Message = s + " Har skrivit ett inlägg med titeln: " + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
+            }, Emails));
         }
+        */
 
-
-
+        
         // Method
         public ProfileModel GetCurrentUser(string Id)
         {
