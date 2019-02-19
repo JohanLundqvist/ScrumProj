@@ -14,6 +14,7 @@ namespace ScrumProj.Models.ViewModels
         public List<ProfileModel> Users { get; set; }
         public List<SelectListItem> UsersToAdd { get; set; }
         public string SelectedUser { get; set; }
+        public List<string> ProposedTimes { get; set; }
 
     }
 }
