@@ -46,4 +46,13 @@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+
+    @if (ViewBag.Message != null)
+    {
+        <script type="text/javascript" charset="iso-8859-1" culture="sv-se">
+        window.onload = function () {
+            alert('@Html.Raw(ViewBag.Message)');
+        }
+        </script>
+    }
 }
