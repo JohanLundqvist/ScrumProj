@@ -77,24 +77,18 @@
     //    $('#one').toggle();
     //    $('#second').toggle();
     //});
-    //nästa sida
      var MeetingTitle = $('Title').val();
     var ParticipantsToBeAdded = [];
-    //var ParticipantsToBeAdded = new Array();
-    //function addParticipants() {
-    //    var newParticipant = { };
-    //    newParticipant.name = $('#newParticipant').val();
-    //    ParticipantsToBeAdded.push(newParticipant);
-    //    console.info(ParticipantsToBeAdded);
-    //}
+
 
     $('#addParticipant').on('click',function() {
         var newParticipant = {};
         newParticipant.id = $('#newParticipant').val();
         newParticipant.name = $('#newParticipant option:selected').text();
         ParticipantsToBeAdded.push(newParticipant);
-        showParticipants();
         console.info(ParticipantsToBeAdded);
+        showParticipants();
+
     });
     function showParticipants() {
         var $list = $('#AddedParticipants').empty();
@@ -102,10 +96,11 @@
             var currentItem = ParticipantsToBeAdded.items[i];
             var $li = $('<li>').html(currentItem.name);
             $li.appendTo($list);
-
         }
     }
 
+
+        //nästa sida
     $('#firstNextPage').on('click', function () {
         $('#one').slideUp(300);
         $('#two').slideDown(1000);
