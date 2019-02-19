@@ -39,6 +39,7 @@ namespace ScrumProj.Models
                  .ToTable("MeetingParticipants"));
         }
 
+        public System.Data.Entity.DbSet<ScrumProj.Models.Meeting> Meetings { get; set; }
     }
 
 }
