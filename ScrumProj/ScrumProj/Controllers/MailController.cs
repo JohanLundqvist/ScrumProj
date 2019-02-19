@@ -48,6 +48,5 @@ namespace ScrumProj.Controllers
                 await smtp.SendMailAsync(message);
             }
         }
-        
     }
 }
