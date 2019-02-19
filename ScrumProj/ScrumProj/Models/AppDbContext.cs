@@ -18,6 +18,7 @@ namespace ScrumProj.Models
         public DbSet<PushNote> PushNotes { get; set; }
         public DbSet<DevFile> DevFiles { get; set; }
         public DbSet<WantMailOrNo> WantMailOrNoes { get; set; }
+        public DbSet<MeetingTimes> MeetingTimes { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DevelopmentProject>()

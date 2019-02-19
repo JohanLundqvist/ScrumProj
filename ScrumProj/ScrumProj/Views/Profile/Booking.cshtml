@@ -17,32 +17,44 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 <div class="jumbotron" id="one">
-
     <h1 class="display-3">Mötesbökning</h1>
-    <p class="lead">Titel</p>
-    <input type="text" class="form-control" id="Title" />
 
-    <p class="lead">Bjud in deltagare</p>
-    @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
-    <a class="btn btn-primary btn-lg" id="addParticipant" role="button">Lägg till deltagare</a>
-    <hr class="my-4">
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" id="firstNextPage" role="button">Nästa</a>
-    </p>
-    <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+    <div class="row">
+        <div class="col-md">
+            <p class="lead">Titel</p>
+            <input type="text" class="form-control" id="Title" />
+
+            <p class="lead">Bjud in deltagare</p>
+            @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { id = "newParticipant", @class = "form-control" })
+            <a class="btn btn-primary btn-lg" id="addParticipant" role="button">Lägg till deltagare</a>
+            <hr class="my-4">
+            <p class="lead">
+                <a class="btn btn-primary btn-lg" id="firstNextPage" role="button">Nästa</a>
+            </p>
+            <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+        </div>
+        <div class="col-md" style="padding-top:40px">
+            <ul id="AddedParticipants">
+                <li>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
 </div>
 
 <div class="jumbotron" id="two" style="display:none">
 
     <h1 class="display-3">Mötesbökning</h1>
+    <div id="datepicker"></div>
     <h2 class="lead">Kalender man kan klicka på</h2>
-    <input type="text" id="datepicker"/>
+    <input class="form-control" type="text" id="date"/>
     <hr class="my-4">
     <p class="lead">
         <a class="btn btn-primary btn-lg" id="SecondPageBack" role="button">Tillbaka</a>
         <a class="btn btn-primary btn-lg" id="SecondNextPage" role="button">Nästa</a>
     </p>
-    <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
 </div>
 
 <div class="jumbotron" id="three" style="display:none">
@@ -65,13 +77,50 @@
     //    $('#one').toggle();
     //    $('#second').toggle();
     //});
-    //nästa sida
      var MeetingTitle = $('Title').val();
+    var ParticipantsToBeAdded = [];
+
+
+    $('#addParticipant').on('click',function() {
+        var newParticipant = {};
+        newParticipant.id = $('#newParticipant').val();
+        newParticipant.name = $('#newParticipant option:selected').text();
+        ParticipantsToBeAdded.push(newParticipant);
+        console.info(ParticipantsToBeAdded);
+        showParticipants();
+
+    });
+    function showParticipants() {
+        var $list = $('#AddedParticipants').empty();
+        for (var i = 0; i < ParticipantsToBeAdded.size; i++) {
+            var currentItem = ParticipantsToBeAdded.items[i];
+            var $li = $('<li>').html(currentItem.name);
+            $li.appendTo($list);
+        }
+    }
+
+
+        //nästa sida
+    var chosenDate;
 
     $('#firstNextPage').on('click', function () {
         $('#one').slideUp(300);
         $('#two').slideDown(1000);
     });
+
+    $('#datepicker').datepicker({
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (value, date) {
+
+            $('#date').val(value);
+            chosenDate = value;
+            
+        }
+    });
+
+ 
+
+   
 
     $('#SecondNextPage').on('click', function () {
         $('#two').slideUp(300);
