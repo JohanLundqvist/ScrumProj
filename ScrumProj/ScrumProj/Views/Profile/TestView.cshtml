@@ -1,30 +1,134 @@
-﻿
-<h2>TheView</h2>
+﻿<!-- Horizontal, rounded -->
 
-<div class="progress">
-    <input btn="1" type="button"/>
-    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+<div class="container horizontal rounded">
+    <h2>Horizontal, Rounded</h2>
+    <div class="progress-bar horizontal">
+        <div class="progress-track">
+            <div class="progress-fill">
+                <span>100%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar horizontal">
+        <div class="progress-track">
+            <div class="progress-fill">
+                <span>75%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar horizontal">
+        <div class="progress-track">
+            <div class="progress-fill">
+                <span>60%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar horizontal">
+        <div class="progress-track">
+            <div class="progress-fill">
+                <span>20%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar horizontal">
+        <div class="progress-track">
+            <div class="progress-fill">
+                <span>34%</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="progress-bar horizontal">
+        <div class="progress-track">
+            <div class="progress-fill">
+                <span>82%</span>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="progress">
-    <input btn="btn2" type="button" />
-    <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-<div class="progress">
-    <input id="btn3" type="button" />
-    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-<div class="progress">
-    <input id="btn4" type="button" />
-    <div class="progress-bar progress-bar-striped progress-bar-animated bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-<div class="progress">
-    <input id="btn5" type="button" />
-    <div class="progress-bar progress-bar-striped progress-bar-animated bg-warning" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
+
+
+<form action="/Product/Create" method="post" id="Product_Form">
+    <div>
+        <label>En tid</label>
+        <input type="radio" name="IsLocal" id="IsLocal" value="yes" checked="checked" tabindex="10" />
+    </div>
+
+    <div>
+        <label>En annan tid</label>
+        <input type="radio" name="IsLocal" value="no" tabindex="11" />
+    </div>
+
+    <input type="submit" value="RÖSTA" class="large" tabindex="17" />
+</form>
 
 
 @section scripts {
-    <scripts>
-        $('')
-    </scripts> 
+    <script>
+        $('.horizontal .progress-fill span').each(function () {
+            var percent = $(this).html();
+            $(this).parent().css('width', percent);
+        });
+
+
+        $('.vertical .progress-fill span').each(function () {
+            var percent = $(this).html();
+            var pTop = 100 - (percent.slice(0, percent.length - 1)) + "%";
+            $(this).parent().css({
+                'height': percent,
+                'top': pTop
+            });
+        });
+    </script>
 }
+<style>
+
+    .horizontal .progress-bar {
+        float: left;
+        height: 45px;
+        width: 100%;
+        padding: 12px 0;
+    }
+
+    .progress-bar {
+    width: 70%;
+    }
+
+    .horizontal .progress-track {
+        position: relative;
+        width: 100%;
+        height: 20px;
+        background: #ebebeb;
+    }
+
+    .horizontal .progress-fill {
+        position: relative;
+        background: #666;
+        height: 20px;
+        width: 50%;
+        color: #fff;
+        text-align: center;
+        font-family: "Lato","Verdana",sans-serif;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .rounded .progress-track,
+    .rounded .progress-fill {
+        border-radius: 3px;
+        box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+    }
+
+
+
+
+    .rounded .progress-track,
+    .rounded .progress-fill {
+        box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+        border-radius: 3px;
+    }
+</style>
