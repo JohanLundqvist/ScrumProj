@@ -197,7 +197,7 @@ namespace ScrumProj.Controllers
             }
             else
             {
-                ViewBag.Message = "Käft Tobbe";
+                ViewBag.Message = "Användaren hittades inte!";
             }
 
             // Prepopulate the dropdown with roles
