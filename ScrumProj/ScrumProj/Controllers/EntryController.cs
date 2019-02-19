@@ -153,7 +153,16 @@ namespace ScrumProj.Controllers
             AddCategoryToDatabase(tags, postId);
             ctx.SaveChanges();
 
+
+
+            /*
             NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"), "bloggPost");
+
+
+            // Two lists containing profiles of two intervals
+            // List<string> yo1 = new List<string>();
+            // List<string> yo2 = new List<string>();
+
             var ap = new ApplicationDbContext();
             List<string> Emails = new List<string>();
             foreach (var p in ap.Users)
@@ -173,7 +182,30 @@ namespace ScrumProj.Controllers
                 Message = s + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
             }, Emails));
 
+            */
+
+
+
+            // Task.Delay(TimeSpan.FromSeconds(5)).ContinueWith((x) => method());
+            // await MethodTask();
+            
             return RedirectToAction("BlogPage"); 
+        }
+
+
+
+        public async Task MethodTask()
+        {
+            Task.Delay(TimeSpan.FromSeconds(5));
+
+            System.Diagnostics.Debug.WriteLine("MOTHERFUCKER");
+        }
+
+
+
+        public void Method()
+        {
+            System.Diagnostics.Debug.WriteLine("Sug kuk");
         }
 
 
@@ -578,11 +610,17 @@ namespace ScrumProj.Controllers
             });
         }
 
+
+
         // Method
         public ActionResult _DeleteCategoryPartial(EntryViewModel model)
         {
             return PartialView(model);
         }
+
+
+
+        // Method
         public void NewPushNote(string note, string typeOfNote)
         {
             var ctx = new AppDbContext();
@@ -605,6 +643,10 @@ namespace ScrumProj.Controllers
             }
             ctx.SaveChanges();
         }
+
+
+
+        // Method
         public void NewPushNote(string note)
         {
             var ctx = new AppDbContext();
