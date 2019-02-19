@@ -1,17 +1,96 @@
-﻿@model ScrumProj.Models.ProfileViewModel
+﻿@using ScrumProj.Models.ViewModels
+@model MeetingViewModel
 
 @if (User.Identity.IsAuthenticated)
 {
     ViewBag.Title = "Booking";
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 }
-<div class="jumbotron">
+<link href="~/Content/jsCalendar.darkseries.css" rel="stylesheet" />
+<link href="~/Content/jsCalendar.css" rel="stylesheet" />
+<script src="~/Scripts/jsCalendar.lang.sv.js"></script>
+<script src="~/Scripts/jsCalendar.js"></script>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<div class="jumbotron" id="one">
+
     <h1 class="display-3">Mötesbökning</h1>
-    <p class="lead">.</p>
+    <p class="lead">Titel</p>
+    <input type="text" class="form-control" id="Title" />
+
+    <p class="lead">Bjud in deltagare</p>
+    @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { @class = "form-control" })
+    <a class="btn btn-primary btn-lg" id="addParticipant" role="button">Lägg till deltagare</a>
     <hr class="my-4">
-    <p></p>
     <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        <a class="btn btn-primary btn-lg" id="firstNextPage" role="button">Nästa</a>
     </p>
+    <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
 </div>
+
+<div class="jumbotron" id="two" style="display:none">
+
+    <h1 class="display-3">Mötesbökning</h1>
+    <h2 class="lead">Kalender man kan klicka på</h2>
+    <input type="text" id="datepicker"/>
+    <hr class="my-4">
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" id="SecondPageBack" role="button">Tillbaka</a>
+        <a class="btn btn-primary btn-lg" id="SecondNextPage" role="button">Nästa</a>
+    </p>
+    <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
 </div>
+
+<div class="jumbotron" id="three" style="display:none">
+
+    <h1 class="display-3">Tider man kan välja</h1>
+    <p class="lead">Tider</p>
+    <input type="text" class="form-control" id="Title" />
+    <hr class="my-4">
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" id="ThirdPageBack" role="button">Tillbaka</a>
+
+        <a class="btn btn-primary btn-lg" id="ThirdNextPage" role="button">Skapa möte</a>
+    </p>
+    <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+</div>
+
+
+<script>
+    //$('#btn').on('click', function () {
+    //    $('#one').toggle();
+    //    $('#second').toggle();
+    //});
+    //nästa sida
+     var MeetingTitle = $('Title').val();
+
+    $('#firstNextPage').on('click', function () {
+        $('#one').slideUp(300);
+        $('#two').slideDown(1000);
+    });
+
+    $('#SecondNextPage').on('click', function () {
+        $('#two').slideUp(300);
+        $('#three').slideDown(1000);
+    });
+
+
+
+    //backa
+    $('#ThirdPageBack').on('click', function () {
+        $('#three').slideUp(300);
+        $('#two').slideDown(1000);
+    });
+    $('#SecondPageBack').on('click', function () {
+        $('#two').slideUp(300);
+        $('#one').slideDown(1000);
+    });
+
+    $(Document).ready(function () {
+        $("#datepicker").datepicker();
+    });
+</script>
