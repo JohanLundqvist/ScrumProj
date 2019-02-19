@@ -12,7 +12,7 @@ using ScrumProj.Models;
 
 namespace ScrumProj.Controllers
 {
-    public class MeetingsController : ApiController
+    public class MeetingsAPIController : ApiController
     {
         private AppDbContext db = new AppDbContext();
 
@@ -72,18 +72,34 @@ namespace ScrumProj.Controllers
         }
 
         // POST: api/Meetings
-        [ResponseType(typeof(Meeting))]
-        public IHttpActionResult PostMeeting(Meeting meeting)
+        [HttpPost]
+        public void PostMeeting([FromBody]Meeting meeting)
         {
-            if (!ModelState.IsValid)
+            var participants = new List<ProfileModel>();
+            var time = new List<string>();
+            foreach (var user in meeting.MeetingParticipants)
             {
-                return BadRequest(ModelState);
+                 var Fulluser = db.Profiles.Single(u => u.ID == user.ID);
+                participants.Add(Fulluser);
             }
+            var titlt = meeting.MeetingTitle;
 
-            db.Meetings.Add(meeting);
+            foreach (var proptime in meeting.ProposedTimes)
+            {  
+                time.Add(proptime);
+            }
+            var meet = new Meeting
+            {
+                MeetingTitle = titlt,
+                MeetingParticipants = participants,
+                Time = meeting.Time,
+                ProposedTimes = time
+            };
+            
+            db.Meetings.Add(meet);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = meeting.MeetingId }, meeting);
+
         }
 
         // DELETE: api/Meetings/5
