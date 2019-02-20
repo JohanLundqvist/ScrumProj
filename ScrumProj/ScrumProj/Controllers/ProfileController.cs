@@ -223,7 +223,7 @@ namespace ScrumProj.Controllers
         {
             var ctx = new AppDbContext();
             var model = new MeetingViewModel();
-            var invited = 9;
+            var invited = 5;
             //ctx.MeetingTimes.Add(new MeetingTimes
             //{
             //    Time1 = "kl17",
@@ -238,8 +238,9 @@ namespace ScrumProj.Controllers
             var dt = new Dictionary<string, double>();
 
             var mt = ctx.MeetingTimes.Find(1);
+            
 
-            if(mt.Time1 != null)
+            if (mt.Time1 != null)
                 dt.Add(mt.Time1, mt.Time1Votes * valueOfVote);
             if (mt.Time2 != null)
                 dt.Add(mt.Time2, mt.Time2Votes * valueOfVote);
@@ -258,6 +259,7 @@ namespace ScrumProj.Controllers
         }
         public ActionResult Vote(MeetingViewModel model ,string SelectedTime = "")
         {
+            var mee = new MeetingViewModel();
             if (SelectedTime == "")
                 return RedirectToAction("TestView");
             var ctx = new AppDbContext();
@@ -267,7 +269,7 @@ namespace ScrumProj.Controllers
                 theMeeting.Time1Votes++;
             else if (SelectedTime == theMeeting.Time2)
                 theMeeting.Time2Votes++;
-            else if (SelectedTime == theMeeting.Time3)
+            else if (SelectedTime == theMeeting.Time3) 
                 theMeeting.Time3Votes++;
             else if (SelectedTime == theMeeting.Time4)
                 theMeeting.Time4Votes++;

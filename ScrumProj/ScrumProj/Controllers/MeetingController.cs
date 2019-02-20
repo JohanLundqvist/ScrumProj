@@ -14,9 +14,9 @@ namespace ScrumProj.Controllers
          AppDbContext _context = new AppDbContext();
 
         [Authorize]
-        public ActionResult Booking(MeetingViewModel model)
+        public ActionResult Booking()
         {
-          
+            var model = new MeetingViewModel();
             var listOfUsers = new List<SelectListItem>();
             var listOfMeetings = new List<Meeting>();
             var listProposedTimes = new List<string>();
@@ -50,7 +50,30 @@ namespace ScrumProj.Controllers
                     listOfUsers.Add(item);
                 }
             }
+            var ListOfMeetings = _context.Meetings.ToList();
+            var DicInvitedToMeeting = new Dictionary<int, int>();
+            if (ListOfMeetings != null)
+            {
+                var dt = new Dictionary<string, double>();
+                foreach (var m in ListOfMeetings)
+                {
+                    DicInvitedToMeeting.Add(m.MeetingId, m.MeetingParticipants.Count());
+                    var valueOfVote = m.MeetingParticipants.Count() / 100;
+                    var mt = new MeetingTimes();
+                    mt = _context.MeetingTimes.Where(n => n.MeetingId == m.MeetingId).Single();
+                    if (mt.Time1 != null)
+                        dt.Add(mt.Time1, mt.Time1Votes * valueOfVote);
+                    if (mt.Time2 != null)
+                        dt.Add(mt.Time2, mt.Time2Votes * valueOfVote);
+                    if (mt.Time3 != null)
+                        dt.Add(mt.Time3, mt.Time3Votes * valueOfVote);
+                    if (mt.Time4 != null)
+                        dt.Add(mt.Time4, mt.Time4Votes * valueOfVote);
+                }
+                model.DicTimes = dt;
+            }
 
+           
             var userId = User.Identity.GetUserId();
             var activeUser = _context.Profiles.First(u => u.ID == userId);
 
@@ -58,6 +81,25 @@ namespace ScrumProj.Controllers
             model.Meetings = listOfMeetings;
             model.User = activeUser;
             return View(model);
+        }
+        public ActionResult Vote(MeetingViewModel model, string SelectedTime = "")
+        {
+            if (SelectedTime == "")
+                return RedirectToAction("Booking");
+            var ctx = new AppDbContext();
+            var theMeeting = ctx.MeetingTimes.Find(model.Times.Id);
+
+            if (SelectedTime == theMeeting.Time1)
+                theMeeting.Time1Votes++;
+            else if (SelectedTime == theMeeting.Time2)
+                theMeeting.Time2Votes++;
+            else if (SelectedTime == theMeeting.Time3)
+                theMeeting.Time3Votes++;
+            else if (SelectedTime == theMeeting.Time4)
+                theMeeting.Time4Votes++;
+            ctx.SaveChanges();
+
+            return RedirectToAction("Booking");
         }
     }
 }

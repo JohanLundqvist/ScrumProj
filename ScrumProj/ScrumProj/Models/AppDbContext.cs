@@ -19,6 +19,7 @@ namespace ScrumProj.Models
         public DbSet<DevFile> DevFiles { get; set; }
         public DbSet<WantMailOrNo> WantMailOrNoes { get; set; }
         public DbSet<MeetingTimes> MeetingTimes { get; set; }
+        public DbSet<HasVotedOrNo> HasVotedOrNo { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DevelopmentProject>()
