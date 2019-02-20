@@ -451,7 +451,10 @@ namespace ScrumProj.Controllers
             var currentUserId = User.Identity.GetUserId();
             var currentUser = GetCurrentUser(currentUserId);
             var comment = model.comment;
-
+            if (comment == "")
+            {
+                return RedirectToAction("BlogPage");
+            }
             ctx.Comments.Add(new Comment
             {
                 comment = comment,
