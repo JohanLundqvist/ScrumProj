@@ -22,18 +22,21 @@
 
     <div class="row">
         <div class="col-md">
-            <p class="lead">Titel</p>
-            <input type="text" class="form-control" id="TitleInput" />
+            <form id="form1">
 
-            <p class="lead">Bjud in deltagare</p>
-            @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { id = "newParticipant", @class = "form-control" })
-            <a class="btn btn-primary btn-lg" id="addParticipant" role="button">Lägg till deltagare</a>
-            <hr class="my-4">
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" id="firstNextPage" role="button">Nästa</a>
-            </p>
-            <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+                <p class="lead">Titel</p>
+                <input type="text" class="form-control" id="TitleInput" name ="TitleInput" />
+
+                <p class="lead">Bjud in deltagare</p>
+                @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { id = "newParticipant", @class = "form-control" })
+                <a class="btn btn-primary btn-lg" id="addParticipant" role="button">Lägg till deltagare</a>
+                <hr class="my-4">
+                <p class="lead">
+                    <a class="btn btn-primary btn-lg" id="firstNextPage" role="button">Nästa</a>
+                </p>
+            </form>
         </div>
+
         <div class="col-md" style="padding-top:40px">
             <ul id="AddedParticipants">
                 <li>
@@ -46,16 +49,17 @@
 
 
 <div class="jumbotron" id="two" style="display:none">
-
+    <form id="form2">
     <h1 class="display-3">Mötesbökning</h1>
     <div id="datepicker"></div>
     <h2 class="lead">Kalender man kan klicka på</h2>
-    <input class="form-control" type="text" id="date" />
+    <input class="form-control" type="text" id="date" name ="date"/>
     <hr class="my-4">
     <p class="lead">
         <a class="btn btn-primary btn-lg" id="SecondPageBack" role="button">Tillbaka</a>
         <a class="btn btn-primary btn-lg" id="SecondNextPage" role="button">Nästa</a>
     </p>
+    </form>
 </div>
 
 <div class="jumbotron" id="three" style="display:none">
@@ -118,6 +122,27 @@
         //    $('#one').toggle();
         //    $('#second').toggle();
         //});
+    <script>
+        $(document).ready(function () {
+
+            $('#form1').validate({ // initialize the plugin
+                rules: {
+                    TitleInput: {
+                        required: true,
+                        minlength: 3
+                    }
+                }
+            });
+
+            $('#form2').validate({ // initialize the plugin
+                rules: {
+                    date: {
+                        required: true,
+                        minlength: 10
+                    }
+                }
+            });
+        });
         var Title;
         var ParticipantsToBeAdded = [];
         var chosenDate;
@@ -138,7 +163,6 @@
             $('#newParticipant option:selected').remove();
             console.info(ParticipantsToBeAdded);
             showParticipants();
-
         });
         function showParticipants() {
             var $list = $('#AddedParticipants').empty();
@@ -155,9 +179,28 @@
         //nästa sida
         $('#firstNextPage').on('click', function () {
             Title = $('#TitleInput').val();
-            $('#one').slideUp(300);
-            $('#two').slideDown(1000);
+
+            if ($('#form1').valid()) {
+
+                $('#one').slideUp(300);
+                $('#two').slideDown(1000);
+            }
+            else {
+                alert("Du har inte fyllt i formuläret korrekt.")
+            }
         });
+
+        $('#SecondNextPage').on('click', function () {
+
+            if ($('#form2').valid()) {
+                $('#two').slideUp(300);
+                $('#three').slideDown(1000);
+            }
+             else {
+                    alert("Klicka i ett datum för mötet.")
+                }
+        });
+
 
         $('#datepicker').datepicker({
             dateFormat: 'yy-mm-dd',
@@ -169,41 +212,41 @@
             }
         });
 
-        $('#SecondNextPage').on('click', function () {
-            $('#two').slideUp(300);
-            $('#three').slideDown(1000);
-        });
+
                 $('#ThirdNextPage').on('click', function () {
-            Proposed = $(":checkbox:checked");
-            var arr = [];
-            for (var i = 0; i < Proposed.length; i++)
-            {
-            var currentItem = Proposed[i];
-            var time = currentItem.id;
-            arr.push(time);
-            }
-                    var obj = {
-                        MeetingTitle: Title,
-                        MeetingParticipants: ParticipantsToBeAdded,
-                        Time: chosenDate,
-                        ProposedTimes: arr
-                    };
-
-            var Meet = JSON.stringify(obj);
-
-                    $.ajax({
-                        type : 'POST',
-                        data: Meet,
-                        dataType: 'JSON',
-                        contentType: 'application/json',
-                        url: '@Url.Action("PostMeeting", "MeetingsAPI", new { httproute = "" })',
-                        success: function (data) {
-                            alert("Mötet är skapat och inväntar omröstning av dess medlemmar.")
-                            location.reload();
+                    Proposed = $(":checkbox:checked");
+                    if (Proposed.length < 0 && Proposed.length >= 4) {
+                        var arr = [];
+                        for (var i = 0; i < Proposed.length; i++) {
+                            var currentItem = Proposed[i];
+                            var time = currentItem.id;
+                            arr.push(time);
                         }
-                    });
-        });
+                        var obj = {
+                            MeetingTitle: Title,
+                            MeetingParticipants: ParticipantsToBeAdded,
+                            Time: chosenDate,
+                            ProposedTimes: arr
+                        };
 
+                        var Meet = JSON.stringify(obj);
+
+                        $.ajax({
+                            type: 'POST',
+                            data: Meet,
+                            dataType: 'JSON',
+                            contentType: 'application/json',
+                            url: '@Url.Action("PostMeeting", "MeetingsAPI", new { httproute = "" })',
+                            success: function (data) {
+                                alert("Mötet är skapat och inväntar omröstning av dess medlemmar.")
+                                location.reload();
+                            }
+                        });
+                    }
+                    else {
+                        alert("Du får ge upp till 4 förslag på tider.")
+                    }
+        });
 
 
         //backa
