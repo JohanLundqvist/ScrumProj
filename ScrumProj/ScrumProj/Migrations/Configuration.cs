@@ -220,7 +220,7 @@ namespace ScrumProj.Migrations
 
             var bennyResult = UserManager.Create(user5, "hejhej123");
 
-            ctx.Profiles.Add(new ProfileModel
+            ctx.Profiles.AddOrUpdate(new ProfileModel
             {
                 ID = user5.Id,
                 FirstName = "Benny",
@@ -228,7 +228,7 @@ namespace ScrumProj.Migrations
                 Position = "Marknadsföringsansvarig",
                 IsApproved = true
             });
-            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            ctx.WantMailOrNoes.AddOrUpdate(new WantMailOrNo
             {
                 BlogPost = true,
                 Mail = true,
