@@ -29,7 +29,7 @@ namespace ScrumProj.Controllers
             }
             if (message.To == null)
                 return;
-            message.From = new MailAddress("haxxor1337elite69ultra420@yandex.com");
+            message.From = new MailAddress("scrumcgrupptvanelson@outlook.com");
             message.Subject = "Du har en ny notis i Nelson Administration";
             message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
             message.IsBodyHtml = true;
@@ -38,8 +38,8 @@ namespace ScrumProj.Controllers
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "haxxor1337elite69ultra420@yandex.com",
-                    Password = "anon6969"
+                    UserName = "scrumcgrupptvanelson@outlook.com",
+                    Password = "hej12345"
                 };
                 smtp.Credentials = credential;
                 smtp.Host = "smtp-mail.outlook.com";

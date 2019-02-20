@@ -1,17 +1,16 @@
 ﻿
 @using Microsoft.AspNet.Identity;
+
 @model ScrumProj.Models.ViewModels.DevelopmentViewModel
 
 @if (User.Identity.IsAuthenticated)
-{ 
-Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
-
+{
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 }
 
+
+
 <h2>Skapa nytt projekt</h2>
-
-
-
 
 <div class="col-sm">
     <div class="card mb-3 form-horizontal">
@@ -20,7 +19,7 @@ Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
             @Html.AntiForgeryToken();
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="card-body">
-                
+
                 <div class="row">
                     <div class="form-group col-md">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -59,13 +58,14 @@ Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
             </div>
             <div class="form-group">
                 <div style="padding-left:20px">
-                    <input type="submit" id="Create" value="Skapa projekt" class="btn btn-outline-warning" />
+                    <input type="submit" id="Create" value="Skapa projekt" class="btn btn-success" />
                 </div>
             </div>
         }
     </div>
-
 </div>
+
+
 
 <div class="col-sm">
     @for (int i = Model.projects.Count - 1; i >= 0; i--)
@@ -102,9 +102,9 @@ Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
                                 </a>
                             </li>
                         }
-                        </ul>
+                    </ul>
                 </div>
-                
+
 
 
                 <div class="card-footer">
@@ -119,106 +119,102 @@ Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
                     }
 
                 </div>
-                
-
             </div>
         }
+
         else
         {
             foreach (var user in project.Participants)
             {
                 if (User.Identity.GetUserId() == user.ID)
                 {
-            <div class="card mb-3">
-                <h2 class="card-header" style="color:white;">@project.Title</h2>
-                <div class="card-body">
-                    <h5 class="card-title">@project.Cat</h5>
-                    <hr />
-                    <h6 class="card-subtitle text-muted"></h6>
-                    <p class="card-text">@project.Content</p>
-                </div>
-                <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
-                    @foreach (var projectUser in project.Participants)
-                    {
-                        <li style="float:left; padding:5px;">
-                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
-                                <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
-                            </a>
-                        </li>
-                    }
-                </ul>
-                    <div class="card-footer">
+                    <div class="card mb-3">
+                        <h2 class="card-header" style="color:white;">@project.Title</h2>
+                        <div class="card-body">
+                            <h5 class="card-title">@project.Cat</h5>
+                            <hr />
+                            <h6 class="card-subtitle text-muted"></h6>
+                            <p class="card-text">@project.Content</p>
+                        </div>
                         <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
-                            @foreach (var file in project.Files)
+                            @foreach (var projectUser in project.Participants)
                             {
                                 <li style="float:left; padding:5px;">
-                                    <a href="@Url.Action("DownloadFile", "Development", new { fileId = file.FileId })" data- class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
-                                        <small class="mb-1">@file.Name</small>
+                                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                        <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
                                     </a>
                                 </li>
                             }
                         </ul>
+                        <div class="card-footer">
+                            <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+                                @foreach (var file in project.Files)
+                                {
+                                    <li style="float:left; padding:5px;">
+                                        <a href="@Url.Action("DownloadFile", "Development", new { fileId = file.FileId })" data- class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                            <small class="mb-1">@file.Name</small>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+
+
+
+                        <div class="card-footer">
+                            @foreach (var userr in project.Participants)
+                            {
+                                if (userr.Equals(Model.ActiveUser))
+                                {
+                                    <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
+                                }
+                            }
+                        </div>
                     </div>
-                
-
-
-                <div class="card-footer">
-
-
-                    @foreach (var userr in project.Participants)
-                    {
-                        if (userr.Equals(Model.ActiveUser))
-                        {
-                            <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = project.Id })" class="card-link" style="float:right;">Redigera</a>
-                        }
-                    }
-
-                </div>
-
-
-            </div>
                 }
             }
         }
     }
 </div>
 
-    <script src="~/Scripts/jquery-3.3.1.js"></script>
-    <script>
-        $('#Create').on('click', function () {
-            $('#CreateProjectCard').hide();
-            $('#AddParticipantsCard').show();
-        }
-        );
-        $('#Done').on('click', function () {
-            $('#AddParticipantsCard').hide();
-            $('#CreateProjectCard').show();
-        }
-        );
-        var myFile = document.getElementById('file');
-        myFile.addEventListener('change', function () {
-            if (this.files[0].size > 4000000) {
-                alert("Filen är för stor, gränsen är 4 mb");
-                myFile.value = "";
-            }
-        });
-    
-        $(function () {
-            $('#Label').keyup(function (e) {
-                var max = 30;
-                var len = $(this).val().length;
-                var char = max - len;
-                $('#text-counter').html(char);
-            });
-        });
-    
-        $(function () {
-            $('#Content').keyup(function (e) {
-                var max = 1500;
-                var len = $(this).val().length;
-                var char = max - len;
-                $('#text-counter2').html(char);
-            });
-        });
 
-    </script>
+
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+    $('#Create').on('click', function () {
+        $('#CreateProjectCard').hide();
+        $('#AddParticipantsCard').show();
+    }
+    );
+    $('#Done').on('click', function () {
+        $('#AddParticipantsCard').hide();
+        $('#CreateProjectCard').show();
+    }
+    );
+    var myFile = document.getElementById('file');
+    myFile.addEventListener('change', function () {
+        if (this.files[0].size > 4000000) {
+            alert("Filen är för stor, gränsen är 4 mb");
+            myFile.value = "";
+        }
+    });
+
+    $(function () {
+        $('#Label').keyup(function (e) {
+            var max = 30;
+            var len = $(this).val().length;
+            var char = max - len;
+            $('#text-counter').html(char);
+        });
+    });
+
+    $(function () {
+        $('#Content').keyup(function (e) {
+            var max = 1500;
+            var len = $(this).val().length;
+            var char = max - len;
+            $('#text-counter2').html(char);
+        });
+    });
+
+</script>

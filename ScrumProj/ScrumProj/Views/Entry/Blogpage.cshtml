@@ -1,4 +1,6 @@
-﻿@model ScrumProj.Models.EntryViewModel
+﻿
+@model ScrumProj.Models.EntryViewModel
+
 @if (User.Identity.IsAuthenticated)
 {
     ViewBag.Title = "Blogpage";
@@ -601,7 +603,8 @@
 
 <!--
     -------------------------------------------------------------------------------------
-    JavaScript to show an Alert message
+    First script: JavaScript to show an Alert message
+    Second script: JavaScript to enable validation
     -------------------------------------------------------------------------------------
 -->
 @if (ViewBag.Message != null)
