@@ -2,6 +2,7 @@
 using ScrumProj.Models;
 using ScrumProj.Models.ViewModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace ScrumProj.Controllers
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var userProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
-            
+
             var exist = false;
 
             if (userProfile != null)
@@ -71,12 +72,15 @@ namespace ScrumProj.Controllers
             var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var currentUserProfile = ctx.Profiles.FirstOrDefault(p => p.ID == currentUserId);
-
+            var PushNoteStatus = ctx.WantMailOrNoes.Where(i=> i.UserId == currentUserId).Single();
+                
             return View(new ProfileViewModel
             {
                 FirstName = currentUserProfile.FirstName,
                 LastName = currentUserProfile.LastName,
-                Position = currentUserProfile.Position
+                Position = currentUserProfile.Position,
+                ID = currentUserId,
+                WantMailOrNo = PushNoteStatus               
             });
         }
 
@@ -111,12 +115,9 @@ namespace ScrumProj.Controllers
             }
             return RedirectToAction("BlogPage");
         }
-        [Authorize]
 
-        public ActionResult Booking()
-        {
-            return View();
-        }
+
+
 
         [Authorize]
         public ActionResult FirstPage(FirstPageViewModel model)
@@ -127,14 +128,14 @@ namespace ScrumProj.Controllers
             var ListofEntries = db.Entries.ToList();
             foreach (var entry in ListofEntries)
             {
-                
-                    var thisFileId = entry.fileId;
-                    var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
-                    model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
-                    {
-                        entry = entry,
-                        File = FileToFetch
-                    });
+
+                var thisFileId = entry.fileId;
+                var FileToFetch = db.Files.SingleOrDefault(i => i.FileId == thisFileId);
+                model.ListOfEntriesToLoopInBlogView.Add(new EntryViewModel
+                {
+                    entry = entry,
+                    File = FileToFetch
+                });
             }
             model.ListOfComments = new List<Comment>();
             foreach (var c in db.Comments)
@@ -152,7 +153,7 @@ namespace ScrumProj.Controllers
             {
                 model.CategoryIds.Add(i);
             }
-                return View(model);
+            return View(model);
         }
         public ActionResult PostComment(EntryViewModel model, int postId)
         {
@@ -205,5 +206,75 @@ namespace ScrumProj.Controllers
             ctx.SaveChanges();
             return View(ListOfPushNotes);
         }
+
+        public ActionResult ChangeNotificationSettings(ProfileViewModel model, bool BlogPostSwitch = false, bool MailSwitch = false, bool ProjectSwitch = false)
+        {
+            var ctx = new AppDbContext();
+
+            var wmon = ctx.WantMailOrNoes.Where(i => i.UserId == model.ID).Single();
+            wmon.BlogPost = BlogPostSwitch;
+            wmon.Mail = MailSwitch;
+            wmon.Project = ProjectSwitch;
+            ctx.SaveChanges();
+            return RedirectToAction("ViewProfile");
+        }
+
+        public ActionResult TestView()
+        {
+            var ctx = new AppDbContext();
+            var model = new MeetingViewModel();
+            var invited = 9;
+            //ctx.MeetingTimes.Add(new MeetingTimes
+            //{
+            //    Time1 = "kl17",
+            //    Time1Votes = 1,
+            //    Time2 = "kl08",
+            //    Time2Votes = 2,
+            //    Time3 = "kl20",
+            //    Time3Votes = 2
+            //});
+            double valueOfVote = 100 / invited;
+
+            var dt = new Dictionary<string, double>();
+
+            var mt = ctx.MeetingTimes.Find(1);
+
+            if(mt.Time1 != null)
+                dt.Add(mt.Time1, mt.Time1Votes * valueOfVote);
+            if (mt.Time2 != null)
+                dt.Add(mt.Time2, mt.Time2Votes * valueOfVote);
+            if (mt.Time3 != null)
+                dt.Add(mt.Time3, mt.Time3Votes * valueOfVote);
+            if (mt.Time4 != null)
+                dt.Add(mt.Time4, mt.Time4Votes * valueOfVote);
+
+
+
+
+            model.Times = mt;
+            model.DicTimes = dt;
+
+            return View(model);
+        }
+        public ActionResult Vote(MeetingViewModel model ,string SelectedTime = "")
+        {
+            if (SelectedTime == "")
+                return RedirectToAction("TestView");
+            var ctx = new AppDbContext();
+            var theMeeting = ctx.MeetingTimes.Find(model.Times.Id);
+
+            if (SelectedTime == theMeeting.Time1)
+                theMeeting.Time1Votes++;
+            else if (SelectedTime == theMeeting.Time2)
+                theMeeting.Time2Votes++;
+            else if (SelectedTime == theMeeting.Time3)
+                theMeeting.Time3Votes++;
+            else if (SelectedTime == theMeeting.Time4)
+                theMeeting.Time4Votes++;
+            ctx.SaveChanges();
+
+            return RedirectToAction("TestView");
+        }
+       
     }
 }

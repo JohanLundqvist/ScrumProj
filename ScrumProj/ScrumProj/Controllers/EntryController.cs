@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -17,7 +18,7 @@ namespace ScrumProj.Controllers
         [Authorize]
         public ActionResult PublishEntry(HttpPostedFileBase newFile, EntryViewModel model, string SelectBlogg, string tags, HttpPostedFileBase img)
         {
-            var ctx = new AppDbContext();            
+            var ctx = new AppDbContext();
             model.loggedInUser = GetCurrentUser(User.Identity.GetUserId());
             var UserId = model.loggedInUser.ID;
             bool IsFormal = false;
@@ -152,12 +153,21 @@ namespace ScrumProj.Controllers
             AddCategoryToDatabase(tags, postId);
             ctx.SaveChanges();
 
-            NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"));
+            
+            
+            NewPushNote(GetNameOfLoggedInUser() + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"), "bloggPost");
+            
+
+    
             var ap = new ApplicationDbContext();
             List<string> Emails = new List<string>();
             foreach (var p in ap.Users)
             {
-                Emails.Add(p.Email);          
+                var b = ctx.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
+                if (b)
+                {
+                    Emails.Add(p.Email);
+                }
             }
             var s = GetNameOfLoggedInUser();
             var mc = new MailController();
@@ -168,11 +178,44 @@ namespace ScrumProj.Controllers
                 Message = s + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
             }, Emails));
 
-            return RedirectToAction("BlogPage"); 
+
+
+
+            // Task.Delay(TimeSpan.FromSeconds(5)).ContinueWith((x) => method());
+            // await MethodTask();
+            // var aTimer = new System.Timers.Timer(5000); //one hour in milliseconds
+            // aTimer.Elapsed += new ElapsedEventHandler(Method);
+            // Method();
+            return RedirectToAction("BlogPage");
         }
 
 
+        /*
+        public void Method()
+        {
+            var ctx = new AppDbContext();
+            var ap = new ApplicationDbContext();
+            List<string> Emails = new List<string>();
+            foreach (var p in ap.Users)
+            {
+                var b = ctx.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
+                if (b)
+                {
+                    Emails.Add(p.Email);
+                }
+            }
+            var s = GetNameOfLoggedInUser();
+            var mc = new MailController();
+            Task.Run(() => mc.SendEmail(new EmailFormModel
+            {
+                FromEmail = "haxxor1337elite69ultra420@yandex.com",
+                FromName = "Nelson Administration",
+                Message = s + " Har skrivit ett inlägg med titeln: " + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
+            }, Emails));
+        }
+        */
 
+        
         // Method
         public ProfileModel GetCurrentUser(string Id)
         {
@@ -573,20 +616,43 @@ namespace ScrumProj.Controllers
             });
         }
 
+
+
         // Method
         public ActionResult _DeleteCategoryPartial(EntryViewModel model)
         {
             return PartialView(model);
         }
-        public void NewPushNote()
+
+
+
+        // Method
+        public void NewPushNote(string note, string typeOfNote)
         {
             var ctx = new AppDbContext();
+
             foreach (var p in ctx.Profiles)
             {
-                p.NewPushNote = true;
+                var b = ctx.WantMailOrNoes.Where(s => s.UserId == p.ID).Single().BlogPost;
+                if (b)
+                {
+                    var NewNote = new PushNote
+                    {
+                        Note = note,
+                        ProfileModelId = p.ID,
+                        TypeOfNote = typeOfNote
+
+                    };
+                    p.NewPushNote = true;
+                    ctx.PushNotes.Add(NewNote);
+                }               
             }
             ctx.SaveChanges();
         }
+
+
+
+        // Method
         public void NewPushNote(string note)
         {
             var ctx = new AppDbContext();
@@ -603,5 +669,6 @@ namespace ScrumProj.Controllers
             }
             ctx.SaveChanges();
         }
+       
     }
 }

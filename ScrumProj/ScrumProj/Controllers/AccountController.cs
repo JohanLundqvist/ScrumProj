@@ -107,6 +107,8 @@ namespace ScrumProj.Controllers
                     }
                     else
                     {
+                        ViewBag.Message = "SUG KUK TÖBBE";
+
                         return View(model);
                     }
                 }

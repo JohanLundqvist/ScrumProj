@@ -17,7 +17,8 @@ namespace ScrumProj.Models
         public DbSet<DevelopmentProject> Projects { get; set; }
         public DbSet<PushNote> PushNotes { get; set; }
         public DbSet<DevFile> DevFiles { get; set; }
-
+        public DbSet<WantMailOrNo> WantMailOrNoes { get; set; }
+        public DbSet<MeetingTimes> MeetingTimes { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<DevelopmentProject>()
@@ -38,6 +39,7 @@ namespace ScrumProj.Models
                  .ToTable("MeetingParticipants"));
         }
 
+        public System.Data.Entity.DbSet<ScrumProj.Models.Meeting> Meetings { get; set; }
     }
 
 }

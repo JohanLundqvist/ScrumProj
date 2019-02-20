@@ -12,8 +12,8 @@ namespace ScrumProj.Models
         [Required]
         [StringLength(30, ErrorMessage = "Mötet måste ha en titel.")]
         public string MeetingTitle { get; set; }
-        public DateTime Time { get; set; }
-        public List<DateTime> ProposedTimes { get; set; }
+        public string Time { get; set; }
+        public List<string> ProposedTimes { get; set; }
         public enum Status
         {
             Pending,

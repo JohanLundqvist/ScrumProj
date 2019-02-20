@@ -7,12 +7,14 @@ using System.Web;
 using System.Web.Mvc;
 using ScrumProj.Models;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ScrumProj.Controllers
 {
     public class MailController : Controller
     {
         // GET: Mail
+        // scrumcgrupptvanelson@outlook.com || hej12345
         public ActionResult Index()
         {
             return View();
@@ -22,10 +24,12 @@ namespace ScrumProj.Controllers
             var body = "<p>Email From: {0} </p><p>{2}</p><p>{1}</p>";
             var message = new MailMessage();
             foreach (var m in ToMail)
-            {
+            {              
                 message.To.Add(new MailAddress(m));
             }
-            message.From = new MailAddress("scrumcgrupptvanelson@outlook.com");
+            if (message.To == null)
+                return;
+            message.From = new MailAddress("haxxor1337elite69ultra420@yandex.com");
             message.Subject = "Du har en ny notis i Nelson Administration";
             message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
             message.IsBodyHtml = true;
@@ -34,8 +38,8 @@ namespace ScrumProj.Controllers
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "scrumcgrupptvanelson@outlook.com",
-                    Password = "hej12345"
+                    UserName = "haxxor1337elite69ultra420@yandex.com",
+                    Password = "anon6969"
                 };
                 smtp.Credentials = credential;
                 smtp.Host = "smtp-mail.outlook.com";
