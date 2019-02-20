@@ -1,11 +1,11 @@
-﻿@using ScrumProj.Models.ViewModels
-@model MeetingViewModel
+﻿@model ScrumProj.Models.ViewModels.MeetingViewModel
 
 @if (User.Identity.IsAuthenticated)
 {
     ViewBag.Title = "Booking";
     Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 }
+
 <link href="~/Content/jsCalendar.darkseries.css" rel="stylesheet" />
 <link href="~/Content/jsCalendar.css" rel="stylesheet" />
 <script src="~/Scripts/jsCalendar.lang.sv.js"></script>
@@ -16,23 +16,32 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
+
 <div class="jumbotron" id="one">
     <h1 class="display-3">Mötesbokning</h1>
 
     <div class="row">
         <div class="col-md">
-            <p class="lead">Titel</p>
-            <input type="text" class="form-control" id="TitleInput" />
+            <form id="form1">
 
-            <p class="lead">Bjud in deltagare</p>
-            @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { id = "newParticipant", @class = "form-control" })
-            <a class="btn btn-primary btn-lg" id="addParticipant" role="button">Lägg till deltagare</a>
-            <hr class="my-4">
-            <p class="lead">
-                <a class="btn btn-primary btn-lg" id="firstNextPage" role="button">Nästa</a>
-            </p>
-            <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+                <p class="lead">Titel</p>
+                <input type="text" class="form-control" id="TitleInput" name ="TitleInput" />
+
+                <p class="lead">Bjud in deltagare</p>
+                @Html.DropDownListFor(m => m.SelectedUser, new SelectList(Model.UsersToAdd, "Value", "Text"), htmlAttributes: new { id = "newParticipant", @class = "form-control" })
+                
+                <br />
+
+                <a class="btn btn-info btn-lg" id="addParticipant" role="button" style="color:#FFF">Lägg till deltagare</a>
+                
+                <hr class="my-4">
+                <p class="lead">
+                    <a class="btn btn-info btn-lg" id="firstNextPage" role="button" style="color:#FFF">Nästa</a>
+                </p>
+            </form>
         </div>
+
         <div class="col-md" style="padding-top:40px">
             <ul id="AddedParticipants">
                 <li>
@@ -41,20 +50,21 @@
             </ul>
         </div>
     </div>
-
 </div>
 
-<div class="jumbotron" id="two" style="display:none">
 
+<div class="jumbotron" id="two" style="display:none">
+    <form id="form2">
     <h1 class="display-3">Mötesbökning</h1>
     <div id="datepicker"></div>
     <h2 class="lead">Kalender man kan klicka på</h2>
-    <input class="form-control" type="text" id="date"/>
+    <input class="form-control" type="text" id="date" name ="date"/>
     <hr class="my-4">
     <p class="lead">
         <a class="btn btn-primary btn-lg" id="SecondPageBack" role="button">Tillbaka</a>
         <a class="btn btn-primary btn-lg" id="SecondNextPage" role="button">Nästa</a>
     </p>
+    </form>
 </div>
 
 <div class="jumbotron" id="three" style="display:none">
@@ -72,20 +82,68 @@
         }
     </div>
 
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" id="ThirdPageBack" role="button">Tillbaka</a>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" id="ThirdPageBack" role="button">Tillbaka</a>
 
-            <a class="btn btn-primary btn-lg" id="ThirdNextPage" role="button">Skapa möte</a>
-        </p>
-        <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+        <a class="btn btn-primary btn-lg" id="ThirdNextPage" role="button">Skapa möte</a>
+    </p>
+    <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+</div>
+
+
+<h1 class="display-3">Mötesinbjudniingar</h1>
+<div class="container horizontal rounded" style="width: 20%">
+    <h2>Horizontal, Rounded</h2>
+    @foreach (var t in Model.DicTimes)
+    {
+        <div class="progress-bar horizontal">
+            <div class="progress-track">
+                <div class="progress-fill">
+                    <label style="float: left">@t.Key</label>
+                    <p class="invisible">@t.Value%</p>
+                    <span class=" bg-danger"></span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<form action="~/Controllers/MeetingController/Vote" method="post">
+    @foreach (var t in Model.DicTimes)
+    {
+    <div>
+        <label>@t.Key</label>
+        <input type="radio" name="SelectedTime" id="SelectedTime" value="@t.Key" tabindex="10" />
     </div>
+    }
+
+    @Html.TextBoxFor(j => j.Times.Id, new { @class = "invisible" })
+    <input type="submit" value="Välj en tid som passar" />
+</form>
 
 
-    <script>
-        //$('#btn').on('click', function () {
-        //    $('#one').toggle();
-        //    $('#second').toggle();
-        //});
+
+<script>
+
+        $(document).ready(function () {
+
+            $('#form1').validate({ // initialize the plugin
+                rules: {
+                    TitleInput: {
+                        required: true,
+                        minlength: 3
+                    }
+                }
+            });
+
+            $('#form2').validate({ // initialize the plugin
+                rules: {
+                    date: {
+                        required: true,
+                        minlength: 10
+                    }
+                }
+            });
+        });
         var Title;
         var ParticipantsToBeAdded = [];
         var chosenDate;
@@ -95,18 +153,19 @@
             MeetingTitle: Title,
             MeetingParticipants: ParticipantsToBeAdded,
             Date: chosenDate,
-            ProposedTimes: Proposed 
+            ProposedTimes: Proposed
         };
 
         $('#addParticipant').on('click', function () {
             var newParticipant = {};
-            newParticipant.id = $('#newParticipant').val();
-            newParticipant.name = $('#newParticipant option:selected').text();
-            ParticipantsToBeAdded.push(newParticipant);
-            $('#newParticipant option:selected').remove();
-            console.info(ParticipantsToBeAdded);
-            showParticipants();
-
+            if ($('#newParticipant').val().length != 0) {
+                newParticipant.id = $('#newParticipant').val();
+                newParticipant.name = $('#newParticipant option:selected').text();
+                ParticipantsToBeAdded.push(newParticipant);
+                $('#newParticipant option:selected').remove();
+                console.info(ParticipantsToBeAdded);
+                showParticipants();
+            }
         });
         function showParticipants() {
             var $list = $('#AddedParticipants').empty();
@@ -123,9 +182,28 @@
         //nästa sida
         $('#firstNextPage').on('click', function () {
             Title = $('#TitleInput').val();
-            $('#one').slideUp(300);
-            $('#two').slideDown(1000);
+
+            if ($('#form1').valid()) {
+
+                $('#one').slideUp(300);
+                $('#two').slideDown(1000);
+            }
+            else {
+                alert("Du har inte fyllt i formuläret korrekt.")
+            }
         });
+
+        $('#SecondNextPage').on('click', function () {
+
+            if ($('#form2').valid()) {
+                $('#two').slideUp(300);
+                $('#three').slideDown(1000);
+            }
+             else {
+                    alert("Klicka i ett datum för mötet.")
+                }
+        });
+
 
         $('#datepicker').datepicker({
             dateFormat: 'yy-mm-dd',
@@ -137,41 +215,40 @@
             }
         });
 
-        $('#SecondNextPage').on('click', function () {
-            $('#two').slideUp(300);
-            $('#three').slideDown(1000);
-        });
                 $('#ThirdNextPage').on('click', function () {
-            Proposed = $(":checkbox:checked");
-            var arr = [];
-            for (var i = 0; i < Proposed.length; i++)
-            {
-            var currentItem = Proposed[i];
-            var time = currentItem.id;
-            arr.push(time);
-            }
-                    var obj = {
-                        MeetingTitle: Title,
-                        MeetingParticipants: ParticipantsToBeAdded,
-                        Time: chosenDate,
-                        ProposedTimes: arr
-                    };
-
-            var Meet = JSON.stringify(obj);
-
-                    $.ajax({
-                        type : 'POST',
-                        data: Meet,
-                        dataType: 'JSON',
-                        contentType: 'application/json',
-                        url: '@Url.Action("PostMeeting", "MeetingsAPI", new { httproute = "" })',
-                        success: function (data) {
-                            alert("Mötet är skapat och inväntar omröstning av dess medlemmar.")
-                            location.reload();
+                    Proposed = $(":checkbox:checked");
+                    if (Proposed.length < 0 && Proposed.length >= 4) {
+                        var arr = [];
+                        for (var i = 0; i < Proposed.length; i++) {
+                            var currentItem = Proposed[i];
+                            var time = currentItem.id;
+                            arr.push(time);
                         }
-                    });
-        });
+                        var obj = {
+                            MeetingTitle: Title,
+                            MeetingParticipants: ParticipantsToBeAdded,
+                            Time: chosenDate,
+                            ProposedTimes: arr
+                        };
 
+                        var Meet = JSON.stringify(obj);
+
+                        $.ajax({
+                            type: 'POST',
+                            data: Meet,
+                            dataType: 'JSON',
+                            contentType: 'application/json',
+                            url: '@Url.Action("PostMeeting", "MeetingsAPI", new { httproute = "" })',
+                            success: function (data) {
+                                alert("Mötet är skapat och inväntar omröstning av dess medlemmar.")
+                                location.reload();
+                            }
+                        });
+                    }
+                    else {
+                        alert("Du får ge upp till 4 förslag på tider.")
+                    }
+        });
 
 
         //backa
@@ -187,4 +264,57 @@
         $(Document).ready(function () {
             $("#datepicker").datepicker();
         });
-    </script>
+        $('.horizontal .progress-fill p').each(function () {
+            var percent = $(this).html();
+            $(this).parent().css('width', percent);
+        });
+
+
+        $('.vertical .progress-fill p').each(function () {
+            var percent = $(this).html();
+            var pTop = 100 - (percent.slice(0, percent.length - 1)) + "%";
+            $(this).parent().css({
+                'height': percent,
+                'top': pTop
+            });
+        });
+</script>
+
+<style>
+
+    .horizontal .progress-bar {
+        float: left;
+        height: 45px;
+        width: 100%;
+        padding: 12px 0;
+    }
+
+    .progress-bar {
+        width: 70%;
+        background-color: inherit;
+    }
+
+    .horizontal .progress-track {
+        position: relative;
+        width: 100%;
+        height: 20px;
+        border: hidden;
+    }
+
+    .horizontal .progress-fill {
+        position: relative;
+        background: #5cb85c;
+        height: 20px;
+        width: 50%;
+        color: #fff;
+        text-align: center;
+        font-family: "Lato","Verdana",sans-serif;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .rounded .progress-track,
+    .rounded .progress-fill {
+        border-radius: 3px;
+    }
+</style>

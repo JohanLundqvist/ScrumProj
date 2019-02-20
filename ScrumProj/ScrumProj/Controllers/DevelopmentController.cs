@@ -78,39 +78,42 @@ namespace ScrumProj.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
-                    projectToUpdate.Participants.Add(user);
-                    _context.SaveChanges();
-                    NewPushNote(GetNameOfLoggedInUser() + " Har lagt till dig i projektet " + model.project.Title + "------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"), user, "projectInvite");
+                    if (model.UserToAdd != null)
+                    {
+                        var user = _context.Profiles.Single(u => u.ID == model.UserToAdd);
+                        projectToUpdate.Participants.Add(user);
+                        _context.SaveChanges();
+                        NewPushNote(GetNameOfLoggedInUser() + " Har lagt till dig i projektet " + model.project.Title + "------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt"), user, "projectInvite");
 
-                    var ap = new ApplicationDbContext();
-                    List<string> Emails = new List<string>();
-                    foreach (var p in ap.Users)
-                    {
-                        var b = _context.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
-                        if (b)
+                        var ap = new ApplicationDbContext();
+                        List<string> Emails = new List<string>();
+                        foreach (var p in ap.Users)
                         {
-                            if (user.ID == p.Id)
+                            var b = _context.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
+                            if (b)
                             {
-                                Emails.Add(p.Email);
+                                if (user.ID == p.Id)
+                                {
+                                    Emails.Add(p.Email);
+                                }
                             }
-                        }                       
+                        }
+                        var s = GetNameOfLoggedInUser();
+                        var mc = new MailController();
+                        Task.Run(() => mc.SendEmail(new EmailFormModel
+                        {
+                            FromEmail = "scrumcgrupptvanelson@outlook.com",
+                            FromName = "Nelson Administration",
+                            Message = s + " Har lagt till dig i projektet " + model.project.Title + "------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
+                        }, Emails));
                     }
-                    var s = GetNameOfLoggedInUser();
-                    var mc = new MailController();
-                    Task.Run(() => mc.SendEmail(new EmailFormModel
-                    {
-                        FromEmail = "scrumcgrupptvanelson@outlook.com",
-                        FromName = "Nelson Administration",
-                        Message = s + " Har lagt till dig i projektet " + model.project.Title + "------" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
-                    }, Emails));
                 }
             }
             
             return RedirectToAction("EditDevelopmentPage", new { projectId = model.project.Id });
         }
 
-
+        [Authorize]
         public ActionResult EditDevelopmentPage(int projectId, DevelopmentViewModel model)
         {
             var project = _context.Projects.First(p => p.Id == projectId);
@@ -156,9 +159,8 @@ namespace ScrumProj.Controllers
 
         public void NewPushNote(string note, ProfileModel model, string typeOfNote)
         {
-            var ctx = new AppDbContext();
 
-            foreach (var p in ctx.Profiles)
+            foreach (var p in _context.Profiles)
             {
                 if (p.ID == model.ID)
                 {
@@ -173,11 +175,11 @@ namespace ScrumProj.Controllers
 
                         };
                         p.NewPushNote = true;
-                        ctx.PushNotes.Add(NewNote);
+                        _context.PushNotes.Add(NewNote);
                     }                    
                 }
             }
-            ctx.SaveChanges();
+            _context.SaveChanges();
         }
         public ProfileModel GetCurrentUser(string Id)
         {
@@ -189,13 +191,11 @@ namespace ScrumProj.Controllers
         }
         public string GetNameOfLoggedInUser()
         {
-            var ctx = new AppDbContext();
             var currentUserId = User.Identity.GetUserId();
             var currentUser = GetCurrentUser(currentUserId);
-            var Profile = ctx.Profiles.Find(currentUserId);
+            var Profile = _context.Profiles.Find(currentUserId);
             var FirstName = Profile.FirstName;
             var LastName = Profile.LastName;
-
             return FirstName + " " + LastName;
         }
 

@@ -36,7 +36,7 @@
     @foreach (var profile in Model.Profiles)
     {
         <div class="form-group">
-            <input type="button" class="btn btn-outline-warning" value="Acceptera användare" onclick="location.href='@Url.Action("AcceptUser", "role", new { id = profile.ID })'" />
+            <input type="button" class="btn btn-outline-success" value="Acceptera användare" onclick="location.href='@Url.Action("AcceptUser", "role", new { id = profile.ID })'" />
             <a class="btn btn-outline-warning" href="@Url.Action("RemoveUser", "role", new { id = profile.ID })" onclick="return confirm('Är du säker att du vill ta bort den här användaren?')">Ta bort användare</a>
             <span style="font-size: 22px;">@Html.Label(profile.FirstName + " " + profile.LastName, new { @class = "col-md-4" })</span>
         </div>
