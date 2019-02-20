@@ -1,5 +1,6 @@
-﻿@using ScrumProj.Models.ViewModels
-@model MeetingViewModel
+﻿@model ScrumProj.Models.ViewModels.MeetingViewModel
+
+
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -41,15 +42,15 @@
             </ul>
         </div>
     </div>
-
 </div>
+
 
 <div class="jumbotron" id="two" style="display:none">
 
     <h1 class="display-3">Mötesbökning</h1>
     <div id="datepicker"></div>
     <h2 class="lead">Kalender man kan klicka på</h2>
-    <input class="form-control" type="text" id="date"/>
+    <input class="form-control" type="text" id="date" />
     <hr class="my-4">
     <p class="lead">
         <a class="btn btn-primary btn-lg" id="SecondPageBack" role="button">Tillbaka</a>
@@ -72,16 +73,47 @@
         }
     </div>
 
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" id="ThirdPageBack" role="button">Tillbaka</a>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg" id="ThirdPageBack" role="button">Tillbaka</a>
 
-            <a class="btn btn-primary btn-lg" id="ThirdNextPage" role="button">Skapa möte</a>
-        </p>
-        <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+        <a class="btn btn-primary btn-lg" id="ThirdNextPage" role="button">Skapa möte</a>
+    </p>
+    <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
+</div>
+
+
+<h1 class="display-3">Mötesinbjudniingar</h1>
+<div class="container horizontal rounded" style="width: 20%">
+    <h2>Horizontal, Rounded</h2>
+    @foreach (var t in Model.DicTimes)
+    {
+        <div class="progress-bar horizontal">
+            <div class="progress-track">
+                <div class="progress-fill">
+                    <label style="float: left">@t.Key</label>
+                    <p class="invisible">@t.Value%</p>
+                    <span class=" bg-danger"></span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<form action="~/Controllers/MeetingController/Vote" method="post">
+    @foreach (var t in Model.DicTimes)
+    {
+    <div>
+        <label>@t.Key</label>
+        <input type="radio" name="SelectedTime" id="SelectedTime" value="@t.Key" tabindex="10" />
     </div>
+    }
+
+    @Html.TextBoxFor(j => j.Times.Id, new { @class = "invisible" })
+    <input type="submit" value="Välj en tid som passar" />
+</form>
 
 
-    <script>
+
+<script>
         //$('#btn').on('click', function () {
         //    $('#one').toggle();
         //    $('#second').toggle();
@@ -95,7 +127,7 @@
             MeetingTitle: Title,
             MeetingParticipants: ParticipantsToBeAdded,
             Date: chosenDate,
-            ProposedTimes: Proposed 
+            ProposedTimes: Proposed
         };
 
         $('#addParticipant').on('click', function () {
@@ -187,4 +219,57 @@
         $(Document).ready(function () {
             $("#datepicker").datepicker();
         });
-    </script>
+        $('.horizontal .progress-fill p').each(function () {
+            var percent = $(this).html();
+            $(this).parent().css('width', percent);
+        });
+
+
+        $('.vertical .progress-fill p').each(function () {
+            var percent = $(this).html();
+            var pTop = 100 - (percent.slice(0, percent.length - 1)) + "%";
+            $(this).parent().css({
+                'height': percent,
+                'top': pTop
+            });
+        });
+</script>
+
+<style>
+
+    .horizontal .progress-bar {
+        float: left;
+        height: 45px;
+        width: 100%;
+        padding: 12px 0;
+    }
+
+    .progress-bar {
+        width: 70%;
+        background-color: inherit;
+    }
+
+    .horizontal .progress-track {
+        position: relative;
+        width: 100%;
+        height: 20px;
+        border: hidden;
+    }
+
+    .horizontal .progress-fill {
+        position: relative;
+        background: #5cb85c;
+        height: 20px;
+        width: 50%;
+        color: #fff;
+        text-align: center;
+        font-family: "Lato","Verdana",sans-serif;
+        font-size: 12px;
+        line-height: 20px;
+    }
+
+    .rounded .progress-track,
+    .rounded .progress-fill {
+        border-radius: 3px;
+    }
+</style>
