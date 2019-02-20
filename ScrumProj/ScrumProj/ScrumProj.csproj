@@ -709,7 +709,6 @@
     <Content Include="Views\Profile\ReadPushNotes.cshtml" />
     <Content Include="Views\Role\ListAllAdmins.cshtml" />
     <Content Include="Views\Profile\ViewProfile.cshtml" />
-    <Content Include="Views\Profile\TestView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />

@@ -17,6 +17,7 @@ namespace ScrumProj.Models.ViewModels
         public List<string> ProposedTimes { get; set; }
         public MeetingTimes Times { get; set; }
         public Dictionary<string, double> DicTimes { get; set; }
+        public HasVotedOrNo HasVotedOrNo { get; set; }
 
     }
 }
