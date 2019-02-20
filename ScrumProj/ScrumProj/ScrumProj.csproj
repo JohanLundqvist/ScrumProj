@@ -701,6 +701,7 @@
     <Content Include="Views\Role\ListAllAdmins.cshtml" />
     <Content Include="Views\Profile\ViewProfile.cshtml" />
     <Content Include="Views\Profile\TestView.cshtml" />
+    <Content Include="Views\Account\ResetPasswordError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\EntryAPI\" />
