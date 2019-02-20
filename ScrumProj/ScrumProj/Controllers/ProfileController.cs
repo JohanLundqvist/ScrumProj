@@ -258,6 +258,7 @@ namespace ScrumProj.Controllers
         }
         public ActionResult Vote(MeetingViewModel model ,string SelectedTime = "")
         {
+            var mee = new MeetingViewModel();
             if (SelectedTime == "")
                 return RedirectToAction("TestView");
             var ctx = new AppDbContext();
@@ -267,7 +268,7 @@ namespace ScrumProj.Controllers
                 theMeeting.Time1Votes++;
             else if (SelectedTime == theMeeting.Time2)
                 theMeeting.Time2Votes++;
-            else if (SelectedTime == theMeeting.Time3)
+            else if (SelectedTime == theMeeting.Time3) 
                 theMeeting.Time3Votes++;
             else if (SelectedTime == theMeeting.Time4)
                 theMeeting.Time4Votes++;
