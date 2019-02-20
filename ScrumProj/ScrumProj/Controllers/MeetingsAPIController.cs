@@ -76,11 +76,18 @@ namespace ScrumProj.Controllers
         [HttpPost]
         public void PostMeeting([FromBody]Meeting meeting)
         {
-            var activeUser = db.Profiles.Single( u => u.ID == User.Identity.GetUserId());
+            var UserId = User.Identity.GetUserId();
+            var activeUser = db.Profiles.Single( u => u.ID == UserId);
             var participants = new List<ProfileModel>();
             var time = new List<string>();
             foreach (var user in meeting.MeetingParticipants)
             {
+                var obj = new HasVotedOrNo
+                {
+                    UserId = user.ID,
+                    Hasvoted = false,
+                    MeetingId = meeting.MeetingId
+                };
                  var Fulluser = db.Profiles.Single(u => u.ID == user.ID);
                 participants.Add(Fulluser);
             }
@@ -98,8 +105,40 @@ namespace ScrumProj.Controllers
                 Time = meeting.Time,
                 ProposedTimes = time
             };
-            
+            var Time1 = "";
+            var Time2 = "";
+            var Time3 = "";
+            var Time4 = "";
+
+            foreach (var m in time)
+            {
+                if (Time1 == "")
+                    Time1 = m;
+                else if (Time2 == "")
+                    Time2 = m;
+                else if (Time3 == "")
+                    Time3 = m;
+                else if (Time4 == "")
+                    Time4 = m;
+            }
             db.Meetings.Add(meet);
+            db.SaveChanges();
+            var getLastId = db.Meetings.ToList();
+            var i = getLastId.Count() - 1;
+
+
+            var mt = new MeetingTimes();
+            mt.MeetingId = getLastId[i].MeetingId;
+            mt.Time1 = Time1;
+            mt.Time2 = Time2;
+            mt.Time3 = Time3;
+            mt.Time4 = Time4;
+            mt.Time2Votes = 0;
+            mt.Time3Votes = 0;
+            mt.Time4Votes = 0;
+            mt.Time1Votes = 0;
+
+            db.MeetingTimes.Add(mt);
             db.SaveChanges();
 
 
