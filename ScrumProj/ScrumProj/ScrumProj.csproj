@@ -396,6 +396,14 @@
     <Compile Include="Migrations\201902191209317_ändringavMeeting.Designer.cs">
       <DependentUpon>201902191209317_ändringavMeeting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201902201058150_HasVodetdOrNot.cs" />
+    <Compile Include="Migrations\201902201058150_HasVodetdOrNot.Designer.cs">
+      <DependentUpon>201902201058150_HasVodetdOrNot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201902201252080_Has.cs" />
+    <Compile Include="Migrations\201902201252080_Has.Designer.cs">
+      <DependentUpon>201902201252080_Has.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AppDbContext.cs" />
@@ -406,6 +414,7 @@
     <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\DevFile.cs" />
     <Compile Include="Models\Entry.cs" />
+    <Compile Include="Models\HasVotedOrNo.cs" />
     <Compile Include="Models\Meeting.cs" />
     <Compile Include="Models\MeetingTimes.cs" />
     <Compile Include="Models\PushNote.cs" />
@@ -850,6 +859,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201902191209317_ändringavMeeting.resx">
       <DependentUpon>201902191209317_ändringavMeeting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201058150_HasVodetdOrNot.resx">
+      <DependentUpon>201902201058150_HasVodetdOrNot.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201902201252080_Has.resx">
+      <DependentUpon>201902201252080_Has.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -101,13 +101,13 @@ namespace ScrumProj.Controllers
                                 return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                             case SignInStatus.Failure:
                             default:
-                                ModelState.AddModelError("", "Invalid login attempt.");
+                                ModelState.AddModelError("", "Fel lösenord!");
                                 return View(model);
                         }
                     }
                     else
                     {
-                        ViewBag.Message = "SUG KUK TÖBBE";
+                        ViewBag.Message = "Du måste bli accepterad innan du kan logga in!";
 
                         return View(model);
                     }
@@ -140,6 +140,8 @@ namespace ScrumProj.Controllers
             }
             else
             {
+                ModelState.AddModelError("", "Användaren finns inte!");
+
                 return View(model);
             }
         }

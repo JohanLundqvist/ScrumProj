@@ -177,43 +177,9 @@ namespace ScrumProj.Controllers
                 FromName = "Nelson Administration",
                 Message = s + " Har skrivit ett inlägg med titeln: " + model.entry.Title + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
             }, Emails));
-
-
-
-
-            // Task.Delay(TimeSpan.FromSeconds(5)).ContinueWith((x) => method());
-            // await MethodTask();
-            // var aTimer = new System.Timers.Timer(5000); //one hour in milliseconds
-            // aTimer.Elapsed += new ElapsedEventHandler(Method);
-            // Method();
             return RedirectToAction("BlogPage");
         }
 
-
-        /*
-        public void Method()
-        {
-            var ctx = new AppDbContext();
-            var ap = new ApplicationDbContext();
-            List<string> Emails = new List<string>();
-            foreach (var p in ap.Users)
-            {
-                var b = ctx.WantMailOrNoes.Where(u => u.UserId == p.Id).Single().Mail;
-                if (b)
-                {
-                    Emails.Add(p.Email);
-                }
-            }
-            var s = GetNameOfLoggedInUser();
-            var mc = new MailController();
-            Task.Run(() => mc.SendEmail(new EmailFormModel
-            {
-                FromEmail = "haxxor1337elite69ultra420@yandex.com",
-                FromName = "Nelson Administration",
-                Message = s + " Har skrivit ett inlägg med titeln: " + "-" + DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt")
-            }, Emails));
-        }
-        */
 
         
         // Method
@@ -451,7 +417,10 @@ namespace ScrumProj.Controllers
             var currentUserId = User.Identity.GetUserId();
             var currentUser = GetCurrentUser(currentUserId);
             var comment = model.comment;
-
+            if (comment == "" || comment == null)
+            {
+                return RedirectToAction("BlogPage");
+            }
             ctx.Comments.Add(new Comment
             {
                 comment = comment,

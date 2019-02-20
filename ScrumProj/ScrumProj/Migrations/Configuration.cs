@@ -70,7 +70,7 @@ namespace ScrumProj.Migrations
             string lastName = "Hatakka";
             string position = "CEO";
 
-            ctx.Profiles.Add(new ProfileModel
+            ctx.Profiles.AddOrUpdate(new ProfileModel
             {
                 ID = user.Id,
                 FirstName = firstName,
@@ -78,7 +78,7 @@ namespace ScrumProj.Migrations
                 Position = position,
                 IsApproved = true
             });
-            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            ctx.WantMailOrNoes.AddOrUpdate(new WantMailOrNo
             {
                 BlogPost = true,
                 Mail = true,
@@ -100,7 +100,7 @@ namespace ScrumProj.Migrations
 
             UserManager.Create(user1, "hejhej123");
 
-            ctx.Profiles.Add(new ProfileModel
+            ctx.Profiles.AddOrUpdate(new ProfileModel
             {
                 ID = user1.Id,
                 FirstName = "Siv",
@@ -108,7 +108,7 @@ namespace ScrumProj.Migrations
                 Position = "Knegare",
                 IsApproved = true
             });
-            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            ctx.WantMailOrNoes.AddOrUpdate(new WantMailOrNo
             {
                 BlogPost = true,
                 Mail = true,
@@ -128,7 +128,7 @@ namespace ScrumProj.Migrations
 
             UserManager.Create(user2, "hejhej123");
 
-            ctx.Profiles.Add(new ProfileModel
+            ctx.Profiles.AddOrUpdate(new ProfileModel
             {
                 ID = user2.Id,
                 FirstName = "Bertil",
@@ -136,7 +136,7 @@ namespace ScrumProj.Migrations
                 Position = "Knegare",
                 IsApproved = true
             });
-            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            ctx.WantMailOrNoes.AddOrUpdate(new WantMailOrNo
             {
                 BlogPost = true,
                 Mail = true,
@@ -156,7 +156,7 @@ namespace ScrumProj.Migrations
 
             UserManager.Create(user3, "hejhej123");
 
-            ctx.Profiles.Add(new ProfileModel
+            ctx.Profiles.AddOrUpdate(new ProfileModel
             {
                 ID = user3.Id,
                 FirstName = "Karl-Henrik",
@@ -164,7 +164,7 @@ namespace ScrumProj.Migrations
                 Position = "Städare",
                 IsApproved = true
             });
-            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            ctx.WantMailOrNoes.AddOrUpdate(new WantMailOrNo
             {
                 BlogPost = true,
                 Mail = true,
@@ -184,7 +184,7 @@ namespace ScrumProj.Migrations
 
             var jennyResult = UserManager.Create(user4, "hejhej123");
 
-            ctx.Profiles.Add(new ProfileModel
+            ctx.Profiles.AddOrUpdate(new ProfileModel
             {
                 ID = user4.Id,
                 FirstName = "Jenny",
@@ -192,7 +192,7 @@ namespace ScrumProj.Migrations
                 Position = "IT Admin",
                 IsApproved = true
             });
-            ctx.WantMailOrNoes.Add(new WantMailOrNo
+            ctx.WantMailOrNoes.AddOrUpdate(new WantMailOrNo
             {
                 BlogPost = true,
                 Mail = true,
