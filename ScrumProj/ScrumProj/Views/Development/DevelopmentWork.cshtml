@@ -185,16 +185,7 @@ Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
 
     <script src="~/Scripts/jquery-3.3.1.js"></script>
     <script>
-        $('#Create').on('click', function () {
-            $('#CreateProjectCard').hide();
-            $('#AddParticipantsCard').show();
-        }
-        );
-        $('#Done').on('click', function () {
-            $('#AddParticipantsCard').hide();
-            $('#CreateProjectCard').show();
-        }
-        );
+       
         var myFile = document.getElementById('file');
         myFile.addEventListener('change', function () {
             if (this.files[0].size > 4000000) {

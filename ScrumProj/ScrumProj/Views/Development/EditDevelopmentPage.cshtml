@@ -119,6 +119,16 @@
 </div>
 
 <div style="padding-top:15px;">
-    @Html.ActionLink("DevelopmentWork", "DevelopmentWork")
+    <a href="@Url.Action("DevelopmentWork", "Development")" class="btn btn-outline-info">Tillbaka</a>
 </div>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+        var myFile = document.getElementById('file');
+        myFile.addEventListener('change', function () {
+            if (this.files[0].size > 4000000) {
+                alert("Filen är för stor, gränsen är 4 mb");
+                myFile.value = "";
+            }
+    });
 
+    </script>
