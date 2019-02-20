@@ -104,12 +104,15 @@
 
                         @using (Html.BeginForm("PostComment", "Profile", new { postId = FormalEntry.entry.Id }, FormMethod.Post, null))
                         {
-
-                            @Html.TextBoxFor(c => c.comment, new { maxLength = 140, @class = "form-control", style = "float:left" })
-
-                            <input type="submit" class="btn btn-outline-warning" value="Kommentera" style="float:left" />
+                            <div>
+                                @Html.TextBoxFor(c => c.comment, new { maxLength = 140, @class = "form-control", style = "float:left" })
+                            </div>
+                            <div>
+                                <input type="submit" class="btn btn-success" value="Kommentera" style="float:left" />
+                            </div>
                         }
                     </div>
+
                     <hr style="height: 0.5px; background-color: black;" />
                 }
             }
