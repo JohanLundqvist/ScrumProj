@@ -17,5 +17,7 @@ namespace ScrumProj.Models.ViewModels
         public List<Comment> ListOfComments { get; set; }
         public List<Categories> Categories { get; set; }
         public List<CategoryInEntry> CategoryIds { get; set; }
+        public List<Meeting> MeetingsOfUser { get; set; }
+        public List<DevelopmentProject> DevsOfUser { get; set; }
     }
 }

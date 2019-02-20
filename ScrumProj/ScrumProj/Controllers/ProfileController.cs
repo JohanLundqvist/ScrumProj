@@ -153,6 +153,31 @@ namespace ScrumProj.Controllers
             {
                 model.CategoryIds.Add(i);
             }
+
+            model.MeetingsOfUser = new List<Meeting>();
+            foreach(var m in db.Meetings)
+            {
+                foreach(var p in m.MeetingParticipants)
+                {
+                    if (p.ID.Equals(User.Identity.GetUserId()))
+                    {
+                        model.MeetingsOfUser.Add(m);
+                    }
+                }
+            }
+
+            model.DevsOfUser = new List<DevelopmentProject>();
+            foreach(var dw in db.Projects)
+            {
+                foreach(var p in dw.Participants)
+                {
+                    if (p.ID.Equals(User.Identity.GetUserId()))
+                    {
+                        model.DevsOfUser.Add(dw);
+                    }
+                }
+            }
+            
             return View(model);
         }
         public ActionResult PostComment(EntryViewModel model, int postId)

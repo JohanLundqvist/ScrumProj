@@ -1,0 +1,49 @@
+﻿@model ScrumProj.Models.DevelopmentProject
+@if (User.Identity.IsAuthenticated)
+{
+    ViewBag.Title = "SpecificDevelopmentProject";
+    Layout = "~/Views/Shared/_navbarSignedIn.cshtml";
+}
+
+<h2>SpecificDevelopmentProject</h2>
+
+<div class="card mb-3">
+    <h2 class="card-header" style="color:white;">@Model.Title</h2>
+    <div class="card-body">
+        <h5 class="card-title">@Model.Cat</h5>
+        <hr />
+        <h6 class="card-subtitle text-muted"></h6>
+        <p class="card-text">@Model.Content</p>
+    </div>
+    <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+        @foreach (var projectUser in Model.Participants)
+        {
+            <li style="float:left; padding:5px;">
+                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                    <small class="mb-1">@projectUser.FirstName @projectUser.LastName</small>
+                </a>
+            </li>
+        }
+    </ul>
+    <div class="card-footer">
+        <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+            @foreach (var file in Model.Files)
+            {
+                <li style="float:left; padding:5px;">
+                    <a href="@Url.Action("DownloadFile", "Development", new { fileId = file.FileId })" data- class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                        <small class="mb-1">@file.Name</small>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+
+
+    <div class="card-footer">  
+                <a href="@Url.Action("FirstPage", "Profile")" class="card-link" style="float:left;">Tillbaka</a>
+                <a href="@Url.Action("EditDevelopmentPage", "Development", new { projectId = Model.Id })" class="card-link" style="float:right;">Redigera</a>
+    </div>
+
+
+</div>

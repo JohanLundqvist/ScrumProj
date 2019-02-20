@@ -236,5 +236,12 @@ namespace ScrumProj.Controllers
             }
             return RedirectToAction("EditDevelopmentPage", new { projectId = model.project.Id });
         }
+
+        public ActionResult SpecificDevelopmentProject(DevelopmentProject model, int projId)
+        {
+            model = _context.Projects.First(p => p.Id == projId);
+
+            return View(model);
+        }
     }
 }

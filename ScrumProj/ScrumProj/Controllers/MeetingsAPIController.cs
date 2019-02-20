@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using ScrumProj.Models;
 
@@ -18,9 +20,28 @@ namespace ScrumProj.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: api/Meetings
-        public IQueryable<Meeting> GetMeetings()
+        //public IQueryable<Meeting> GetMeetings()
+        //{
+        //    return db.Meetings;
+        //}
+
+        [System.Web.Http.HttpGet]
+        public JsonResult<List<Meeting>> GetMeetingsJson()
         {
-            return db.Meetings;
+            var list = new List<Meeting>();
+
+            foreach(var m in db.Meetings)
+            {
+                foreach(var mp in m.MeetingParticipants)
+                {
+                    if (mp.ID.Equals(User.Identity.GetUserId()))
+                    {
+                        list.Add(m);
+                    }
+                }
+            }
+
+            return Json(list);
         }
 
 
@@ -73,7 +94,7 @@ namespace ScrumProj.Controllers
         }
 
         // POST: api/Meetings
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public void PostMeeting([FromBody]Meeting meeting)
         {
             var activeUser = db.Profiles.Single( u => u.ID == User.Identity.GetUserId());
