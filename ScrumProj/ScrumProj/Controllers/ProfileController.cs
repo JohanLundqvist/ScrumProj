@@ -153,6 +153,31 @@ namespace ScrumProj.Controllers
             {
                 model.CategoryIds.Add(i);
             }
+
+            model.MeetingsOfUser = new List<Meeting>();
+            foreach(var m in db.Meetings)
+            {
+                foreach(var p in m.MeetingParticipants)
+                {
+                    if (p.ID.Equals(User.Identity.GetUserId()))
+                    {
+                        model.MeetingsOfUser.Add(m);
+                    }
+                }
+            }
+
+            model.DevsOfUser = new List<DevelopmentProject>();
+            foreach(var dw in db.Projects)
+            {
+                foreach(var p in dw.Participants)
+                {
+                    if (p.ID.Equals(User.Identity.GetUserId()))
+                    {
+                        model.DevsOfUser.Add(dw);
+                    }
+                }
+            }
+            
             return View(model);
         }
         public ActionResult PostComment(EntryViewModel model, int postId)
@@ -259,6 +284,7 @@ namespace ScrumProj.Controllers
         }
         public ActionResult Vote(MeetingViewModel model ,string SelectedTime = "")
         {
+            var mee = new MeetingViewModel();
             if (SelectedTime == "")
                 return RedirectToAction("TestView");
             var ctx = new AppDbContext();
@@ -268,7 +294,7 @@ namespace ScrumProj.Controllers
                 theMeeting.Time1Votes++;
             else if (SelectedTime == theMeeting.Time2)
                 theMeeting.Time2Votes++;
-            else if (SelectedTime == theMeeting.Time3)
+            else if (SelectedTime == theMeeting.Time3) 
                 theMeeting.Time3Votes++;
             else if (SelectedTime == theMeeting.Time4)
                 theMeeting.Time4Votes++;

@@ -101,13 +101,13 @@ namespace ScrumProj.Controllers
                                 return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                             case SignInStatus.Failure:
                             default:
-                                ModelState.AddModelError("", "Invalid login attempt.");
+                                ModelState.AddModelError("", "Fel lösenord!");
                                 return View(model);
                         }
                     }
                     else
                     {
-                        ViewBag.Message = "SUG KUK TÖBBE";
+                        ViewBag.Message = "Du måste bli accepterad innan du kan logga in!";
 
                         return View(model);
                     }
@@ -140,6 +140,8 @@ namespace ScrumProj.Controllers
             }
             else
             {
+                ModelState.AddModelError("", "Användaren finns inte!");
+
                 return View(model);
             }
         }
@@ -282,7 +284,7 @@ namespace ScrumProj.Controllers
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToAction("ResetPasswordConfirmation", "Account");
+                return RedirectToAction("ResetPasswordError", "Account");
             }
             var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
             if (result.Succeeded)
@@ -297,6 +299,14 @@ namespace ScrumProj.Controllers
         // GET: /Account/ResetPasswordConfirmation
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
+        {
+            return View();
+        }
+
+        //
+        // GET: /Account/ResetPasswordConfirmation
+        [AllowAnonymous]
+        public ActionResult ResetPasswordError()
         {
             return View();
         }

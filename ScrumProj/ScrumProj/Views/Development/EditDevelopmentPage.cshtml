@@ -6,6 +6,8 @@
 }
 
 <div class="row">
+    
+
     <div class="col" style="padding-bottom:20px">
         <div style="width:100%;">
             <h4>Redigera projekt</h4>
@@ -96,7 +98,10 @@
     @using (Html.BeginForm("AddFile", "Development", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.LabelFor(m => m.project.Files)<br />
-        <input id="file" type="file" name="upload" />
+
+        <label class="btn btn-sm btn-outline-info" for="newFile">Välj Fil</label>
+        <input id="file" type="file" name="upload" class="ImageFile" onchange="pressedFile()"/>
+        <label id="fileLabel">Ingen fil har valts..</label>
         @Html.HiddenFor(u => u.project.Id)
         @Html.HiddenFor(u => u.project.Title)
         <div class="form-group" style="padding-top:15px;">
@@ -119,6 +124,34 @@
 </div>
 
 <div style="padding-top:15px;">
-    @Html.ActionLink("DevelopmentWork", "DevelopmentWork")
+    <a href="@Url.Action("DevelopmentWork", "Development")" class="btn btn-outline-info">Tillbaka</a>
 </div>
+<script src="~/Scripts/jquery-3.3.1.js"></script>
+<script>
+        var myFile = document.getElementById('file');
+        myFile.addEventListener('change', function () {
+            if (this.files[0].size > 4000000) {
+                alert("Filen är för stor, gränsen är 4 mb");
+                myFile.value = "";
+            }
+    });
 
+    function pressedFile() {
+        var a = document.getElementById('newFile');
+        if (a.value == "") {
+            fileLabel.innerHTML = "Choose file";
+        }
+        else {
+            var theSplit = a.value.split('\\');
+            fileLabel.innerHTML = theSplit[theSplit.length - 1];
+        }
+    };
+    </script>
+
+<style>
+    .ImageFile {
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+    }
+</style>
