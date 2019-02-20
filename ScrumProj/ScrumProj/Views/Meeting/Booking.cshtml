@@ -227,7 +227,7 @@
 
                 $('#ThirdNextPage').on('click', function () {
                     Proposed = $(":checkbox:checked");
-                    if (Proposed.length < 0 && Proposed.length >= 4) {
+                    if (Proposed.length > 0 && Proposed.length <= 4) {
                         var arr = [];
                         for (var i = 0; i < Proposed.length; i++) {
                             var currentItem = Proposed[i];
