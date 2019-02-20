@@ -177,44 +177,33 @@
     }
 </div>
 
-
-
-<script src="~/Scripts/jquery-3.3.1.js"></script>
-<script>
-    $('#Create').on('click', function () {
-        $('#CreateProjectCard').hide();
-        $('#AddParticipantsCard').show();
-    }
-    );
-    $('#Done').on('click', function () {
-        $('#AddParticipantsCard').hide();
-        $('#CreateProjectCard').show();
-    }
-    );
-    var myFile = document.getElementById('file');
-    myFile.addEventListener('change', function () {
-        if (this.files[0].size > 4000000) {
-            alert("Filen är för stor, gränsen är 4 mb");
-            myFile.value = "";
-        }
-    });
-
-    $(function () {
-        $('#Label').keyup(function (e) {
-            var max = 30;
-            var len = $(this).val().length;
-            var char = max - len;
-            $('#text-counter').html(char);
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script>
+       
+        var myFile = document.getElementById('file');
+        myFile.addEventListener('change', function () {
+            if (this.files[0].size > 4000000) {
+                alert("Filen är för stor, gränsen är 4 mb");
+                myFile.value = "";
+            }
         });
-    });
-
-    $(function () {
-        $('#Content').keyup(function (e) {
-            var max = 1500;
-            var len = $(this).val().length;
-            var char = max - len;
-            $('#text-counter2').html(char);
+    
+        $(function () {
+            $('#Label').keyup(function (e) {
+                var max = 30;
+                var len = $(this).val().length;
+                var char = max - len;
+                $('#text-counter').html(char);
+            });
         });
-    });
+    
+        $(function () {
+            $('#Content').keyup(function (e) {
+                var max = 1500;
+                var len = $(this).val().length;
+                var char = max - len;
+                $('#text-counter2').html(char);
+            });
+        });
 
 </script>
