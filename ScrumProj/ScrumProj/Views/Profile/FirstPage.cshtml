@@ -113,11 +113,55 @@
                     <hr style="height: 0.5px; background-color: black;" />
                 }
             }
-        </div>             
+        </div>
     </div>
     <div class="col-sm-3">
         <h3>Kalender</h3>
     </div>
+
+
+    <!--
+        -------------------------------------------------------------------------------------
+        Datepicker
+        -------------------------------------------------------------------------------------
+    -->
+
+
+    <div id="datepicker"></div>
+
+
 </div>
 
 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryui")
+    @Styles.Render("~/Content/cssjqryUi")
+
+    <script type="text/javascript">
+        var activeDays = [1, 4, 10, 21, 22, 23, 27, 28, 30];
+
+        $('#datepicker').datepicker(
+            {
+                beforeShowDay: function (date) {
+                    var hilight = [false, ''];
+
+                    if (activeDays.indexOf(date.getDate()) > -1) {
+                        hilight = [true, 'isActive'];
+                    }
+
+                    return hilight;
+                }
+            }
+        );
+
+        $("#datepicker").datepicker({
+            onSelect: function (dateText, inst) {
+                var date = $(this).val();
+                var time = $('#time').val();
+                alert('on select triggered');
+                $("#start").val(date + time.toString(' HH:mm').toString());
+
+            }
+        });
+    </script>
+}
