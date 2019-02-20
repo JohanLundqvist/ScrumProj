@@ -123,11 +123,7 @@
 
 
 <script>
-        //$('#btn').on('click', function () {
-        //    $('#one').toggle();
-        //    $('#second').toggle();
-        //});
-    <script>
+
         $(document).ready(function () {
 
             $('#form1').validate({ // initialize the plugin
@@ -162,12 +158,14 @@
 
         $('#addParticipant').on('click', function () {
             var newParticipant = {};
-            newParticipant.id = $('#newParticipant').val();
-            newParticipant.name = $('#newParticipant option:selected').text();
-            ParticipantsToBeAdded.push(newParticipant);
-            $('#newParticipant option:selected').remove();
-            console.info(ParticipantsToBeAdded);
-            showParticipants();
+            if ($('#newParticipant').val().length != 0) {
+                newParticipant.id = $('#newParticipant').val();
+                newParticipant.name = $('#newParticipant option:selected').text();
+                ParticipantsToBeAdded.push(newParticipant);
+                $('#newParticipant option:selected').remove();
+                console.info(ParticipantsToBeAdded);
+                showParticipants();
+            }
         });
         function showParticipants() {
             var $list = $('#AddedParticipants').empty();
