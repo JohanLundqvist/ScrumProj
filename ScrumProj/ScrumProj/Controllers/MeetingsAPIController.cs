@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Microsoft.AspNet.Identity;
 using ScrumProj.Models;
 
 namespace ScrumProj.Controllers
@@ -75,6 +76,7 @@ namespace ScrumProj.Controllers
         [HttpPost]
         public void PostMeeting([FromBody]Meeting meeting)
         {
+            var activeUser = db.Profiles.Single( u => u.ID == User.Identity.GetUserId());
             var participants = new List<ProfileModel>();
             var time = new List<string>();
             foreach (var user in meeting.MeetingParticipants)
@@ -82,6 +84,7 @@ namespace ScrumProj.Controllers
                  var Fulluser = db.Profiles.Single(u => u.ID == user.ID);
                 participants.Add(Fulluser);
             }
+            participants.Add(activeUser);
             var titlt = meeting.MeetingTitle;
 
             foreach (var proptime in meeting.ProposedTimes)

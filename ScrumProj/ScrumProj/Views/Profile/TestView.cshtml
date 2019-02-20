@@ -1,81 +1,46 @@
 ﻿<!-- Horizontal, rounded -->
+@model ScrumProj.Models.ViewModels.MeetingViewModel
 
-<div class="container horizontal rounded">
+<div class="container horizontal rounded" style="width: 20%">
     <h2>Horizontal, Rounded</h2>
-    <div class="progress-bar horizontal">
-        <div class="progress-track">
-            <div class="progress-fill">
-                <span>100%</span>
+    @foreach (var t in Model.DicTimes)
+    {
+        <div class="progress-bar horizontal">
+            <div class="progress-track">
+                <div class="progress-fill">
+                    <label style="float: left">@t.Key</label>
+                    <p class="invisible">@t.Value%</p>
+                    <span class=" bg-danger"></span>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="progress-bar horizontal">
-        <div class="progress-track">
-            <div class="progress-fill">
-                <span>75%</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="progress-bar horizontal">
-        <div class="progress-track">
-            <div class="progress-fill">
-                <span>60%</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="progress-bar horizontal">
-        <div class="progress-track">
-            <div class="progress-fill">
-                <span>20%</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="progress-bar horizontal">
-        <div class="progress-track">
-            <div class="progress-fill">
-                <span>34%</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="progress-bar horizontal">
-        <div class="progress-track">
-            <div class="progress-fill">
-                <span>82%</span>
-            </div>
-        </div>
-    </div>
+    }
 </div>
 
+@using (Html.BeginForm("Vote", "Profile"))
+{
+    foreach (var t in Model.DicTimes)
+    {
+        <div>
+            <label>@t.Key</label>
+            <input type="radio" name="SelectedTime" id="SelectedTime" value="@t.Key" tabindex="10" />
+        </div>
+        }
 
-<form action="/Product/Create" method="post" id="Product_Form">
-    <div>
-        <label>En tid</label>
-        <input type="radio" name="IsLocal" id="IsLocal" value="yes" checked="checked" tabindex="10" />
-    </div>
-
-    <div>
-        <label>En annan tid</label>
-        <input type="radio" name="IsLocal" value="no" tabindex="11" />
-    </div>
-
-    <input type="submit" value="RÖSTA" class="large" tabindex="17" />
-</form>
+    @Html.TextBoxFor(j => j.Times.Id, new { @class = "invisible" })
+    <input type="submit" value="Välj en tid som passar" class="btn btn-success" tabindex="17" />
+}
 
 
 @section scripts {
     <script>
-        $('.horizontal .progress-fill span').each(function () {
+        $('.horizontal .progress-fill p').each(function () {
             var percent = $(this).html();
             $(this).parent().css('width', percent);
         });
 
 
-        $('.vertical .progress-fill span').each(function () {
+        $('.vertical .progress-fill p').each(function () {
             var percent = $(this).html();
             var pTop = 100 - (percent.slice(0, percent.length - 1)) + "%";
             $(this).parent().css({
@@ -95,19 +60,20 @@
     }
 
     .progress-bar {
-    width: 70%;
+        width: 70%;
+        background-color:inherit;
     }
 
     .horizontal .progress-track {
         position: relative;
         width: 100%;
         height: 20px;
-        background: #ebebeb;
+        border:hidden;
     }
 
     .horizontal .progress-fill {
         position: relative;
-        background: #666;
+        background: #5cb85c;
         height: 20px;
         width: 50%;
         color: #fff;
@@ -119,16 +85,6 @@
 
     .rounded .progress-track,
     .rounded .progress-fill {
-        border-radius: 3px;
-        box-shadow: inset 0 0 5px rgba(0,0,0,.2);
-    }
-
-
-
-
-    .rounded .progress-track,
-    .rounded .progress-fill {
-        box-shadow: inset 0 0 5px rgba(0,0,0,.2);
         border-radius: 3px;
     }
 </style>
