@@ -177,7 +177,7 @@
                 @Html.LabelFor(u => u.File.FileName):
                 <div class="form-group">
                     <div>
-                        <label class="btn btn-sm btn-outline-success" for="newFile">Välj Fil</label>
+                        <label class="btn btn-sm btn-outline-info" for="newFile">Välj Fil</label>
                         <input type="file" id="newFile" name="newFile" class="inputfile" onchange="pressedFile()" />
                         <label id="fileLabel">Ingen fil har valts..</label>
                     </div>
@@ -185,7 +185,7 @@
                     <label>Ladda upp bild:</label>
                     <div>
 
-                        <label class="btn btn-sm btn-outline-success" for="ImageFile">Välj Bild</label>
+                        <label class="btn btn-sm btn-outline-info" for="ImageFile">Välj Bild</label>
                         @Html.TextBox("img", "", new { type = "file", Id = "ImageFile", accept = ".jpg, .jpeg, .png, .gif", onchange = "pressedImage()" })
                         <label id="fileLabel2">Ingen bild har valts..</label>
                     </div>
@@ -203,7 +203,7 @@
                     <br />
 
                     <div>
-                        <input type="submit" value="Posta inlägg" class="btn btn-success" id="SubmitButton" />
+                        <input type="submit" value="Posta inlägg" class="btn btn-info" id="SubmitButton" />
                     </div>
                 </div>
             </div>
