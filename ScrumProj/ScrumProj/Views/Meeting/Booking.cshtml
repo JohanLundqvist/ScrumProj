@@ -91,7 +91,7 @@
 </div>
 
 
-<h1 class="display-3">Mötesinbjudniingar</h1>
+@*<h1 class="display-3">Mötesinbjudniingar</h1>
 <div class="container horizontal rounded" style="width: 20%">
     <h2>Horizontal, Rounded</h2>
     @foreach (var t in Model.DicTimes)
@@ -118,7 +118,7 @@
 
     @Html.TextBoxFor(j => j.Times.Id, new { @class = "invisible" })
     <input type="submit" value="Välj en tid som passar" />
-</form>
+</form>*@
 
 
 
@@ -217,7 +217,7 @@
 
                 $('#ThirdNextPage').on('click', function () {
                     Proposed = $(":checkbox:checked");
-                    if (Proposed.length < 0 && Proposed.length >= 4) {
+                    if (Proposed.length > 0 && Proposed.length <= 4) {
                         var arr = [];
                         for (var i = 0; i < Proposed.length; i++) {
                             var currentItem = Proposed[i];
@@ -264,23 +264,23 @@
         $(Document).ready(function () {
             $("#datepicker").datepicker();
         });
-        $('.horizontal .progress-fill p').each(function () {
-            var percent = $(this).html();
-            $(this).parent().css('width', percent);
-        });
+        //$('.horizontal .progress-fill p').each(function () {
+        //    var percent = $(this).html();
+        //    $(this).parent().css('width', percent);
+        //});
 
 
-        $('.vertical .progress-fill p').each(function () {
-            var percent = $(this).html();
-            var pTop = 100 - (percent.slice(0, percent.length - 1)) + "%";
-            $(this).parent().css({
-                'height': percent,
-                'top': pTop
-            });
-        });
+        //$('.vertical .progress-fill p').each(function () {
+        //    var percent = $(this).html();
+        //    var pTop = 100 - (percent.slice(0, percent.length - 1)) + "%";
+        //    $(this).parent().css({
+        //        'height': percent,
+        //        'top': pTop
+        //    });
+        //});
 </script>
 
-<style>
+@*<style>
 
     .horizontal .progress-bar {
         float: left;
@@ -317,4 +317,4 @@
     .rounded .progress-fill {
         border-radius: 3px;
     }
-</style>
+</style>*@
