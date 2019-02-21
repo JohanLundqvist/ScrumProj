@@ -147,15 +147,15 @@ namespace ScrumProj.Controllers
             var getLastId = db.Meetings.ToList();
             var i = getLastId.Count() - 1;
 
-            foreach(var user in meeting.MeetingParticipants)
-            {
-                db.HasVotedOrNo.Add(new HasVotedOrNo
-                {
-                    UserId = user.ID,
-                    Hasvoted = false,
-                    MeetingId = getLastId[i].MeetingId
-                });
-            }
+            //foreach(var user in meeting.MeetingParticipants)
+            //{
+            //    db.HasVotedOrNo.Add(new HasVotedOrNo
+            //    {
+            //        UserId = user.ID,
+            //        Hasvoted = false,
+            //        MeetingId = getLastId[i].MeetingId
+            //    });
+            //}
 
 
             var mt = new MeetingTimes();

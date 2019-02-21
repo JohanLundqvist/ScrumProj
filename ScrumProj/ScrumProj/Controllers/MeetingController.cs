@@ -20,7 +20,7 @@ namespace ScrumProj.Controllers
             var listOfUsers = new List<SelectListItem>();
             var listOfMeetings = new List<Meeting>();
             var listProposedTimes = new List<string>();
-            model.UserNotVoted = new List<ProfileModel>();
+            //model.UserNotVoted = new List<ProfileModel>();
 
             listProposedTimes.Add("08.00-09.00");
             listProposedTimes.Add("09.00-10.00");
@@ -52,28 +52,28 @@ namespace ScrumProj.Controllers
                 }
             }
             var ListOfMeetings = _context.Meetings.ToList();
-            var DicInvitedToMeeting = new Dictionary<int, int>();
-            if (ListOfMeetings != null)
-            {
-                var dt = new Dictionary<string, double>();
-                foreach (var m in ListOfMeetings)
-                {
-                    DicInvitedToMeeting.Add(m.MeetingId, m.MeetingParticipants.Count());
-                    var valueOfVote = 100 / m.MeetingParticipants.Count();
-                    var mt = new MeetingTimes();
-                    mt = _context.MeetingTimes.Where(n => n.MeetingId == m.MeetingId).Single();
-                    if (mt.Time1 != null)
-                        dt.Add(mt.Time1, mt.Time1Votes * valueOfVote);
-                    if (mt.Time2 != null)
-                        dt.Add(mt.Time2, mt.Time2Votes * valueOfVote);
-                    if (mt.Time3 != null)
-                        dt.Add(mt.Time3, mt.Time3Votes * valueOfVote);
-                    if (mt.Time4 != null)
-                        dt.Add(mt.Time4, mt.Time4Votes * valueOfVote);
-                    model.Times = mt;
-                }
-                model.DicTimes = dt;
-            }
+            //var DicInvitedToMeeting = new Dictionary<int, int>();
+            //if (ListOfMeetings != null)
+            //{
+            //    var dt = new Dictionary<string, double>();
+            //    foreach (var m in ListOfMeetings)
+            //    {
+            //        DicInvitedToMeeting.Add(m.MeetingId, m.MeetingParticipants.Count());
+            //        var valueOfVote = 100 / m.MeetingParticipants.Count();
+            //        var mt = new MeetingTimes();
+            //        mt = _context.MeetingTimes.Where(n => n.MeetingId == m.MeetingId).Single();
+            //        if (mt.Time1 != null)
+            //            dt.Add(mt.Time1, mt.Time1Votes * valueOfVote);
+            //        if (mt.Time2 != null)
+            //            dt.Add(mt.Time2, mt.Time2Votes * valueOfVote);
+            //        if (mt.Time3 != null)
+            //            dt.Add(mt.Time3, mt.Time3Votes * valueOfVote);
+            //        if (mt.Time4 != null)
+            //            dt.Add(mt.Time4, mt.Time4Votes * valueOfVote);
+            //        model.Times = mt;
+            //    }
+            //    model.DicTimes = dt;
+            //}
             
             var userId = User.Identity.GetUserId();
             var activeUser = _context.Profiles.First(u => u.ID == userId);
@@ -86,26 +86,26 @@ namespace ScrumProj.Controllers
 
             return View(model);
         }
-        public ActionResult Vote(MeetingViewModel model, string SelectedTime = "")
-        {
-            var currentUserId = User.Identity.GetUserId();
-            if (SelectedTime == "")
-                return RedirectToAction("Booking");
-            var ctx = new AppDbContext();
-            var theMeeting = ctx.MeetingTimes.Find(model.Times.Id);
+        //public ActionResult Vote(MeetingViewModel model, string SelectedTime = "")
+        //{
+        //    var currentUserId = User.Identity.GetUserId();
+        //    if (SelectedTime == "")
+        //        return RedirectToAction("Booking");
+        //    var ctx = new AppDbContext();
+        //    var theMeeting = ctx.MeetingTimes.Find(model.Times.Id);
 
-            if (SelectedTime == theMeeting.Time1)
-                theMeeting.Time1Votes++;
-            else if (SelectedTime == theMeeting.Time2)
-                theMeeting.Time2Votes++;
-            else if (SelectedTime == theMeeting.Time3)
-                theMeeting.Time3Votes++;
-            else if (SelectedTime == theMeeting.Time4)
-                theMeeting.Time4Votes++;
+        //    if (SelectedTime == theMeeting.Time1)
+        //        theMeeting.Time1Votes++;
+        //    else if (SelectedTime == theMeeting.Time2)
+        //        theMeeting.Time2Votes++;
+        //    else if (SelectedTime == theMeeting.Time3)
+        //        theMeeting.Time3Votes++;
+        //    else if (SelectedTime == theMeeting.Time4)
+        //        theMeeting.Time4Votes++;
 
-            ctx.SaveChanges();
+        //    ctx.SaveChanges();
 
-            return RedirectToAction("Booking");
-        }
+        //    return RedirectToAction("Booking");
+        //}
     }
 }
