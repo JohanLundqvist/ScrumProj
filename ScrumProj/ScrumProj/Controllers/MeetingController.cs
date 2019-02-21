@@ -82,8 +82,6 @@ namespace ScrumProj.Controllers
             model.Meetings = listOfMeetings;
             model.User = activeUser;
 
-
-
             return View(model);
         }
         //public ActionResult Vote(MeetingViewModel model, string SelectedTime = "")
