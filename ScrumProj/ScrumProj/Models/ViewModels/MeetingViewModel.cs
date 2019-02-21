@@ -18,6 +18,6 @@ namespace ScrumProj.Models.ViewModels
         public MeetingTimes Times { get; set; }
         public Dictionary<string, double> DicTimes { get; set; }
         public HasVotedOrNo HasVotedOrNo { get; set; }
-
+        public List<ProfileModel> UserNotVoted { get; set; }
     }
 }

@@ -92,10 +92,6 @@
 
 <div class="jumbotron">
     <h1 class="display-3">Mötesinbjudningar</h1>
-    @if(Model.Meetings.Count() != 0)
-    {
-        if (Model.HasVotedOrNo.Hasvoted == false)
-        {
         <div class="container horizontal rounded" style="width: 20%">
             @foreach (var t in Model.DicTimes)
             {
@@ -111,11 +107,8 @@
             }
         
         </div>
-        }
-    }
-    else
-    {
-        using (Html.BeginForm("Vote", "Meeting"))
+
+        @using (Html.BeginForm("Vote", "Meeting"))
         {
             foreach (var t in Model.DicTimes)
             {
@@ -128,7 +121,7 @@
             @Html.TextBoxFor(j => j.Times.Id, new { @class = "invisible" })
 
         }
-    }
+
 </div>
 
 

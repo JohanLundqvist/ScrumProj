@@ -109,7 +109,7 @@ namespace ScrumProj.Controllers
                     Hasvoted = false,
                     MeetingId = meeting.MeetingId
                 };
-                 var Fulluser = db.Profiles.Single(u => u.ID == user.ID);
+                var Fulluser = db.Profiles.Single(u => u.ID == user.ID);
                 participants.Add(Fulluser);
             }
             participants.Add(activeUser);
@@ -146,6 +146,16 @@ namespace ScrumProj.Controllers
             db.SaveChanges();
             var getLastId = db.Meetings.ToList();
             var i = getLastId.Count() - 1;
+
+            foreach(var user in meeting.MeetingParticipants)
+            {
+                db.HasVotedOrNo.Add(new HasVotedOrNo
+                {
+                    UserId = user.ID,
+                    Hasvoted = false,
+                    MeetingId = getLastId[i].MeetingId
+                });
+            }
 
 
             var mt = new MeetingTimes();

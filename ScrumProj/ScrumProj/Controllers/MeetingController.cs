@@ -20,6 +20,7 @@ namespace ScrumProj.Controllers
             var listOfUsers = new List<SelectListItem>();
             var listOfMeetings = new List<Meeting>();
             var listProposedTimes = new List<string>();
+            model.UserNotVoted = new List<ProfileModel>();
 
             listProposedTimes.Add("08.00-09.00");
             listProposedTimes.Add("09.00-10.00");
@@ -72,20 +73,17 @@ namespace ScrumProj.Controllers
                     model.Times = mt;
                 }
                 model.DicTimes = dt;
-                
-
             }
-
-           
+            
             var userId = User.Identity.GetUserId();
             var activeUser = _context.Profiles.First(u => u.ID == userId);
-
-            if(ListOfMeetings.Count() != 0)
-            model.HasVotedOrNo = _context.HasVotedOrNo.Where(u => u.UserId == userId).Single();
 
             model.UsersToAdd = listOfUsers;
             model.Meetings = listOfMeetings;
             model.User = activeUser;
+
+
+
             return View(model);
         }
         public ActionResult Vote(MeetingViewModel model, string SelectedTime = "")
@@ -104,8 +102,6 @@ namespace ScrumProj.Controllers
                 theMeeting.Time3Votes++;
             else if (SelectedTime == theMeeting.Time4)
                 theMeeting.Time4Votes++;
-
-            _context.HasVotedOrNo.Where(u => u.UserId == currentUserId).Single().Hasvoted = true;
 
             ctx.SaveChanges();
 
