@@ -187,23 +187,43 @@ namespace ScrumProj.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddRoleToUser(string UserName, string RoleName)
         {
-            if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(RoleName))
+            try
             {
-                ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+                if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(RoleName))
+                {
+                    ApplicationUser user = ctx.Users.Where(u => u.UserName.Equals(UserName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
 
-                var idResult = userManager.AddToRole(user.Id, RoleName);
+                    if (userManager.IsInRole(user.Id, RoleName))
+                    {
+                        ViewBag.Message = "Denna användare har redan rollen " + RoleName + "!";
 
-                ViewBag.Message = "Det lyckades! Rollen för användaren lades till!";
+                    }
+                    else
+                    {
+                        var idResult = userManager.AddToRole(user.Id, RoleName);
+
+                        ViewBag.Message = "Det lyckades! Rollen för användaren lades till!";
+                    }
+                }
+                else
+                {
+                    ViewBag.Message = "Användaren hittades inte!";
+                }
+
+                // Prepopulate the dropdown with roles
+                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                ViewBag.Roles = list;
             }
-            else
+            catch
             {
-                ViewBag.Message = "Användaren hittades inte!";
-            }
+                ViewBag.Message = "Var vänlig fyll i fältet och ange en giltig E-post adress!";
 
-            // Prepopulate the dropdown with roles
-            var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
-            new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
-            ViewBag.Roles = list;
+                // Prepopulate the dropdown with roles
+                var list = ctx.Roles.OrderBy(r => r.Name).ToList().Select(rr =>
+                new SelectListItem { Value = rr.Name.ToString(), Text = rr.Name }).ToList();
+                ViewBag.Roles = list;
+            }
 
             return View("ManageRoles");
         }
