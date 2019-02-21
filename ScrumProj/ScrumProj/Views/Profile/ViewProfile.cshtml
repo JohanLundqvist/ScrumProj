@@ -18,7 +18,7 @@
     <div class="col-md-4">
         <h2>Din profil</h2>
 
-        <hr />
+        <hr style="border-color: #777;" />
 
         <dl class="dl-horizontal">
             <dt>
@@ -42,7 +42,7 @@
             <br />
 
             <dt>
-                Position:
+                Befattning:
             </dt>
 
             <dd>
@@ -56,7 +56,8 @@
     <div class="col-md-4">
         <h2>Dina notiser</h2>
 
-        <hr />
+        <hr style="border-color: #777;" />
+
         @using (Html.BeginForm("ChangeNotificationSettings", "Profile", FormMethod.Post, new { Model }))
         {
             @Html.TextBoxFor(model => model.ID, new { @class = "invisible" })
@@ -101,12 +102,7 @@
 
             </div>
             <br />
-            <input class="btn btn-outline-info" type="submit" name="Ändra inställningar" />
+            <input class="btn btn-info" type="submit" name="Ändra inställningar" />
         }
     </div>
-
-
-
-    
-
 </div>

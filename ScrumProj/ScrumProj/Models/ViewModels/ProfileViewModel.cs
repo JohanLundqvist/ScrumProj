@@ -11,15 +11,15 @@ namespace ScrumProj.Models
     {
         public string ID { get; set; }
 
-        [Required(ErrorMessage = "Please enter you First Name")]
+        [Required(ErrorMessage = "Ange ditt förnamn")]
         [StringLength(60, MinimumLength = 1)]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "Please enter your Last Name")]
+        [Required(ErrorMessage = "Ange ditt efternamn")]
         [StringLength(60, MinimumLength = 1)]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Please enter your Position")]
+        [Required(ErrorMessage = "Ange din befattning")]
         [StringLength(60, MinimumLength = 1)]
         public string Position { get; set; }
 
