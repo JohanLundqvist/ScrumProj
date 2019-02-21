@@ -8,6 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Web.Http.Results;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using ScrumProj.Models;
 
@@ -18,9 +20,28 @@ namespace ScrumProj.Controllers
         private AppDbContext db = new AppDbContext();
 
         // GET: api/Meetings
-        public IQueryable<Meeting> GetMeetings()
+        //public IQueryable<Meeting> GetMeetings()
+        //{
+        //    return db.Meetings;
+        //}
+
+        [System.Web.Http.HttpGet]
+        public JsonResult<List<Meeting>> GetMeetingsJson()
         {
-            return db.Meetings;
+            var list = new List<Meeting>();
+
+            foreach(var m in db.Meetings)
+            {
+                foreach(var mp in m.MeetingParticipants)
+                {
+                    if (mp.ID.Equals(User.Identity.GetUserId()))
+                    {
+                        list.Add(m);
+                    }
+                }
+            }
+
+            return Json(list);
         }
 
 
@@ -73,7 +94,7 @@ namespace ScrumProj.Controllers
         }
 
         // POST: api/Meetings
-        [HttpPost]
+        [System.Web.Http.HttpPost]
         public void PostMeeting([FromBody]Meeting meeting)
         {
             var UserId = User.Identity.GetUserId();
@@ -88,7 +109,7 @@ namespace ScrumProj.Controllers
                     Hasvoted = false,
                     MeetingId = meeting.MeetingId
                 };
-                 var Fulluser = db.Profiles.Single(u => u.ID == user.ID);
+                var Fulluser = db.Profiles.Single(u => u.ID == user.ID);
                 participants.Add(Fulluser);
             }
             participants.Add(activeUser);
@@ -125,6 +146,16 @@ namespace ScrumProj.Controllers
             db.SaveChanges();
             var getLastId = db.Meetings.ToList();
             var i = getLastId.Count() - 1;
+
+            foreach(var user in meeting.MeetingParticipants)
+            {
+                db.HasVotedOrNo.Add(new HasVotedOrNo
+                {
+                    UserId = user.ID,
+                    Hasvoted = false,
+                    MeetingId = getLastId[i].MeetingId
+                });
+            }
 
 
             var mt = new MeetingTimes();

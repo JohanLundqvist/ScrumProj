@@ -701,7 +701,7 @@
     <Content Include="Views\Role\ManageRoles.cshtml" />
     <Content Include="Views\Development\DevelopmentWork.cshtml" />
     <Content Include="Views\Entry\EditEntryView.cshtml" />
-    <Content Include="Views\Profile\SpecificDevelopmentProject.cshtml" />
+    <Content Include="Views\Development\SpecificDevelopmentProject.cshtml" />
     <Content Include="Views\Profile\ProfileCreated.cshtml" />
     <Content Include="Views\Entry\_DeleteCategoryPartial.cshtml" />
     <Content Include="Views\Development\EditDevelopmentPage.cshtml" />

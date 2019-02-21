@@ -11,12 +11,19 @@
 <div class="row" style="padding-top: 25px;">
     <div class="col-sm-3">
         <h3>Dina projekt.</h3>
-        <div class="card bg-light" style="width:100%;">
-
-            <div class="card-body">
-
+        @foreach (var dw in Model.DevsOfUser)
+        {
+            <div style="padding-top:10px; padding-bottom:10px">
+                <a href="@Url.Action("SpecificDevelopmentProject", "Development", new { projId = dw.Id })" class="list-group-item list-group-item-action flex-column align-items-start active">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">@dw.Title</h5>
+                        <small>@dw.Cat</small>
+                    </div>
+                    
+                    <small>@dw.Content</small>
+                </a>
             </div>
-        </div>
+        }
     </div>
     <div class="col-sm-6" style="text-align:center">
         <h3 style="text-decoration:underline;">Örebro Universitet</h3>
@@ -120,20 +127,34 @@
     </div>
     <div class="col-sm-3">
         <h3>Kalender</h3>
-    </div>
+        <div id="datepicker"></div>
+        <h3>Möten</h3>
+        @foreach (var m in Model.MeetingsOfUser)
+        {
+            <div style="padding-bottom:10px; padding-top:10px">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">Möte @m.MeetingTitle</h4>
+                    <h6 class="card-subtitle mb-2 text-muted">Tid @m.Time</h6>
+                    <p class="card-text">Deltagare</p>
+                    <ul class="d-md-inline-block" style="list-style-type: none; padding-left: 0px;">
+                        @foreach (var mp in m.MeetingParticipants)
+                        {
+                            <li style="float:left; padding:5px;">
+                                <a href="#" class="list-group-item list-group-item-action flex-column align-items-start" style="padding: 5px; float:left">
+                                    <small class="mb-1">@mp.FirstName @mp.LastName</small>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                
+            </div>
+                </div>
+            }
 
 
-    <!--
-        -------------------------------------------------------------------------------------
-        Datepicker
-        -------------------------------------------------------------------------------------
-    -->
-
-
-    <div id="datepicker"></div>
-
-
-</div>
+        </div>
 
 
 @section Scripts {
@@ -141,10 +162,33 @@
     @Styles.Render("~/Content/cssjqryUi")
 
     <script type="text/javascript">
-        var activeDays = [1, 4, 10, 21, 22, 23, 27, 28, 30];
+        var activeDays = [];
+
+        $(document).ready(function () {
+
+            var meetings;
+
+            meetings = $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetMeetingsJson", "MeetingsAPI", new { httproute = "" })',
+                success: function () {
+                    console.log(meetings);
+                }
+
+            });
+
+            for (var i = 0; i < list.length; i++) {
+                currentItem = list[i];
+
+                activeDays(list.Time);
+            }
+        });
+        
+        
 
         $('#datepicker').datepicker(
             {
+                dateFormat: 'yy-mm-dd',
                 beforeShowDay: function (date) {
                     var hilight = [false, ''];
 

@@ -142,8 +142,6 @@
         }
     </div>
 
-
-
     <!--
         -------------------------------------------------------------------------------------
         Code to publish an Entry
@@ -176,15 +174,20 @@
                     <span id="faux" style="display:none;"></span>
 
                 </div>
-                @Html.LabelFor(u => u.File.FileName)
+                @Html.LabelFor(u => u.File.FileName):
                 <div class="form-group">
                     <div>
-                        <input type="file" id="newFile" name="newFile" />
+                        <label class="btn btn-sm btn-outline-success" for="newFile">Välj Fil</label>
+                        <input type="file" id="newFile" name="newFile" class="inputfile" onchange="pressedFile()" />
+                        <label id="fileLabel">Ingen fil har valts..</label>
                     </div>
                     <br />
                     <label>Ladda upp bild:</label>
                     <div>
-                        @Html.TextBox("img", "", new { type = "file", Id = "ImageFile", accept = ".jpg, .jpeg, .png, .gif" })
+
+                        <label class="btn btn-sm btn-outline-success" for="ImageFile">Välj Bild</label>
+                        @Html.TextBox("img", "", new { type = "file", Id = "ImageFile", accept = ".jpg, .jpeg, .png, .gif", onchange = "pressedImage()" })
+                        <label id="fileLabel2">Ingen bild har valts..</label>
                     </div>
                 </div>
 
@@ -206,8 +209,6 @@
             </div>
         }
     </div>
-
-
 
     <!--
         -------------------------------------------------------------------------------------
@@ -596,8 +597,43 @@
                     return false;
                 }
             });
+
+
+            function pressedFile(){
+                var a = document.getElementById('newFile');
+            if (a.value == "") {
+                fileLabel.innerHTML = "Choose file";
+            }
+            else {
+                var theSplit = a.value.split('\\');
+                fileLabel.innerHTML = theSplit[theSplit.length - 1];
+                }
+            };
+            function pressedImage() {
+                var a = document.getElementById('ImageFile');
+                if (a.value == "") {
+                    fileLabel2.innerHTML = "Choose file";
+                }
+                else {
+                    var theSplit = a.value.split('\\');
+                    fileLabel2.innerHTML = theSplit[theSplit.length - 1];
+                }
+            };
+        
     </script>
 }
+<style>
+    #newFile {
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+    }
+    #ImageFile {
+        opacity: 0;
+        position: absolute;
+        z-index: -1;
+    }
+</style>
 
 
 

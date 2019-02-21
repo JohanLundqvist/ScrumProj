@@ -11,6 +11,5 @@ namespace ScrumProj.Models
         public string UserId { get; set; }
         public int MeetingId { get; set; }
         public bool Hasvoted { get; set; }
-
     }
 }

@@ -20,6 +20,7 @@ namespace ScrumProj.Controllers
             var listOfUsers = new List<SelectListItem>();
             var listOfMeetings = new List<Meeting>();
             var listProposedTimes = new List<string>();
+            model.UserNotVoted = new List<ProfileModel>();
 
             listProposedTimes.Add("08.00-09.00");
             listProposedTimes.Add("09.00-10.00");
@@ -58,7 +59,7 @@ namespace ScrumProj.Controllers
                 foreach (var m in ListOfMeetings)
                 {
                     DicInvitedToMeeting.Add(m.MeetingId, m.MeetingParticipants.Count());
-                    var valueOfVote = m.MeetingParticipants.Count() / 100;
+                    var valueOfVote = 100 / m.MeetingParticipants.Count();
                     var mt = new MeetingTimes();
                     mt = _context.MeetingTimes.Where(n => n.MeetingId == m.MeetingId).Single();
                     if (mt.Time1 != null)
@@ -69,21 +70,25 @@ namespace ScrumProj.Controllers
                         dt.Add(mt.Time3, mt.Time3Votes * valueOfVote);
                     if (mt.Time4 != null)
                         dt.Add(mt.Time4, mt.Time4Votes * valueOfVote);
+                    model.Times = mt;
                 }
                 model.DicTimes = dt;
             }
-
-           
+            
             var userId = User.Identity.GetUserId();
             var activeUser = _context.Profiles.First(u => u.ID == userId);
 
             model.UsersToAdd = listOfUsers;
             model.Meetings = listOfMeetings;
             model.User = activeUser;
+
+
+
             return View(model);
         }
         public ActionResult Vote(MeetingViewModel model, string SelectedTime = "")
         {
+            var currentUserId = User.Identity.GetUserId();
             if (SelectedTime == "")
                 return RedirectToAction("Booking");
             var ctx = new AppDbContext();
@@ -97,6 +102,7 @@ namespace ScrumProj.Controllers
                 theMeeting.Time3Votes++;
             else if (SelectedTime == theMeeting.Time4)
                 theMeeting.Time4Votes++;
+
             ctx.SaveChanges();
 
             return RedirectToAction("Booking");

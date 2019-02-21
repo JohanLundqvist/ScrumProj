@@ -90,36 +90,39 @@
     <div id="second" class="auto-jsCalendar black-theme" style="display:none"></div>
 </div>
 
-
-@*<h1 class="display-3">Mötesinbjudniingar</h1>
-<div class="container horizontal rounded" style="width: 20%">
-    <h2>Horizontal, Rounded</h2>
-    @foreach (var t in Model.DicTimes)
-    {
-        <div class="progress-bar horizontal">
-            <div class="progress-track">
-                <div class="progress-fill">
-                    <label style="float: left">@t.Key</label>
-                    <p class="invisible">@t.Value%</p>
-                    <span class=" bg-danger"></span>
+<div class="jumbotron">
+    <h1 class="display-3">Mötesinbjudningar</h1>
+        <div class="container horizontal rounded" style="width: 20%">
+            @foreach (var t in Model.DicTimes)
+            {
+                <div class="progress-bar horizontal">
+                    <div class="progress-track">
+                        <div class="progress-fill">
+                            <label style="float: left">@t.Key</label>
+                            <p class="invisible">@t.Value%</p>
+                            <span class=" bg-danger"></span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            }
+        
         </div>
-    }
+
+        @using (Html.BeginForm("Vote", "Meeting"))
+        {
+            foreach (var t in Model.DicTimes)
+            {
+                <div>
+                    <label>@t.Key</label>
+                    <input type="radio" name="SelectedTime" id="SelectedTime" value="@t.Key" tabindex="10" />
+                </div>
+            }
+            <input type="submit" value="Välj en tid som passar" />
+            @Html.TextBoxFor(j => j.Times.Id, new { @class = "invisible" })
+
+        }
+
 </div>
-<form action="~/Controllers/MeetingController/Vote" method="post">
-    @foreach (var t in Model.DicTimes)
-    {
-    <div>
-        <label>@t.Key</label>
-        <input type="radio" name="SelectedTime" id="SelectedTime" value="@t.Key" tabindex="10" />
-    </div>
-    }
-
-    @Html.TextBoxFor(j => j.Times.Id, new { @class = "invisible" })
-    <input type="submit" value="Välj en tid som passar" />
-</form>*@
-
 
 
 <script>
@@ -264,10 +267,11 @@
         $(Document).ready(function () {
             $("#datepicker").datepicker();
         });
-        //$('.horizontal .progress-fill p').each(function () {
-        //    var percent = $(this).html();
-        //    $(this).parent().css('width', percent);
-        //});
+
+        $('.horizontal .progress-fill p').each(function () {
+            var percent = $(this).html();
+            $(this).parent().css('width', percent);
+        });
 
 
         //$('.vertical .progress-fill p').each(function () {
